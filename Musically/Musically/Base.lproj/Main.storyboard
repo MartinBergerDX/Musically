@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6I7-h4-hjr">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="MJQ-Z8-d9o">
+            <objects>
+                <navigationController id="6I7-h4-hjr" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="iqs-ug-FIa">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Bz6-F4-59u" kind="relationship" relationship="rootViewController" id="NQV-NC-XVZ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2Mn-8X-etb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-675" y="-24"/>
+        </scene>
+        <!--Stored Albums View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController restorationIdentifier="StoredAlbumsViewController" storyboardIdentifier="StoredAlbumsViewController" id="BYZ-38-t0r" customClass="StoredAlbumsViewController" customModule="Musically" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="sDO-jF-vCM">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="pcA-6C-qcC">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="sDO-jF-vCM" secondAttribute="bottom" id="8E5-gf-KOu"/>
+                            <constraint firstItem="sDO-jF-vCM" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="8vs-nV-0aK"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="sDO-jF-vCM" secondAttribute="trailing" id="uN6-c7-TTp"/>
+                            <constraint firstItem="sDO-jF-vCM" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="yeW-TY-CvD"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="hzJ-tf-1XC"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="364" y="-24"/>
+        </scene>
+        <!--Artist Search View Controller-->
+        <scene sceneID="aCX-Mx-CSR">
+            <objects>
+                <viewController restorationIdentifier="ArtistSearchViewController" storyboardIdentifier="ArtistSearchViewController" id="Bz6-F4-59u" customClass="ArtistSearchViewController" customModule="Musically" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lMk-GX-G5t">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="sgw-cc-4Zg">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="sgw-cc-4Zg" firstAttribute="top" secondItem="SkR-Zw-s9M" secondAttribute="top" id="Nda-V2-eo6"/>
+                            <constraint firstItem="SkR-Zw-s9M" firstAttribute="bottom" secondItem="sgw-cc-4Zg" secondAttribute="bottom" id="kEO-Uc-S6j"/>
+                            <constraint firstItem="SkR-Zw-s9M" firstAttribute="trailing" secondItem="sgw-cc-4Zg" secondAttribute="trailing" id="mvu-vX-Grk"/>
+                            <constraint firstItem="sgw-cc-4Zg" firstAttribute="leading" secondItem="SkR-Zw-s9M" secondAttribute="leading" id="z6e-lK-rfI"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="SkR-Zw-s9M"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="qjR-kt-YUs"/>
+                    <connections>
+                        <outlet property="tableView" destination="sgw-cc-4Zg" id="lHA-bR-Fhl"/>
+                        <outlet property="viewModel" destination="GhC-xh-3Sx" id="94b-d9-cCQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dwh-vv-3O4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="GhC-xh-3Sx" customClass="ArtistSearchViewModel" customModule="Musically" customModuleProvider="target"/>
+            </objects>
+            <point key="canvasLocation" x="1366.6666666666667" y="-24.107142857142858"/>
+        </scene>
+    </scenes>
+</document>
