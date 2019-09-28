@@ -21,15 +21,17 @@ extension Storyboardable where Self: UIViewController {
         return String(describing: self)
     }
     
-    static func storyboardViewController<T: UIViewController>() -> T {
-        let storyboard = UIStoryboard(name: T.storyboardName, bundle: nil)
-        
-        guard let vc = storyboard.instantiateInitialViewController() as? T else {
-            fatalError("Could not instantiate initial storyboard with name: \(T.storyboardName)")
+    static func storyboardViewController(from storyboard: String) -> Self {
+        let storyboard = UIStoryboard(name: storyboard, bundle: nil)
+        let storyboardId = String(describing: self)
+        guard let vc = storyboard.instantiateViewController(withIdentifier: storyboardId) as? Self else {
+            fatalError("Could not instantiate initial storyboard with name: \(storyboard)")
         }
         
         return vc
     }
 }
 
-extension UIViewController: Storyboardable { }
+extension UIViewController: Storyboardable {
+    
+}

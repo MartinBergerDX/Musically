@@ -17,7 +17,7 @@ struct ArtistSearchRequest: BackendRequest, PagedBackendRequest {
     var endpoint: String = "artist.search"
     var arguments: String {
         get {
-            return "artist=" + artist
+            return "artist=" + artist + pagingArguments()
         }
     }
     var method: String = HTTPMethod.get.description

@@ -34,13 +34,16 @@ class BackendService: BackendServiceProtocol {
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = request.method
         urlRequest.addValue(self.userAgent.UAString(), forHTTPHeaderField: "User-Agent")
+        print(urlRequest)
         session.dataTask(with: urlRequest) { (data, response, error) in
-            guard error == nil else {
-                request.onComplete(result: .failure(error!))
-                return
-            }
-            let received: Data = data ?? Data.init()
-            request.onComplete(result: .success(received))
+            DispatchQueue.main.async(execute: {() -> Void in
+                guard error == nil else {
+                    request.onComplete(result: .failure(error!))
+                    return
+                }
+                let received: Data = data ?? Data.init()
+                request.onComplete(result: .success(received))
+            })
         }.resume()
     }
     

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol ServiceRegistryProtocol {
     var database: CoreDataStack {get}
@@ -17,4 +18,5 @@ class ServiceRegistry : ServiceRegistryProtocol {
     static let shared = ServiceRegistry.init()
     let database = CoreDataStack.init(modelName: CoreDataStack.defaultModelName)
     let backendService: BackendServiceProtocol = BackendService.init()
+    let imageCache = NSCache<NSString, UIImage>.init()
 }
