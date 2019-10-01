@@ -9,7 +9,7 @@
 import Foundation
 
 struct AlbumImage: Codable {
-    var url: URL
+    var url: URL?
     var size: AlbumImageSize
     
     enum CodingKeys: String, CodingKey {
@@ -19,7 +19,11 @@ struct AlbumImage: Codable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        try self.url = container.decode(URL.self, forKey: .url)
+        do {
+            try self.url = container.decode(URL.self, forKey: .url)
+        } catch {
+            self.url = nil
+        }
         try self.size = container.decode(AlbumImageSize.self, forKey: .size)
     }
 }
