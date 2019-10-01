@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class TextViewUrlOpener: NSObject, UITextViewDelegate {
+class TextViewOpenUrlBehaviour: NSObject, UITextViewDelegate {
     private var acceptUrl: URL!
     init(acceptUrl: URL, textView: UITextView) {
         super.init()
