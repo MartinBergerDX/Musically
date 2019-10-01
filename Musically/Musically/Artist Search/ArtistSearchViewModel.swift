@@ -14,62 +14,97 @@ protocol ArtistSearchViewModelOutput: class {
 }
 
 class ArtistSearchViewModel: NSObject {
+    private static let defaultQuery = "cher"
+    private static let optimizedCount = 100 // needed because server can return large data sets
     weak var output: ArtistSearchViewModelOutput!
     private var artists: [Artist] = []
-    private var currentSearchText: String! = "a"
-    private var searchInProgress = false // mutated on main thread only
-    private var page = Pagination.init()
+    private var currentQuery: String! = ArtistSearchViewModel.defaultQuery
+    private var newQuery: String! = ArtistSearchViewModel.defaultQuery
+    private var searching = false // mutated on main thread only
+    private var page: Int = Pagination.defaultPage
+    private var totalElements: Int = 100
+    var backendService: BackendServiceProtocol!
     
     override init() {
         super.init()
     }
     
-    func search(artist name: String) {
-        guard searchInProgress == false else {
+    func search() {
+        guard !searching else {
             return
         }
-        searchInProgress = true
+        searching = true
+
+        if queryUpdated() {
+            page = Pagination.defaultPage
+        }
         
         var request = ArtistSearchRequest.init()
-        request.artist = name
-        request.completion = { [unowned self] (artists: [Artist]) in
-            self.artists = artists
+        request.page = page
+        request.artist = self.newQuery.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? self.newQuery
+        request.completion = { [unowned self] (result) in
+            self.searchFinished(with: result)
             self.output.updated(viewModel: self)
-            self.searchFinished(with: name)
         }
-        ServiceRegistry.shared.backendService.execute(request: request)
+        self.backendService.execute(request: request)
     }
     
-    private func searchFinished(with search: String) {
-        searchInProgress = false
-        if search != self.currentSearchText {
-            self.search(artist: self.currentSearchText)
+    private func searchFinished(with result: Result<AlbumSearchResult, Error>) {
+        switch result {
+        case .success(let received):
+            self.totalElements = received.pagination.total
+            self.page += 1
+            if queryUpdated() {
+                self.artists = received.albums
+                totalElements = ArtistSearchViewModel.optimizedCount
+                currentQuery = newQuery
+            } else {
+                self.artists.append(contentsOf: received.albums)
+            }
+            
+            break
+        case .failure(let error):
+            
+            print(error)
+            
+            break
         }
+        
+        searching = false
     }
     
-    func count() -> Int {
-        return self.artists.count
+    func totalCount() -> Int {
+        guard totalElements > 0 else {
+            return ArtistSearchViewModel.optimizedCount
+        }
+        return totalElements
     }
     
-    func artist(for index: Int) -> Artist {
+    func artist(for index: Int) -> Artist? {
+        guard index < artists.count else {
+            return .none
+        }
         return artists[index]
     }
     
-    private func resetPage() {
-        self.page = Pagination.init()
+    func isLoading(for indexPath: IndexPath) -> Bool {
+        guard !self.artists.isEmpty else {
+            return false
+        }
+        return indexPath.row > self.artists.count
+    }
+    
+    private func queryUpdated() -> Bool {
+        return currentQuery != newQuery
     }
 }
 
 extension ArtistSearchViewModel: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
-        resetPage()
-        var searchText = (searchController.searchBar.text ?? "")
-        if (searchText.count == 0) {
-            searchText = "a"
-        }
-        self.currentSearchText = searchText
-        print("Searching with: " + searchText)
-        search(artist: searchText)
+        let query: String = searchController.searchBar.text ?? ArtistSearchViewModel.defaultQuery
+        print("Searching with: " + query)
+        newQuery = query
+        search()
     }
 }

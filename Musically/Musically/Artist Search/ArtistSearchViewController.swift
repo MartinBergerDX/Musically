@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ArtistSearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ArtistSearchViewModelOutput {
+class ArtistSearchViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var viewModel: ArtistSearchViewModel!
     
@@ -16,8 +16,9 @@ class ArtistSearchViewController: UIViewController, UITableViewDelegate, UITable
         super.viewDidLoad()
         setupTableView()
         
+        self.viewModel.backendService = ServiceRegistry.shared.backendService
         self.viewModel.output = self
-        self.viewModel.search(artist: "a")
+        self.viewModel.search()
         
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self.viewModel
@@ -33,15 +34,23 @@ class ArtistSearchViewController: UIViewController, UITableViewDelegate, UITable
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 60
     }
-    
-    func updated(viewModel: ArtistSearchViewModel) {
-        self.tableView.reloadData()
+}
+
+extension ArtistSearchViewController: UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        let contains: Bool = indexPaths.contains { element in
+            return self.viewModel.isLoading(for: element)
+        }
+        if contains {
+            self.viewModel.search()
+        }
     }
-    
-    // DATA SOURCE
-    
+}
+
+extension ArtistSearchViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let artist = self.viewModel.artist(for: indexPath.row)
+        //print("Cell for index: " + String(indexPath.row))
+        let artist: Artist? = self.viewModel.artist(for: indexPath.row)
         let reuseId = String.init(describing: ArtistTableViewCell.self)
         let cell: ArtistTableViewCell = tableView.dequeueReusableCell(withIdentifier: reuseId, for:indexPath) as! ArtistTableViewCell
         cell.setup(with: artist)
@@ -53,6 +62,12 @@ class ArtistSearchViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.viewModel.count()
+        return self.viewModel.totalCount()
+    }
+}
+
+extension ArtistSearchViewController: ArtistSearchViewModelOutput {
+    func updated(viewModel: ArtistSearchViewModel) {
+        self.tableView.reloadData()
     }
 }
