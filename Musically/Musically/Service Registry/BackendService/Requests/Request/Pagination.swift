@@ -9,15 +9,14 @@
 import Foundation
 
 struct Pagination {
-    var limit: Int = 30
-    var page: Int = 1
+    static let defaultLimit = 30
+    static let defaultPage = 1
+    var limit: Int = Pagination.defaultLimit
+    var page: Int = Pagination.defaultPage
+    var total: Int = 0
     
     mutating func nextPage() {
         self.page += 1
-    }
-    
-    init() {
-        
     }
 }
 
@@ -27,19 +26,18 @@ protocol BaseRequest {
 }
 
 protocol PagedBackendRequest {
-    associatedtype DataType
-    var pagination: Pagination {get set}
-    var completion: ([DataType]) -> Void {get set}
+    var limit: Int {get set}
+    var page: Int {get set}
 }
 
 extension PagedBackendRequest {
     func pagingArguments() -> String {
         var args = "&"
         args.append("page=")
-        args.append(String(self.pagination.page))
+        args.append(String(self.page))
         args.append("&")
         args.append("limit=")
-        args.append(String(self.pagination.limit))
+        args.append(String(self.limit))
         return args
     }
 }

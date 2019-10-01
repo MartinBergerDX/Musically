@@ -11,8 +11,9 @@ import Foundation
 // https://www.last.fm/api/show/artist.search
 
 struct ArtistSearchRequest: BackendRequest, PagedBackendRequest {
-    var pagination: Pagination = Pagination.init()
-    var completion: ([Artist]) -> Void = { (infos: [Artist]) in }
+    var completion: ((Result<AlbumSearchResult, Error>) -> Void)?
+    var limit: Int = Pagination.defaultLimit
+    var page: Int = Pagination.defaultPage
     
     var endpoint: String = "artist.search"
     var arguments: String {
@@ -27,15 +28,15 @@ struct ArtistSearchRequest: BackendRequest, PagedBackendRequest {
         switch result {
         case .success(let data):
             let decoder = JSONDecoder()
-            var albumsFound = AlbumSearchResult.init()
-            if let didFound = try? decoder.decode(AlbumSearchResult.self, from: data) {
-                albumsFound = didFound
+            do {
+                let received = try decoder.decode(AlbumSearchResult.self, from: data)
+                self.completion?(.success(received))
+            } catch let error {
+                self.completion?(.failure(error))
             }
-            self.completion(albumsFound.albums)
             
         case .failure(let error):
-            print("failure: " + error.localizedDescription)
-            self.completion([])
+            self.completion?(.failure(error))
         }
     }
 }

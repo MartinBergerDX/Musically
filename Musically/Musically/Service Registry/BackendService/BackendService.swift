@@ -34,9 +34,14 @@ class BackendService: BackendServiceProtocol {
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = request.method
         urlRequest.addValue(self.userAgent.UAString(), forHTTPHeaderField: "User-Agent")
+        
+        print("Making request")
+        print(request)
         print(urlRequest)
+        
         session.dataTask(with: urlRequest) { (data, response, error) in
             DispatchQueue.main.async(execute: {() -> Void in
+                print("Request complete")
                 guard error == nil else {
                     request.onComplete(result: .failure(error!))
                     return
