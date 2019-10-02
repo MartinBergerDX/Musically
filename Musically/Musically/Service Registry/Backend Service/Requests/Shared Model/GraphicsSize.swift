@@ -14,4 +14,5 @@ enum GraphicsSize: String, Codable {
     case large
     case extralarge
     case mega
+    case none
 }

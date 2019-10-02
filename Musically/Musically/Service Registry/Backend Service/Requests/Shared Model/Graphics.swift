@@ -9,8 +9,8 @@
 import Foundation
 
 struct Graphics: Codable {
-    var url: URL?
-    var size: GraphicsSize
+    var url: URL? = .none
+    var size: GraphicsSize? = .none
     
     enum CodingKeys: String, CodingKey {
         case url = "#text"
@@ -19,11 +19,7 @@ struct Graphics: Codable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        do {
-            try self.url = container.decode(URL.self, forKey: .url)
-        } catch {
-            self.url = nil
-        }
-        try self.size = container.decode(GraphicsSize.self, forKey: .size)
+        url = try? container.decode(URL.self, forKey: .url)
+        size = try? container.decode(GraphicsSize.self, forKey: .size)
     }
 }

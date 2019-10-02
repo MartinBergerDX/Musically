@@ -17,14 +17,10 @@ struct Artist: Codable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.decode(String.self, forKey: .name)
-        self.listeners = try container.decode(String.self, forKey: .listeners)
-        self.mbid = try container.decode(String.self, forKey: .mbid)
-        do {
-            try self.url = container.decode(URL.self, forKey: .url)
-        } catch {
-            // url constructor fails if string is empty eg. ""
-        }
-        self.image = try container.decode([Graphics].self, forKey: .image)
+        name = try container.decode(String.self, forKey: .name)
+        listeners = (try? container.decode(String.self, forKey: .listeners)) ?? ""
+        mbid = try container.decode(String.self, forKey: .mbid)
+        url = try? container.decode(URL.self, forKey: .url)
+        image = (try? container.decode([Graphics].self, forKey: .image)) ?? []
     }
 }
