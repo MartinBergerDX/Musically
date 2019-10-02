@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum AlbumImageSize: String, Codable {
+enum GraphicsSize: String, Codable {
     case small
     case medium
     case large

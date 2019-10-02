@@ -8,45 +8,45 @@
 
 import UIKit
 
-class ArtistTableViewCell: UITableViewCell {
+class AlbumTableViewCell: UITableViewCell {
     var viewTapBehaviour: ViewTapBehaviour!
     private var openUrlBehaviour: ViewOpenUrlBehaviour!
     
     @IBOutlet weak var mainContainer: UIView!
     @IBOutlet weak var name: UILabel!
-    @IBOutlet weak var listeners: UILabel!
+    @IBOutlet weak var playcount: UILabel!
     @IBOutlet weak var identifier: UILabel!
-    @IBOutlet weak var artistPhoto: UIImageView!
+    @IBOutlet weak var albumPhoto: UIImageView!
     @IBOutlet weak var loadingContainer: UIView!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.artistPhoto.layer.cornerRadius = 3.0
-        self.artistPhoto.layer.masksToBounds = true
+        albumPhoto.layer.cornerRadius = 3.0
+        albumPhoto.layer.masksToBounds = true
     }
     
-    func setup(with artist: Artist?) {
-        name.text = ""
-        listeners.text = "Listeners: ?"
-        identifier.text = ""
-        artistPhoto.image = UIImage.init(named: "PhotoPlaceholder")
+    func setup(with album: Album?) {
         openUrlBehaviour = nil
+        name.text = "Loading"
+        playcount.text = "Playcount: 0"
+        albumPhoto.image = UIImage.init(named: "PhotoPlaceholder")
+        identifier.text = "id"
         
-        switch artist {
-        case .some(let artist):
-                name.text = artist.name
-                listeners.text = "Listeners: " + artist.listeners;
-                identifier.text = artist.mbid
-                identifier.isHidden = artist.mbid.isEmpty ? true : false
-                let medium = artist.image.filter { (graphics) -> Bool in
+        switch album {
+        case .some(let album):
+                name.text = album.name
+                playcount.text = "Played: " + String(album.playcount) + " times.";
+                let medium = album.image.filter { (graphics) -> Bool in
                     return graphics.size == GraphicsSize.medium
                 }
                 if let imageUrl: URL = medium.first?.url {
-                    artistPhoto.download(image: imageUrl)
+                    albumPhoto.download(image: imageUrl)
                 }
-                if let url: URL = artist.url {
-                    openUrlBehaviour = ViewOpenUrlBehaviour.init(views: [artistPhoto], url: url)
+                identifier.text = album.mbid
+                identifier.isHidden = album.mbid.isEmpty ? true : false
+                if let url: URL = album.url {
+                    openUrlBehaviour = ViewOpenUrlBehaviour.init(views: [albumPhoto], url: url)
                 }
                 set(loading: false)
             break

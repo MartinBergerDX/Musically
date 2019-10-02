@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct AlbumImage: Codable {
+struct Graphics: Codable {
     var url: URL?
-    var size: AlbumImageSize
+    var size: GraphicsSize
     
     enum CodingKeys: String, CodingKey {
         case url = "#text"
@@ -24,6 +24,6 @@ struct AlbumImage: Codable {
         } catch {
             self.url = nil
         }
-        try self.size = container.decode(AlbumImageSize.self, forKey: .size)
+        try self.size = container.decode(GraphicsSize.self, forKey: .size)
     }
 }

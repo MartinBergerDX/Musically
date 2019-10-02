@@ -12,8 +12,8 @@ struct Artist: Codable {
     var name: String = ""
     var listeners: String = ""
     var mbid: String = ""
-    var url: URL?
-    var image: [AlbumImage]
+    var url: URL? = .none
+    var image: [Graphics]
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -23,8 +23,8 @@ struct Artist: Codable {
         do {
             try self.url = container.decode(URL.self, forKey: .url)
         } catch {
-            self.url = nil
+            // url constructor fails if string is empty eg. ""
         }
-        self.image = try container.decode([AlbumImage].self, forKey: .image)
+        self.image = try container.decode([Graphics].self, forKey: .image)
     }
 }

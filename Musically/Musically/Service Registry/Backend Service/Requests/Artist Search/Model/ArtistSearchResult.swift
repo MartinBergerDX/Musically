@@ -8,8 +8,8 @@
 
 import Foundation
 
-struct AlbumSearchResult: Decodable {
-    var albums: [Artist] = []
+struct ArtistSearchResult: Decodable {
+    var artists: [Artist] = []
     var pagination = Pagination.init()
     
     enum CodingKeys: String, CodingKey {
@@ -28,7 +28,7 @@ struct AlbumSearchResult: Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let results = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .results)
         let artistMatches = try results.nestedContainer(keyedBy: CodingKeys.self, forKey: .artistmatches)
-        try self.albums = artistMatches.decode([Artist].self, forKey: .artist)
+        try self.artists = artistMatches.decode([Artist].self, forKey: .artist)
         
         let totalString: String = try results.decode(String.self, forKey: .totalResults)
         pagination.total = Int.init(totalString) ?? 0
@@ -38,9 +38,5 @@ struct AlbumSearchResult: Decodable {
         let query = try results.nestedContainer(keyedBy: CodingKeys.self, forKey: .query)
         let startPageString: String = try query.decode(String.self, forKey: .startPage)
         pagination.page = Int.init(startPageString) ?? 0
-    }
-    
-    init() {
-        
     }
 }

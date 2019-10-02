@@ -49,27 +49,23 @@ class ArtistSearchViewModel: NSObject {
         self.backendService.execute(request: request)
     }
     
-    private func searchFinished(with result: Result<AlbumSearchResult, Error>) {
+    private func searchFinished(with result: Result<ArtistSearchResult, Error>) {
         switch result {
         case .success(let received):
             self.totalElements = received.pagination.total
             self.page += 1
             if queryUpdated() {
-                self.artists = received.albums
+                self.artists = received.artists
                 totalElements = ArtistSearchViewModel.optimizedCount
                 currentQuery = newQuery
             } else {
-                self.artists.append(contentsOf: received.albums)
+                self.artists.append(contentsOf: received.artists)
             }
-            
             break
         case .failure(let error):
-            
             print(error)
-            
             break
         }
-        
         searching = false
     }
     

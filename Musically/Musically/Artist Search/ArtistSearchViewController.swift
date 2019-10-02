@@ -15,11 +15,24 @@ class ArtistSearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-        
+        setupViewModel()
+        setupSearchController()
+    }
+    
+    private func setupTableView() {
+        let reuseId = String.init(describing: ArtistTableViewCell.self)
+        self.tableView.register(UINib(nibName: reuseId, bundle: Bundle.main), forCellReuseIdentifier: reuseId)
+        self.tableView.rowHeight = UITableView.automaticDimension
+        self.tableView.estimatedRowHeight = 60
+    }
+    
+    private func setupViewModel() {
         self.viewModel.backendService = ServiceRegistry.shared.backendService
         self.viewModel.output = self
         self.viewModel.search()
-        
+    }
+    
+    private func setupSearchController() {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self.viewModel
         searchController.obscuresBackgroundDuringPresentation = false
@@ -28,11 +41,10 @@ class ArtistSearchViewController: UIViewController {
         self.definesPresentationContext = true
     }
     
-    private func setupTableView() {
-        let reuseId = String.init(describing: ArtistTableViewCell.self)
-        self.tableView.register(UINib(nibName: reuseId, bundle: Bundle.main), forCellReuseIdentifier: reuseId)
-        self.tableView.rowHeight = UITableView.automaticDimension
-        self.tableView.estimatedRowHeight = 60
+    private func showAlbums(for artist: Artist) {
+        let vc = AlbumsViewController.storyboardViewController(from: "Main")
+        vc.artist = artist
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -49,11 +61,15 @@ extension ArtistSearchViewController: UITableViewDataSourcePrefetching {
 
 extension ArtistSearchViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //print("Cell for index: " + String(indexPath.row))
         let artist: Artist? = self.viewModel.artist(for: indexPath.row)
         let reuseId = String.init(describing: ArtistTableViewCell.self)
         let cell: ArtistTableViewCell = tableView.dequeueReusableCell(withIdentifier: reuseId, for:indexPath) as! ArtistTableViewCell
         cell.setup(with: artist)
+        if let artist = artist {
+            cell.viewTapBehaviour = ViewTapBehaviour.init(views: [cell.mainContainer], onTap: { [unowned self] (view: UIView) in
+                self.showAlbums(for: artist)
+            })
+        }
         return cell
     }
     
