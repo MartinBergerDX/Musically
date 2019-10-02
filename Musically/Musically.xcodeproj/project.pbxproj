@@ -152,6 +152,22 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		5B3527312345155800209639 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				5BD4F90E233BD72100E27715 /* Main.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		5B3527322345157200209639 /* App Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				5BD4F90A233BD72100E27715 /* AppDelegate.swift */,
+			);
+			path = "App Delegate";
+			sourceTree = "<group>";
+		};
 		5B4419C3233D1CD200F87B86 /* Backend Service */ = {
 			isa = PBXGroup;
 			children = (
@@ -256,13 +272,13 @@
 		5BD4F909233BD72100E27715 /* Musically */ = {
 			isa = PBXGroup;
 			children = (
+				5B3527322345157200209639 /* App Delegate */,
 				5B4419C8233D35E900F87B86 /* Stored Albums */,
 				5B4419CB233D4E3100F87B86 /* Artist Search */,
 				5B3527102344984700209639 /* Albums */,
 				5BD4F921233BD91700E27715 /* Service Registry */,
 				5BD4F926233BD94600E27715 /* Persistance */,
-				5BD4F90E233BD72100E27715 /* Main.storyboard */,
-				5BD4F90A233BD72100E27715 /* AppDelegate.swift */,
+				5B3527312345155800209639 /* Storyboards */,
 				5B4419E4233E691700F87B86 /* Behaviour */,
 				5B4419CE233D4F2700F87B86 /* Extensions */,
 				5B4419C9233D360500F87B86 /* Support Files */,
