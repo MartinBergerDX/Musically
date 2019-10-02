@@ -41,7 +41,9 @@ class AlbumsViewController: UIViewController {
     }
     
     private func showAlbumDetails(for album: Album) {
-        print(#function)
+        let vc = AlbumDetailsViewController.storyboardViewController(from: "Main")
+        vc.album = album
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -62,11 +64,11 @@ extension AlbumsViewController: UITableViewDataSource, UITableViewDelegate {
         let reuseId = String.init(describing: AlbumTableViewCell.self)
         let cell: AlbumTableViewCell = tableView.dequeueReusableCell(withIdentifier: reuseId, for:indexPath) as! AlbumTableViewCell
         cell.setup(with: album)
-//        if let album = album {
-//            cell.viewTapBehaviour = ViewTapBehaviour.init(views: [cell.mainContainer], onTap: { [unowned self] (view: UIView) in
-//
-//            })
-//        }
+        if let album = album {
+            cell.viewTapBehaviour = ViewTapBehaviour.init(views: [cell.mainContainer], onTap: { [unowned self] (view: UIView) in
+                self.showAlbumDetails(for: album)
+            })
+        }
         return cell
     }
     
