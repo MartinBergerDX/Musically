@@ -19,6 +19,8 @@
 		5B35272923450E6C00209639 /* AlbumDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B35272823450E6C00209639 /* AlbumDetails.swift */; };
 		5B35272E23450EE100209639 /* AlbumDetailsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B35272D23450EE100209639 /* AlbumDetailsRequest.swift */; };
 		5B35273023450FBB00209639 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B35272F23450FBB00209639 /* Track.swift */; };
+		5B352734234515B000209639 /* AlbumDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B352733234515B000209639 /* AlbumDetailsViewController.swift */; };
+		5B352736234515BE00209639 /* AlbumDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B352735234515BE00209639 /* AlbumDetailsViewModel.swift */; };
 		5B4419BE233CED6A00F87B86 /* Pagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4419BD233CED6A00F87B86 /* Pagination.swift */; };
 		5B4419C0233CFE6B00F87B86 /* BackendRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4419BF233CFE6B00F87B86 /* BackendRequest.swift */; };
 		5B4419C2233D020B00F87B86 /* ArtistSearchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4419C1233D020B00F87B86 /* ArtistSearchRequest.swift */; };
@@ -61,6 +63,8 @@
 		5B35272823450E6C00209639 /* AlbumDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetails.swift; sourceTree = "<group>"; };
 		5B35272D23450EE100209639 /* AlbumDetailsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailsRequest.swift; sourceTree = "<group>"; };
 		5B35272F23450FBB00209639 /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
+		5B352733234515B000209639 /* AlbumDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailsViewController.swift; sourceTree = "<group>"; };
+		5B352735234515BE00209639 /* AlbumDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailsViewModel.swift; sourceTree = "<group>"; };
 		5B4419BD233CED6A00F87B86 /* Pagination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pagination.swift; sourceTree = "<group>"; };
 		5B4419BF233CFE6B00F87B86 /* BackendRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendRequest.swift; sourceTree = "<group>"; };
 		5B4419C1233D020B00F87B86 /* ArtistSearchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistSearchRequest.swift; sourceTree = "<group>"; };
@@ -156,6 +160,15 @@
 				5B3527212344B9E400209639 /* AlbumTableViewCell.xib */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		5B3527262344D2BC00209639 /* Album Details */ = {
+			isa = PBXGroup;
+			children = (
+				5B352733234515B000209639 /* AlbumDetailsViewController.swift */,
+				5B352735234515BE00209639 /* AlbumDetailsViewModel.swift */,
+			);
+			path = "Album Details";
 			sourceTree = "<group>";
 		};
 		5B35272723450DB400209639 /* Album Details */ = {
@@ -300,6 +313,7 @@
 				5B4419C8233D35E900F87B86 /* Stored Albums */,
 				5B4419CB233D4E3100F87B86 /* Artist Search */,
 				5B3527102344984700209639 /* Albums */,
+				5B3527262344D2BC00209639 /* Album Details */,
 				5BD4F921233BD91700E27715 /* Service Registry */,
 				5BD4F926233BD94600E27715 /* Persistance */,
 				5B3527312345155800209639 /* Storyboards */,
@@ -338,6 +352,7 @@
 				5B35271323449AD000209639 /* Shared Model */,
 				5B4419C5233D1CF200F87B86 /* Artist Search */,
 				5B35271423449D3C00209639 /* Albums */,
+				5B35272723450DB400209639 /* Album Details */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -423,6 +438,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5BD4F92A233BDB5800E27715 /* CoreDataStack.swift in Sources */,
+				5B352736234515BE00209639 /* AlbumDetailsViewModel.swift in Sources */,
 				5BD4F925233BD94100E27715 /* Database.swift in Sources */,
 				5B35271E2344AC2F00209639 /* AlbumsViewModel.swift in Sources */,
 				5B4419CD233D4E5200F87B86 /* ArtistSearchViewController.swift in Sources */,
@@ -449,6 +465,7 @@
 				5B4419BE233CED6A00F87B86 /* Pagination.swift in Sources */,
 				5B4419D4233D543200F87B86 /* HTTPMethod.swift in Sources */,
 				5BD4F913233BD72100E27715 /* Musically.xcdatamodeld in Sources */,
+				5B352734234515B000209639 /* AlbumDetailsViewController.swift in Sources */,
 				5B35271623449E1C00209639 /* AlbumsResult.swift in Sources */,
 				5B3527252344CA2000209639 /* ViewOpenUrlBehaviour.swift in Sources */,
 				5B35271823449FB800209639 /* Album.swift in Sources */,
@@ -604,6 +621,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BE4CWML7BN;
 				INFOPLIST_FILE = "$(SRCROOT)/Musically/Support Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -622,6 +640,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BE4CWML7BN;
 				INFOPLIST_FILE = "$(SRCROOT)/Musically/Support Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
