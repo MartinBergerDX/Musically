@@ -21,6 +21,10 @@
 		5B35273023450FBB00209639 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B35272F23450FBB00209639 /* Track.swift */; };
 		5B352734234515B000209639 /* AlbumDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B352733234515B000209639 /* AlbumDetailsViewController.swift */; };
 		5B352736234515BE00209639 /* AlbumDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B352735234515BE00209639 /* AlbumDetailsViewModel.swift */; };
+		5B3527382346082800209639 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3527372346082800209639 /* Tag.swift */; };
+		5B35273A23460C8700209639 /* AlbumDetailsScrollController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B35273923460C8700209639 /* AlbumDetailsScrollController.swift */; };
+		5B35273D234614B800209639 /* TrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B35273C234614B800209639 /* TrackView.swift */; };
+		5B35273F234614C400209639 /* TrackView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B35273E234614C400209639 /* TrackView.xib */; };
 		5B4419BE233CED6A00F87B86 /* Pagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4419BD233CED6A00F87B86 /* Pagination.swift */; };
 		5B4419C0233CFE6B00F87B86 /* BackendRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4419BF233CFE6B00F87B86 /* BackendRequest.swift */; };
 		5B4419C2233D020B00F87B86 /* ArtistSearchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4419C1233D020B00F87B86 /* ArtistSearchRequest.swift */; };
@@ -65,6 +69,10 @@
 		5B35272F23450FBB00209639 /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
 		5B352733234515B000209639 /* AlbumDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailsViewController.swift; sourceTree = "<group>"; };
 		5B352735234515BE00209639 /* AlbumDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailsViewModel.swift; sourceTree = "<group>"; };
+		5B3527372346082800209639 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		5B35273923460C8700209639 /* AlbumDetailsScrollController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailsScrollController.swift; sourceTree = "<group>"; };
+		5B35273C234614B800209639 /* TrackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackView.swift; sourceTree = "<group>"; };
+		5B35273E234614C400209639 /* TrackView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrackView.xib; sourceTree = "<group>"; };
 		5B4419BD233CED6A00F87B86 /* Pagination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pagination.swift; sourceTree = "<group>"; };
 		5B4419BF233CFE6B00F87B86 /* BackendRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendRequest.swift; sourceTree = "<group>"; };
 		5B4419C1233D020B00F87B86 /* ArtistSearchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistSearchRequest.swift; sourceTree = "<group>"; };
@@ -167,6 +175,8 @@
 			children = (
 				5B352733234515B000209639 /* AlbumDetailsViewController.swift */,
 				5B352735234515BE00209639 /* AlbumDetailsViewModel.swift */,
+				5B35273923460C8700209639 /* AlbumDetailsScrollController.swift */,
+				5B35273B234613F200209639 /* Views */,
 			);
 			path = "Album Details";
 			sourceTree = "<group>";
@@ -185,6 +195,7 @@
 			children = (
 				5B35272823450E6C00209639 /* AlbumDetails.swift */,
 				5B35272F23450FBB00209639 /* Track.swift */,
+				5B3527372346082800209639 /* Tag.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -203,6 +214,15 @@
 				5BD4F90A233BD72100E27715 /* AppDelegate.swift */,
 			);
 			path = "App Delegate";
+			sourceTree = "<group>";
+		};
+		5B35273B234613F200209639 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5B35273C234614B800209639 /* TrackView.swift */,
+				5B35273E234614C400209639 /* TrackView.xib */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		5B4419C3233D1CD200F87B86 /* Backend Service */ = {
@@ -424,6 +444,7 @@
 			files = (
 				5BD4F918233BD72200E27715 /* LaunchScreen.storyboard in Resources */,
 				5BD4F915233BD72200E27715 /* Assets.xcassets in Resources */,
+				5B35273F234614C400209639 /* TrackView.xib in Resources */,
 				5B4419E1233E020700F87B86 /* ArtistTableViewCell.xib in Resources */,
 				5B3527232344B9E400209639 /* AlbumTableViewCell.xib in Resources */,
 				5BD4F910233BD72100E27715 /* Main.storyboard in Resources */,
@@ -438,6 +459,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5BD4F92A233BDB5800E27715 /* CoreDataStack.swift in Sources */,
+				5B3527382346082800209639 /* Tag.swift in Sources */,
 				5B352736234515BE00209639 /* AlbumDetailsViewModel.swift in Sources */,
 				5BD4F925233BD94100E27715 /* Database.swift in Sources */,
 				5B35271E2344AC2F00209639 /* AlbumsViewModel.swift in Sources */,
@@ -456,6 +478,7 @@
 				5B4419D6233D5A1B00F87B86 /* GraphicsSize.swift in Sources */,
 				5B4419E6233E694300F87B86 /* TextViewOpenUrlBehaviour.swift in Sources */,
 				5B4419D8233D5A4000F87B86 /* Graphics.swift in Sources */,
+				5B35273A23460C8700209639 /* AlbumDetailsScrollController.swift in Sources */,
 				5BD4F92B233BDB5800E27715 /* GenericDao.swift in Sources */,
 				5BD4F920233BD90700E27715 /* ServiceRegistry.swift in Sources */,
 				5B35270F23448F3900209639 /* ViewTapBehaviour.swift in Sources */,
@@ -463,6 +486,7 @@
 				5B4419E3233E621200F87B86 /* UIImageView+Downloadable.swift in Sources */,
 				5B4419C7233D1D0800F87B86 /* Artist.swift in Sources */,
 				5B4419BE233CED6A00F87B86 /* Pagination.swift in Sources */,
+				5B35273D234614B800209639 /* TrackView.swift in Sources */,
 				5B4419D4233D543200F87B86 /* HTTPMethod.swift in Sources */,
 				5BD4F913233BD72100E27715 /* Musically.xcdatamodeld in Sources */,
 				5B352734234515B000209639 /* AlbumDetailsViewController.swift in Sources */,

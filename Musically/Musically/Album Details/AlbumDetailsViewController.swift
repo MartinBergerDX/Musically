@@ -10,7 +10,8 @@ import UIKit
 
 class AlbumDetailsViewController: UIViewController {
     @IBOutlet weak var viewModel: AlbumDetailsViewModel!
-    @IBOutlet weak var mainStack: UIStackView!
+    @IBOutlet weak var scrollController: AlbumDetailsScrollController!
+    
     var album: Album!
     
     override func viewDidLoad() {
@@ -28,6 +29,6 @@ class AlbumDetailsViewController: UIViewController {
 
 extension AlbumDetailsViewController: AlbumDetailsViewModelOutput {
     func updated(viewModel: AlbumDetailsViewModel) {
-        print(viewModel.albumDetails)
+        scrollController.setup(with: viewModel.albumDetails)
     }
 }
