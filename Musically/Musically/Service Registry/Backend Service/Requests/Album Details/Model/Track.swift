@@ -8,15 +8,21 @@
 
 import Foundation
 
-struct Track: Decodable {
-    var name: String
+struct Track: Hashable {
+    var name: String = ""
     var url: URL?
-    var duration: String
-    var rank: String
-    var streamableText: String
-    var streamableFullTrack: String
-    var artist: Artist
+    var duration: String = ""
+    var rank: String = ""
+    var streamableText: String = ""
+    var streamableFullTrack: String = ""
+    var artist: Artist = Artist.init()
     
+    init() {
+        
+    }
+}
+
+extension Track: Decodable {
     enum CodingKeys: String, CodingKey {
         case name
         case duration
@@ -44,5 +50,15 @@ struct Track: Decodable {
         streamableFullTrack = try streamable.decode(String.self, forKey: .fulltrack)
         
         artist = try container.decode(Artist.self, forKey: .artist)
+    }
+}
+
+extension Track: Comparable {
+    static func ==(lhs: Track, rhs: Track) -> Bool {
+        return lhs.name == rhs.name
+    }
+    
+    static func <(lhs: Track, rhs: Track) -> Bool {
+        return lhs.name < rhs.name
     }
 }

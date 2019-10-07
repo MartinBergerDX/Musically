@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum GraphicsSize: String, Codable {
+enum GraphicsSize: String, Codable, CaseIterable {
     case small
     case medium
     case large

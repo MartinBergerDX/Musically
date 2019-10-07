@@ -9,8 +9,11 @@
 import Foundation
 import CoreData
 
-public class GenericDao<T:NSManagedObject> {
+public class GenericDao<T: NSManagedObject, D: Comparable> {
 
+    public typealias ManagedType = T
+    public typealias DomainType = D
+    
     var moc: NSManagedObjectContext
     var entityName: String = ""
     var defaultOrderBy: NSSortDescriptor?
@@ -21,12 +24,8 @@ public class GenericDao<T:NSManagedObject> {
         return ed!
     }()
 
-    public init() {
-        if let _ : String = ProcessInfo.processInfo.environment["TESTING"] {
-            self.moc = CoreDataStack.init(modelName: CoreDataStack.defaultModelName).managedObjectContext
-        } else {
-            self.moc = ServiceRegistry.shared.database.managedObjectContext
-        }
+    public init(moc: NSManagedObjectContext!) {
+        self.moc = moc
         self.entityName = NSStringFromClass(T.self).components(separatedBy: ".").last!
     }
 
@@ -129,6 +128,7 @@ public class GenericDao<T:NSManagedObject> {
         return results
     }
 
+    @discardableResult
     public func save() -> Bool {
         do {
             try self.moc.save()
@@ -139,6 +139,7 @@ public class GenericDao<T:NSManagedObject> {
         return true
     }
 
+    @discardableResult
     public func saveToPersistentStore() -> Bool {
         do {
             try self.moc.save()
@@ -149,6 +150,7 @@ public class GenericDao<T:NSManagedObject> {
         return true
     }
 
+    @discardableResult
     public func delete(_ entity: T, save: Bool) -> Bool {
         self.moc.delete(entity)
         if (save) {
@@ -159,6 +161,7 @@ public class GenericDao<T:NSManagedObject> {
         }
     }
 
+    @discardableResult
     public func deleteEntities(_ entities: Array<T>, save: Bool) -> Bool {
         for entity in entities {
             self.moc.delete(entity)
@@ -170,12 +173,36 @@ public class GenericDao<T:NSManagedObject> {
         return true
     }
 
-    public func domainToCoreData(_ domain: AnyObject, dbObject: T) {
-        // abstract
+    public func domainToCoreData(_ domain: D, dbObject: T) {
+        NSException.init(name: NSExceptionName(rawValue: "Abstract Method Invocation"), reason: "Not Implemented", userInfo: nil).raise()
     }
 
-    public func coreDataToDomain(_ dbObject: T, domain: AnyObject) {
-        // abstract
+    public func coreDataToDomain(_ dbObject: T, domain: inout D) {
+        NSException.init(name: NSExceptionName(rawValue: "Abstract Method Invocation"), reason: "Not Implemented", userInfo: nil).raise()
+    }
+
+    public func convertCollectionDomainToCoreData(_ domain: [DomainType]) -> NSSet {
+        let all: NSMutableSet! = NSMutableSet.init()
+        for obj: DomainType in domain {
+            let managed = self.insertNew()
+            domainToCoreData(obj, dbObject: managed)
+            all.add(managed)
+        }
+        return NSSet.init(set: all)
+    }
+    
+    public func convertCollectionCoreDataToDomain(_ dbObject: NSSet?, domain: inout [DomainType]) {
+        guard let persisted: Set<ManagedType> = dbObject as! Set<ManagedType>? else {
+            return
+        }
+        for managed: ManagedType in persisted {
+            guard var object: DomainType = produceDomainObject() else {
+                return
+            }
+            coreDataToDomain(managed, domain: &object)
+            domain.append(object)
+        }
+        domain.sort()
     }
     
     public func deleteAll() {
@@ -187,5 +214,10 @@ public class GenericDao<T:NSManagedObject> {
         } catch let error {
             print(error.localizedDescription)
         }
+    }
+    
+    public func produceDomainObject() -> DomainType? {
+        NSException.init(name: NSExceptionName(rawValue: "Abstract Method Invocation"), reason: "Not Implemented", userInfo: nil).raise()
+        return .none
     }
 }

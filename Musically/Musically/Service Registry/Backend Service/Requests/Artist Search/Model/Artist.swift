@@ -8,13 +8,15 @@
 
 import Foundation
 
-struct Artist: Codable {
+struct Artist: Hashable {
     var name: String = ""
     var listeners: String = ""
     var mbid: String = ""
     var url: URL? = .none
-    var image: [Graphics]
-    
+    var image: [Graphics] = []
+}
+
+extension Artist: Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         name = try container.decode(String.self, forKey: .name)

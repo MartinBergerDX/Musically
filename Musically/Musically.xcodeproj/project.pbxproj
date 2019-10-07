@@ -25,6 +25,12 @@
 		5B35273A23460C8700209639 /* AlbumDetailsScrollController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B35273923460C8700209639 /* AlbumDetailsScrollController.swift */; };
 		5B35273D234614B800209639 /* TrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B35273C234614B800209639 /* TrackView.swift */; };
 		5B35273F234614C400209639 /* TrackView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B35273E234614C400209639 /* TrackView.xib */; };
+		5B35278F234662D600209639 /* AlbumDetailsDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B35278E234662D600209639 /* AlbumDetailsDao.swift */; };
+		5B3527972346655B00209639 /* PersistanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3527962346655B00209639 /* PersistanceTests.swift */; };
+		5B35279F2346662700209639 /* DaoFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B35279E2346662700209639 /* DaoFactory.swift */; };
+		5B3527A1234765BC00209639 /* TrackDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3527A0234765BC00209639 /* TrackDao.swift */; };
+		5B3527A3234769EA00209639 /* TagDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3527A2234769EA00209639 /* TagDao.swift */; };
+		5B3527A523476AC300209639 /* GraphicsDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3527A423476AC300209639 /* GraphicsDao.swift */; };
 		5B4419BE233CED6A00F87B86 /* Pagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4419BD233CED6A00F87B86 /* Pagination.swift */; };
 		5B4419C0233CFE6B00F87B86 /* BackendRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4419BF233CFE6B00F87B86 /* BackendRequest.swift */; };
 		5B4419C2233D020B00F87B86 /* ArtistSearchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4419C1233D020B00F87B86 /* ArtistSearchRequest.swift */; };
@@ -48,7 +54,6 @@
 		5BD4F918233BD72200E27715 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BD4F916233BD72200E27715 /* LaunchScreen.storyboard */; };
 		5BD4F920233BD90700E27715 /* ServiceRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD4F91F233BD90700E27715 /* ServiceRegistry.swift */; };
 		5BD4F923233BD93100E27715 /* BackendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD4F922233BD93100E27715 /* BackendService.swift */; };
-		5BD4F925233BD94100E27715 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD4F924233BD94100E27715 /* Database.swift */; };
 		5BD4F92A233BDB5800E27715 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD4F928233BDB5800E27715 /* CoreDataStack.swift */; };
 		5BD4F92B233BDB5800E27715 /* GenericDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD4F929233BDB5800E27715 /* GenericDao.swift */; };
 		5BD4F92E233BE5C500E27715 /* UserAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD4F92D233BE5C500E27715 /* UserAgent.swift */; };
@@ -73,6 +78,12 @@
 		5B35273923460C8700209639 /* AlbumDetailsScrollController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailsScrollController.swift; sourceTree = "<group>"; };
 		5B35273C234614B800209639 /* TrackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackView.swift; sourceTree = "<group>"; };
 		5B35273E234614C400209639 /* TrackView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrackView.xib; sourceTree = "<group>"; };
+		5B3527792346260300209639 /* Persistance.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Persistance.h; sourceTree = "<group>"; };
+		5B35278E234662D600209639 /* AlbumDetailsDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailsDao.swift; sourceTree = "<group>"; };
+		5B35279E2346662700209639 /* DaoFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaoFactory.swift; sourceTree = "<group>"; };
+		5B3527A0234765BC00209639 /* TrackDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackDao.swift; sourceTree = "<group>"; };
+		5B3527A2234769EA00209639 /* TagDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagDao.swift; sourceTree = "<group>"; };
+		5B3527A423476AC300209639 /* GraphicsDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphicsDao.swift; sourceTree = "<group>"; };
 		5B4419BD233CED6A00F87B86 /* Pagination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pagination.swift; sourceTree = "<group>"; };
 		5B4419BF233CFE6B00F87B86 /* BackendRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendRequest.swift; sourceTree = "<group>"; };
 		5B4419C1233D020B00F87B86 /* ArtistSearchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistSearchRequest.swift; sourceTree = "<group>"; };
@@ -98,7 +109,6 @@
 		5BD4F919233BD72200E27715 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5BD4F91F233BD90700E27715 /* ServiceRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceRegistry.swift; sourceTree = "<group>"; };
 		5BD4F922233BD93100E27715 /* BackendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendService.swift; sourceTree = "<group>"; };
-		5BD4F924233BD94100E27715 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		5BD4F928233BDB5800E27715 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		5BD4F929233BDB5800E27715 /* GenericDao.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericDao.swift; sourceTree = "<group>"; };
 		5BD4F92D233BE5C500E27715 /* UserAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAgent.swift; sourceTree = "<group>"; };
@@ -356,9 +366,7 @@
 		5BD4F926233BD94600E27715 /* Persistance */ = {
 			isa = PBXGroup;
 			children = (
-				5BD4F924233BD94100E27715 /* Database.swift */,
 				5BD4F928233BDB5800E27715 /* CoreDataStack.swift */,
-				5BD4F929233BDB5800E27715 /* GenericDao.swift */,
 				5BD4F911233BD72100E27715 /* Musically.xcdatamodeld */,
 				5BD4F92C233BDB7000E27715 /* DAO */,
 			);
@@ -380,6 +388,12 @@
 		5BD4F92C233BDB7000E27715 /* DAO */ = {
 			isa = PBXGroup;
 			children = (
+				5BD4F929233BDB5800E27715 /* GenericDao.swift */,
+				5B35279E2346662700209639 /* DaoFactory.swift */,
+				5B35278E234662D600209639 /* AlbumDetailsDao.swift */,
+				5B3527A0234765BC00209639 /* TrackDao.swift */,
+				5B3527A2234769EA00209639 /* TagDao.swift */,
+				5B3527A423476AC300209639 /* GraphicsDao.swift */,
 			);
 			path = DAO;
 			sourceTree = "<group>";
@@ -461,7 +475,6 @@
 				5BD4F92A233BDB5800E27715 /* CoreDataStack.swift in Sources */,
 				5B3527382346082800209639 /* Tag.swift in Sources */,
 				5B352736234515BE00209639 /* AlbumDetailsViewModel.swift in Sources */,
-				5BD4F925233BD94100E27715 /* Database.swift in Sources */,
 				5B35271E2344AC2F00209639 /* AlbumsViewModel.swift in Sources */,
 				5B4419CD233D4E5200F87B86 /* ArtistSearchViewController.swift in Sources */,
 				5B35272923450E6C00209639 /* AlbumDetails.swift in Sources */,
@@ -480,19 +493,24 @@
 				5B4419D8233D5A4000F87B86 /* Graphics.swift in Sources */,
 				5B35273A23460C8700209639 /* AlbumDetailsScrollController.swift in Sources */,
 				5BD4F92B233BDB5800E27715 /* GenericDao.swift in Sources */,
+				5B3527A523476AC300209639 /* GraphicsDao.swift in Sources */,
 				5BD4F920233BD90700E27715 /* ServiceRegistry.swift in Sources */,
 				5B35270F23448F3900209639 /* ViewTapBehaviour.swift in Sources */,
+				5B3527A3234769EA00209639 /* TagDao.swift in Sources */,
 				5B4419DF233E01FA00F87B86 /* ArtistTableViewCell.swift in Sources */,
 				5B4419E3233E621200F87B86 /* UIImageView+Downloadable.swift in Sources */,
 				5B4419C7233D1D0800F87B86 /* Artist.swift in Sources */,
+				5B35278F234662D600209639 /* AlbumDetailsDao.swift in Sources */,
 				5B4419BE233CED6A00F87B86 /* Pagination.swift in Sources */,
 				5B35273D234614B800209639 /* TrackView.swift in Sources */,
+				5B3527A1234765BC00209639 /* TrackDao.swift in Sources */,
 				5B4419D4233D543200F87B86 /* HTTPMethod.swift in Sources */,
 				5BD4F913233BD72100E27715 /* Musically.xcdatamodeld in Sources */,
 				5B352734234515B000209639 /* AlbumDetailsViewController.swift in Sources */,
 				5B35271623449E1C00209639 /* AlbumsResult.swift in Sources */,
 				5B3527252344CA2000209639 /* ViewOpenUrlBehaviour.swift in Sources */,
 				5B35271823449FB800209639 /* Album.swift in Sources */,
+				5B35279F2346662700209639 /* DaoFactory.swift in Sources */,
 				5B4419D0233D4F4600F87B86 /* Storyboardable.swift in Sources */,
 				5BD4F923233BD93100E27715 /* BackendService.swift in Sources */,
 				5B35272E23450EE100209639 /* AlbumDetailsRequest.swift in Sources */,

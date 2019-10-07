@@ -8,10 +8,12 @@
 
 import Foundation
 
-struct ArtistSearchResult: Decodable {
+struct ArtistSearchResult {
     var artists: [Artist] = []
     var pagination = Pagination.init()
-    
+}
+
+extension ArtistSearchResult: Decodable {
     enum CodingKeys: String, CodingKey {
         case results
         case artistmatches

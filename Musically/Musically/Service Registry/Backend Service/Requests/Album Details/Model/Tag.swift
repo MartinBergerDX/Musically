@@ -8,7 +8,17 @@
 
 import Foundation
 
-class Tag: Codable {
+struct Tag: Codable, Hashable {
     var name: String?
     var url: URL?
+}
+
+extension Tag: Comparable {
+    static func ==(lhs: Tag, rhs: Tag) -> Bool {
+        return lhs.name == rhs.name
+    }
+    
+    static func <(lhs: Tag, rhs: Tag) -> Bool {
+        return (lhs.name ?? "") < (rhs.name ?? "")
+    }
 }

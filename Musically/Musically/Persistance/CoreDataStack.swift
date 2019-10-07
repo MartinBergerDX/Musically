@@ -14,8 +14,7 @@ public protocol DatabaseProtocol {
 }
 
 public final class CoreDataStack : DatabaseProtocol {
-    static let null: DatabaseProtocol = CoreDataStack.init(modelName: "null")
-    static let defaultModelName: String = "Database"
+    static let defaultModelName: String = "Musically"
     private let modelName: String
     
     init(modelName: String) {
@@ -25,6 +24,7 @@ public final class CoreDataStack : DatabaseProtocol {
     public private(set) lazy var managedObjectContext: NSManagedObjectContext = {
         let managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = self.persistentStoreCoordinator
+        managedObjectContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         return managedObjectContext
     }()
     

@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct AlbumDetails: Decodable {
-    var name: String = ""
-    var artist: String = ""
+struct AlbumDetails {
+    var albumName: String = ""
+    var artistName: String = ""
     var playcount: String = ""
     var listeners: String = ""
     var mbid: String = ""
@@ -21,6 +21,9 @@ struct AlbumDetails: Decodable {
     var published: String = ""
     var summary: String = ""
     var content: String = ""
+}
+
+extension AlbumDetails: Decodable {
     
     enum CodingKeys: String, CodingKey {
         case name
@@ -44,25 +47,40 @@ struct AlbumDetails: Decodable {
     init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let album = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .album)
+        guard let album = try? container.nestedContainer(keyedBy: CodingKeys.self, forKey: .album) else {
+            return
+        }
         
-        name = try album.decode(String.self, forKey: .name)
-        artist = try album.decode(String.self, forKey: .artist)
+        albumName = (try? album.decode(String.self, forKey: .name)) ?? ""
+        artistName = (try? album.decode(String.self, forKey: .artist)) ?? ""
         playcount = (try? album.decode(String.self, forKey: .playcount)) ?? ""
         listeners = (try? album.decode(String.self, forKey: .listeners)) ?? ""
         mbid = (try? album.decode(String.self, forKey: .mbid)) ?? ""
         url = try? album.decode(URL.self, forKey: .url)
-        images = try album.decode([Graphics].self, forKey: .images)
+        images = (try? album.decode([Graphics].self, forKey: .images)) ?? []
+        
+        if let tracks = try? album.nestedContainer(keyedBy: CodingKeys.self, forKey: .tracks) {
+            self.tracks = (try? tracks.decode([Track].self, forKey: .track)) ?? []
+        }
+        
+        if let tags = try? album.nestedContainer(keyedBy: CodingKeys.self, forKey: .tags) {
+            self.tags = (try? tags.decode([Tag].self, forKey: .tag)) ?? []
+        }
+        
+        if let wiki = try? album.nestedContainer(keyedBy: CodingKeys.self, forKey: .wiki) {
+            published = (try? wiki.decode(String.self, forKey: .published)) ?? ""
+            summary = (try? wiki.decode(String.self, forKey: .summary)) ?? ""
+            content = (try? wiki.decode(String.self, forKey: .content)) ?? ""
+        }
+    }
+}
 
-        let tracks = try album.nestedContainer(keyedBy: CodingKeys.self, forKey: .tracks)
-        self.tracks = try tracks.decode([Track].self, forKey: .track)
-        
-        let tags = try album.nestedContainer(keyedBy: CodingKeys.self, forKey: .tags)
-        self.tags = (try? tags.decode([Tag].self, forKey: .tag)) ?? []
-        
-        let wiki = try album.nestedContainer(keyedBy: CodingKeys.self, forKey: .wiki)
-        published = (try? wiki.decode(String.self, forKey: .published)) ?? ""
-        summary = (try? wiki.decode(String.self, forKey: .summary)) ?? ""
-        content = (try? wiki.decode(String.self, forKey: .content)) ?? ""
+extension AlbumDetails: Comparable {
+    static func ==(lhs: AlbumDetails, rhs: AlbumDetails) -> Bool {
+        return lhs.albumName == rhs.albumName
+    }
+    
+    static func <(lhs: AlbumDetails, rhs: AlbumDetails) -> Bool {
+        return lhs.albumName < rhs.albumName
     }
 }
