@@ -43,4 +43,27 @@ class AlbumDetailsViewModel: NSObject {
             break
         }
     }
+    
+    func exists() -> Bool {
+        let dao: AlbumDetailsDao! = DaoFactory.albumDetails()
+        if let _ = dao.findByID(album.mbid as AnyObject) {
+            return true
+        }
+        return false
+    }
+    
+    func save() {
+        let dao: AlbumDetailsDao = DaoFactory.albumDetails()
+        let db = dao.insertNew()
+        dao.domainToCoreData(albumDetails, dbObject: db)
+        dao.save()
+    }
+    
+    func remove() {
+        let dao: AlbumDetailsDao = DaoFactory.albumDetails()
+        let mbid = albumDetails.mbid
+        if let found = dao.findByID(mbid as AnyObject) {
+            dao.delete(found, save: true)
+        }
+    }
 }

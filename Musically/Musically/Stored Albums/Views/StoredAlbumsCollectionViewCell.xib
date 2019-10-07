@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StoredAlbumsCollectionViewCell" customModule="Musically" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="AXL-qe-PBj" customClass="StoredAlbumsCollectionViewCell" customModule="Musically" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="206" height="176"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                <rect key="frame" x="0.0" y="0.0" width="206" height="176"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ihY-cF-KGI">
+                        <rect key="frame" x="0.0" y="0.0" width="206" height="176"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rs9-ZP-wWU">
+                                <rect key="frame" x="0.0" y="0.0" width="206" height="176"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZP7-nC-tmM">
+                                <rect key="frame" x="0.0" y="0.0" width="206" height="19.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" red="1" green="0.2527923882" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Rs9-ZP-wWU" secondAttribute="trailing" id="Cyf-Wz-x3k"/>
+                            <constraint firstAttribute="bottom" secondItem="Rs9-ZP-wWU" secondAttribute="bottom" id="KWt-Ck-EvO"/>
+                            <constraint firstItem="ZP7-nC-tmM" firstAttribute="centerX" secondItem="ihY-cF-KGI" secondAttribute="centerX" id="VM6-QT-ZhT"/>
+                            <constraint firstItem="Rs9-ZP-wWU" firstAttribute="top" secondItem="ihY-cF-KGI" secondAttribute="top" id="Vaa-FW-XeB"/>
+                            <constraint firstItem="ZP7-nC-tmM" firstAttribute="leading" secondItem="ihY-cF-KGI" secondAttribute="leading" id="YSH-lQ-mN4"/>
+                            <constraint firstItem="Rs9-ZP-wWU" firstAttribute="leading" secondItem="ihY-cF-KGI" secondAttribute="leading" id="ZZQ-6n-g0N"/>
+                            <constraint firstAttribute="trailing" secondItem="ZP7-nC-tmM" secondAttribute="trailing" id="cLj-fC-8gI"/>
+                            <constraint firstItem="ZP7-nC-tmM" firstAttribute="top" secondItem="ihY-cF-KGI" secondAttribute="top" id="kKh-nz-2zC"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="ihY-cF-KGI" secondAttribute="trailing" id="1OH-Vl-WOl"/>
+                <constraint firstAttribute="bottom" secondItem="ihY-cF-KGI" secondAttribute="bottom" id="gS3-7J-QM9"/>
+                <constraint firstItem="ihY-cF-KGI" firstAttribute="leading" secondItem="AXL-qe-PBj" secondAttribute="leading" id="mH6-8T-p6P"/>
+                <constraint firstItem="ihY-cF-KGI" firstAttribute="top" secondItem="AXL-qe-PBj" secondAttribute="top" id="ujc-zU-BZ6"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="wvc-gO-NLR"/>
+            <size key="customSize" width="206" height="176"/>
+            <connections>
+                <outlet property="albumGraphics" destination="Rs9-ZP-wWU" id="03G-mw-uLN"/>
+                <outlet property="albumName" destination="ZP7-nC-tmM" id="sZc-mJ-rdQ"/>
+            </connections>
+            <point key="canvasLocation" x="-1.4492753623188408" y="106.47321428571428"/>
+        </collectionViewCell>
+    </objects>
+</document>

@@ -37,7 +37,7 @@ class AlbumTableViewCell: UITableViewCell {
         case .some(let album):
                 name.text = album.name
                 playcount.text = "Played: " + String(album.playcount) + " times.";
-                let medium = album.image.filter { (graphics) -> Bool in
+                let medium = album.images.filter { (graphics) -> Bool in
                     return graphics.size == GraphicsSize.medium
                 }
                 if let imageUrl: URL = medium.first?.url {

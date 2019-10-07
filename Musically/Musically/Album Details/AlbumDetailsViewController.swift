@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 class AlbumDetailsViewController: UIViewController {
     @IBOutlet weak var viewModel: AlbumDetailsViewModel!
@@ -17,6 +18,18 @@ class AlbumDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViewModel()
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Save", style: .done, target: self, action: #selector(onSave(sender:)))
+        updateSaveButton()
+    }
+    
+    @objc private func onSave(sender: UIBarButtonItem) {
+        if viewModel.exists() {
+            viewModel.remove()
+        } else {
+            viewModel.save()
+        }
+        updateSaveButton()
     }
     
     private func setupViewModel() {
@@ -24,6 +37,11 @@ class AlbumDetailsViewController: UIViewController {
         viewModel.output = self
         viewModel.album = album
         viewModel.search()
+    }
+    
+    private func updateSaveButton() {
+        let save = self.navigationItem.rightBarButtonItem
+        save?.title = viewModel.exists() ? "Remove" : "Save"
     }
 }
 

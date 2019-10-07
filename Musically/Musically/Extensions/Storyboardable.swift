@@ -10,6 +10,7 @@ import Foundation
 
 import UIKit
 
+// Taken initial code from here. Reworked to work with arbitrary storyboard name.
 // https://codeburst.io/simpler-ios-storyboard-instantiation-97ca4bfb63bd
 
 protocol Storyboardable: class {

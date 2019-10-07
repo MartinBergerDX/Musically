@@ -20,8 +20,8 @@ class AlbumDetailsScrollController: NSObject {
     @IBOutlet weak var content: UILabel!
     
     func setup(with details: AlbumDetails!) {
-        name.text = details.name
-        artist.text = details.artist
+        name.text = details.albumName
+        artist.text = details.artistName
         mbid.text = details.mbid
         
         let medium = details.images.filter { (graphics) -> Bool in
@@ -52,7 +52,7 @@ class AlbumDetailsScrollController: NSObject {
         content.isHidden = true
         if !details.content.isEmpty {
             content.isHidden = false
-            content.text = "Published: " + details.content
+            content.text = details.content
         }
         
         for track in details.tracks {
