@@ -58,6 +58,9 @@ extension StoredAlbumsViewController: UICollectionViewDataSource, UICollectionVi
         if let albumDetails: AlbumDetails = viewModel.object(for: indexPath.row) {
             cell.setup(with: albumDetails)
         }
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(arc4random() % 5)) {
+            cell.startAnimations()
+        }
         return cell
     }
     

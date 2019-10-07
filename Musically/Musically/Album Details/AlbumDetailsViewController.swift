@@ -18,8 +18,7 @@ class AlbumDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViewModel()
-        
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Save", style: .done, target: self, action: #selector(onSave(sender:)))
+        installSaveButton()
         updateSaveButton()
     }
     
@@ -30,6 +29,10 @@ class AlbumDetailsViewController: UIViewController {
             viewModel.save()
         }
         updateSaveButton()
+    }
+    
+    private func installSaveButton() {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Save", style: .done, target: self, action: #selector(onSave(sender:)))
     }
     
     private func setupViewModel() {
@@ -47,6 +50,10 @@ class AlbumDetailsViewController: UIViewController {
 
 extension AlbumDetailsViewController: AlbumDetailsViewModelOutput {
     func updated(viewModel: AlbumDetailsViewModel) {
-        scrollController.setup(with: viewModel.albumDetails)
+        if viewModel.anythingUseful() {
+            scrollController.setup(with: viewModel.albumDetails)
+        } else {
+            scrollController.noData()
+        }
     }
 }

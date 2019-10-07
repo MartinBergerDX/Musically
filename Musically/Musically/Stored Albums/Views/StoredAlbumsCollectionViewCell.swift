@@ -16,6 +16,7 @@ class StoredAlbumsCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         albumGraphics.layer.cornerRadius = 3.0
         albumGraphics.layer.masksToBounds = true
+        albumName.layer.backgroundColor = UIColor.blue.cgColor
     }
     
     func setup(with albumDetails: AlbumDetails) {
@@ -26,5 +27,19 @@ class StoredAlbumsCollectionViewCell: UICollectionViewCell {
             albumGraphics.download(image: imageUrl)
         }
         albumName.text = albumDetails.albumName
+    }
+    
+    func startAnimations() {
+        let animation = CABasicAnimation.init(keyPath: "backgroundColor")
+        animation.fromValue = UIColor.blue.cgColor
+        animation.toValue = UIColor.green.cgColor
+        animation.duration = 4
+        animation.repeatDuration = .infinity
+        animation.autoreverses = true
+        albumName.layer.add(animation, forKey: "backgroundColorAnimation")
+    }
+    
+    func stopAnimations() {
+        albumName.layer.removeAnimation(forKey: "backgroundColorAnimation")
     }
 }

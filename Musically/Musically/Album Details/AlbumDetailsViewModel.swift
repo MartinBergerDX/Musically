@@ -66,4 +66,8 @@ class AlbumDetailsViewModel: NSObject {
             dao.delete(found, save: true)
         }
     }
+    
+    func anythingUseful() -> Bool {
+        return !albumDetails.albumName.isEmpty || !albumDetails.mbid.isEmpty || !albumDetails.content.isEmpty
+    }
 }

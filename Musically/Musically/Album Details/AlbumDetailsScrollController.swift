@@ -9,6 +9,8 @@
 import UIKit
 
 class AlbumDetailsScrollController: NSObject {
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var mainContainer: UIStackView!
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var artist: UILabel!
     @IBOutlet weak var mbid: UILabel!
@@ -25,7 +27,7 @@ class AlbumDetailsScrollController: NSObject {
         mbid.text = details.mbid
         
         let medium = details.images.filter { (graphics) -> Bool in
-            return graphics.size == GraphicsSize.medium
+            return graphics.size == GraphicsSize.large
         }
         if let imageUrl: URL = medium.first?.url {
             albumPhoto.download(image: imageUrl)
@@ -57,9 +59,21 @@ class AlbumDetailsScrollController: NSObject {
         
         for track in details.tracks {
             let nibName = String.init(describing: TrackView.self)
-            let trackView: TrackView = Bundle.main.loadNibNamed(nibName, owner: TrackView.self, options: nil)?.first as! TrackView
+            let trackView: TrackView = Bundle.main.loadNibNamed(nibName, owner: nil, options: nil)?.first as! TrackView
             trackView.setup(with: track)
             tracks.addArrangedSubview(trackView)
         }
+    }
+    
+    private var animator: UIDynamicAnimator!
+    func noData() {
+        
+        let parentView: UIView = scrollView.superview!
+        scrollView.removeFromSuperview()
+        let nibName = String.init(describing: AlbumDetailsNoDataView.self)
+        let noDataView: AlbumDetailsNoDataView = Bundle.main.loadNibNamed(nibName, owner: nil, options: nil)?.first as! AlbumDetailsNoDataView
+        parentView.addSubview(noDataView)
+        animator = UIDynamicAnimator.init(referenceView: parentView)
+        noDataView.setup(with: parentView, animator: animator)
     }
 }

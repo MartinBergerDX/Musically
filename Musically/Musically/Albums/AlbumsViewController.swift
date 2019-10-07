@@ -18,6 +18,7 @@ class AlbumsViewController: UIViewController {
         setupTableView()
         setupTitle()
         setupViewModel()
+        installResetButton()
     }
     
     private func setupTableView() {
@@ -40,10 +41,18 @@ class AlbumsViewController: UIViewController {
         viewModel.search()
     }
     
+    private func installResetButton() {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Stored", style: .done, target: self, action: #selector(resetToStoredAlbums(sender:)))
+    }
+    
     private func showAlbumDetails(for album: Album) {
         let vc = AlbumDetailsViewController.storyboardViewController(from: "Main")
         vc.album = album
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc private func resetToStoredAlbums(sender: UIBarButtonItem) {
+        NotificationCenter.default.post(name: NSNotification.Name.resetToStoredAlbums, object: nil)
     }
 }
 
