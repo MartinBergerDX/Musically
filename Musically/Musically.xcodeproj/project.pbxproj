@@ -49,6 +49,7 @@
 		5B4419E1233E020700F87B86 /* ArtistTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B4419E0233E020700F87B86 /* ArtistTableViewCell.xib */; };
 		5B4419E3233E621200F87B86 /* UIImageView+Downloadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4419E2233E621200F87B86 /* UIImageView+Downloadable.swift */; };
 		5B4419E6233E694300F87B86 /* TextViewOpenUrlBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4419E5233E694300F87B86 /* TextViewOpenUrlBehaviour.swift */; };
+		5B785786234BAE59003BC97A /* RootNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B785785234BAE59003BC97A /* RootNavigationController.swift */; };
 		5B78578A234BB310003BC97A /* AlbumDetailsNoDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B785789234BB310003BC97A /* AlbumDetailsNoDataView.swift */; };
 		5B78578C234BB319003BC97A /* AlbumDetailsNoDataView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B78578B234BB319003BC97A /* AlbumDetailsNoDataView.xib */; };
 		5BD4F90B233BD72100E27715 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD4F90A233BD72100E27715 /* AppDelegate.swift */; };
@@ -63,6 +64,16 @@
 		5BD4F92B233BDB5800E27715 /* GenericDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD4F929233BDB5800E27715 /* GenericDao.swift */; };
 		5BD4F92E233BE5C500E27715 /* UserAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD4F92D233BE5C500E27715 /* UserAgent.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5B785783234B9801003BC97A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5BD4F8FF233BD72100E27715 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5BD4F906233BD72100E27715;
+			remoteInfo = Musically;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		5B35270E23448F3900209639 /* ViewTapBehaviour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTapBehaviour.swift; sourceTree = "<group>"; };
@@ -111,6 +122,7 @@
 		5B4419E0233E020700F87B86 /* ArtistTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArtistTableViewCell.xib; sourceTree = "<group>"; };
 		5B4419E2233E621200F87B86 /* UIImageView+Downloadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Downloadable.swift"; sourceTree = "<group>"; };
 		5B4419E5233E694300F87B86 /* TextViewOpenUrlBehaviour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewOpenUrlBehaviour.swift; sourceTree = "<group>"; };
+		5B785785234BAE59003BC97A /* RootNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationController.swift; sourceTree = "<group>"; };
 		5B785789234BB310003BC97A /* AlbumDetailsNoDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailsNoDataView.swift; sourceTree = "<group>"; };
 		5B78578B234BB319003BC97A /* AlbumDetailsNoDataView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlbumDetailsNoDataView.xib; sourceTree = "<group>"; };
 		5BD4F907233BD72100E27715 /* Musically.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Musically.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -378,6 +390,14 @@
 			path = Request;
 			sourceTree = "<group>";
 		};
+		5B785784234BAE3C003BC97A /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				5B785785234BAE59003BC97A /* RootNavigationController.swift */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
 		5B785787234BB2EB003BC97A /* Track */ = {
 			isa = PBXGroup;
 			children = (
@@ -418,6 +438,7 @@
 		5BD4F909233BD72100E27715 /* Musically */ = {
 			isa = PBXGroup;
 			children = (
+				5B785784234BAE3C003BC97A /* Navigation */,
 				5B3527322345157200209639 /* App Delegate */,
 				5B4419C8233D35E900F87B86 /* Stored Albums */,
 				5B4419CB233D4E3100F87B86 /* Artist Search */,
@@ -505,7 +526,6 @@
 				5BD4F903233BD72100E27715 /* Sources */,
 				5BD4F904233BD72100E27715 /* Frameworks */,
 				5BD4F905233BD72100E27715 /* Resources */,
-				5B3527522346255100209639 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -595,6 +615,7 @@
 				5BD4F92A233BDB5800E27715 /* CoreDataStack.swift in Sources */,
 				5B3527382346082800209639 /* Tag.swift in Sources */,
 				5B352736234515BE00209639 /* AlbumDetailsViewModel.swift in Sources */,
+				5B785786234BAE59003BC97A /* RootNavigationController.swift in Sources */,
 				5B35271E2344AC2F00209639 /* AlbumsViewModel.swift in Sources */,
 				5B4419CD233D4E5200F87B86 /* ArtistSearchViewController.swift in Sources */,
 				5B35272923450E6C00209639 /* AlbumDetails.swift in Sources */,
@@ -647,7 +668,7 @@
 		5B35279A2346655B00209639 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5BD4F906233BD72100E27715 /* Musically */;
-			targetProxy = 5B3527992346655B00209639 /* PBXContainerItemProxy */;
+			targetProxy = 5B785783234B9801003BC97A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
