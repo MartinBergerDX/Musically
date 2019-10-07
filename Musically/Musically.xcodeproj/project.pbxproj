@@ -49,6 +49,8 @@
 		5B4419E1233E020700F87B86 /* ArtistTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B4419E0233E020700F87B86 /* ArtistTableViewCell.xib */; };
 		5B4419E3233E621200F87B86 /* UIImageView+Downloadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4419E2233E621200F87B86 /* UIImageView+Downloadable.swift */; };
 		5B4419E6233E694300F87B86 /* TextViewOpenUrlBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4419E5233E694300F87B86 /* TextViewOpenUrlBehaviour.swift */; };
+		5B78578A234BB310003BC97A /* AlbumDetailsNoDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B785789234BB310003BC97A /* AlbumDetailsNoDataView.swift */; };
+		5B78578C234BB319003BC97A /* AlbumDetailsNoDataView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B78578B234BB319003BC97A /* AlbumDetailsNoDataView.xib */; };
 		5BD4F90B233BD72100E27715 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD4F90A233BD72100E27715 /* AppDelegate.swift */; };
 		5BD4F90D233BD72100E27715 /* StoredAlbumsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD4F90C233BD72100E27715 /* StoredAlbumsViewController.swift */; };
 		5BD4F910233BD72100E27715 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BD4F90E233BD72100E27715 /* Main.storyboard */; };
@@ -109,6 +111,8 @@
 		5B4419E0233E020700F87B86 /* ArtistTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArtistTableViewCell.xib; sourceTree = "<group>"; };
 		5B4419E2233E621200F87B86 /* UIImageView+Downloadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Downloadable.swift"; sourceTree = "<group>"; };
 		5B4419E5233E694300F87B86 /* TextViewOpenUrlBehaviour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewOpenUrlBehaviour.swift; sourceTree = "<group>"; };
+		5B785789234BB310003BC97A /* AlbumDetailsNoDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailsNoDataView.swift; sourceTree = "<group>"; };
+		5B78578B234BB319003BC97A /* AlbumDetailsNoDataView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlbumDetailsNoDataView.xib; sourceTree = "<group>"; };
 		5BD4F907233BD72100E27715 /* Musically.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Musically.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BD4F90A233BD72100E27715 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5BD4F90C233BD72100E27715 /* StoredAlbumsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredAlbumsViewController.swift; sourceTree = "<group>"; };
@@ -246,8 +250,8 @@
 		5B35273B234613F200209639 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				5B35273C234614B800209639 /* TrackView.swift */,
-				5B35273E234614C400209639 /* TrackView.xib */,
+				5B785787234BB2EB003BC97A /* Track */,
+				5B785788234BB2F4003BC97A /* No Data */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -372,6 +376,24 @@
 				5B4419D3233D543200F87B86 /* HTTPMethod.swift */,
 			);
 			path = Request;
+			sourceTree = "<group>";
+		};
+		5B785787234BB2EB003BC97A /* Track */ = {
+			isa = PBXGroup;
+			children = (
+				5B35273C234614B800209639 /* TrackView.swift */,
+				5B35273E234614C400209639 /* TrackView.xib */,
+			);
+			path = Track;
+			sourceTree = "<group>";
+		};
+		5B785788234BB2F4003BC97A /* No Data */ = {
+			isa = PBXGroup;
+			children = (
+				5B785789234BB310003BC97A /* AlbumDetailsNoDataView.swift */,
+				5B78578B234BB319003BC97A /* AlbumDetailsNoDataView.xib */,
+			);
+			path = "No Data";
 			sourceTree = "<group>";
 		};
 		5BD4F8FE233BD72100E27715 = {
@@ -548,6 +570,7 @@
 				5BD4F918233BD72200E27715 /* LaunchScreen.storyboard in Resources */,
 				5BD4F915233BD72200E27715 /* Assets.xcassets in Resources */,
 				5B35273F234614C400209639 /* TrackView.xib in Resources */,
+				5B78578C234BB319003BC97A /* AlbumDetailsNoDataView.xib in Resources */,
 				5B4419E1233E020700F87B86 /* ArtistTableViewCell.xib in Resources */,
 				5B3527232344B9E400209639 /* AlbumTableViewCell.xib in Resources */,
 				5BD4F910233BD72100E27715 /* Main.storyboard in Resources */,
@@ -600,6 +623,7 @@
 				5B4419E3233E621200F87B86 /* UIImageView+Downloadable.swift in Sources */,
 				5B4419C7233D1D0800F87B86 /* Artist.swift in Sources */,
 				5B35278F234662D600209639 /* AlbumDetailsDao.swift in Sources */,
+				5B78578A234BB310003BC97A /* AlbumDetailsNoDataView.swift in Sources */,
 				5B4419BE233CED6A00F87B86 /* Pagination.swift in Sources */,
 				5B35273D234614B800209639 /* TrackView.swift in Sources */,
 				5B3527A1234765BC00209639 /* TrackDao.swift in Sources */,
