@@ -39,6 +39,7 @@ class AlbumDetailsViewModel: NSObject {
             albumDetails = received
             break
         case .failure(let error):
+            tryReadFromDatabase()
             print(error)
             break
         }
@@ -69,5 +70,15 @@ class AlbumDetailsViewModel: NSObject {
     
     func anythingUseful() -> Bool {
         return !albumDetails.albumName.isEmpty || !albumDetails.mbid.isEmpty || !albumDetails.content.isEmpty
+    }
+    
+    private func tryReadFromDatabase() {
+        let dao: AlbumDetailsDao = DaoFactory.albumDetails()
+        let mbid = album.mbid
+        if let found = dao.findByID(mbid as AnyObject) {
+            var ad = AlbumDetails.init()
+            dao.coreDataToDomain(found, domain: &ad)
+            albumDetails = ad
+        }
     }
 }
