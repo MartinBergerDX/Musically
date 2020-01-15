@@ -134,16 +134,6 @@ class PersistanceTests: XCTestCase {
         return true
     }
     
-//    private func compare<DomainType: Comparable & Hashable, DaoType: GenericDao<NSManagedObject, DomainType>>(model objects: inout [DomainType], db: NSSet, dao: DaoType) -> Bool {
-//        let dao = DaoType.init(moc: stack.managedObjectContext)
-//        let converted: [DomainType] = []
-//        dao.convertCollectionCoreDataToDomain(db, domain: &objects)
-//        if Set(converted).symmetricDifference(Set(objects)).count > 0 {
-//            return false
-//        }
-//        return true
-//    }
-    
     func testCompare() {
         let dao: AlbumDetailsDao = AlbumDetailsDao.init(moc: stack.managedObjectContext)
         let db = dao.insertNew()
