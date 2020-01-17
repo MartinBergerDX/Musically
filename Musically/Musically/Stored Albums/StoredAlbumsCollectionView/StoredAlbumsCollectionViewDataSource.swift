@@ -24,8 +24,7 @@ class StoredAlbumsCollectionViewDataSource: NSObject, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let reuseId = String.init(describing: StoredAlbumsCollectionViewCell.self)
-        let cell: StoredAlbumsCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseId, for: indexPath) as! StoredAlbumsCollectionViewCell
+        let cell: StoredAlbumsCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: StoredAlbumsCollectionViewCell.reuseId(), for: indexPath) as! StoredAlbumsCollectionViewCell
         if let albumDetails: AlbumDetails = viewModel.object(for: indexPath.row) {
             cell.setup(with: albumDetails)
         }

@@ -11,7 +11,7 @@ import UIKit
 class StoredAlbumsViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var viewModel: StoredAlbumsViewModel!
-    private var collectionViewConfigurator: StoredAlbumsCollectionViewConfigurator!
+    private var collectionViewDelegator: StoredAlbumsCollectionViewDelegator!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,8 +27,8 @@ class StoredAlbumsViewController: UIViewController {
     private func setupCollectionView() {
         let reuseId = String.init(describing: StoredAlbumsCollectionViewCell.self)
         collectionView.register(UINib(nibName: reuseId, bundle: Bundle.main), forCellWithReuseIdentifier: reuseId)
-        self.collectionViewConfigurator = StoredAlbumsFactory.produce(viewModel: viewModel, navigationController: self.navigationController)
-        self.collectionViewConfigurator.bind(collectionView: collectionView)
+        self.collectionViewDelegator = StoredAlbumsFactory.produce(viewModel: viewModel, navigationController: self.navigationController)
+        self.collectionViewDelegator.bind(collectionView: collectionView)
     }
     
     @IBAction func onSearch() {

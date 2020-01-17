@@ -11,11 +11,11 @@ import UIKit
 // produced object will rarely be instantiated, maybe using the factory is not justified, but we will use it anyway
 
 class StoredAlbumsFactory {
-    static func produce(viewModel: StoredAlbumsViewModel!, navigationController: UINavigationController!) -> StoredAlbumsCollectionViewConfigurator {
+    static func produce(viewModel: StoredAlbumsViewModel!, navigationController: UINavigationController!) -> StoredAlbumsCollectionViewDelegator {
         let router = AlbumDetailsRouter.init(navigationController: navigationController)
         let dataSource = StoredAlbumsCollectionViewDataSource.init(viewModel: viewModel)
         let delegate = StoredAlbumsCollectionViewDelegate.init(viewModel: viewModel, router: router)
         let layout = StoredAlbumsCollectionViewLayout.init()
-        return StoredAlbumsCollectionViewConfigurator.init(delegate: delegate, dataSource: dataSource, layout: layout)
+        return StoredAlbumsCollectionViewDelegator.init(delegate: delegate, dataSource: dataSource, layout: layout)
     }
 }

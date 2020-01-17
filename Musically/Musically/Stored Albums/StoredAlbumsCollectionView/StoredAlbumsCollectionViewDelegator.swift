@@ -8,7 +8,7 @@
 
 import UIKit
 
-class StoredAlbumsCollectionViewConfigurator: NSObject, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class StoredAlbumsCollectionViewDelegator: NSObject, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     private let delegate: StoredAlbumsCollectionViewDelegate
     private let dataSource: StoredAlbumsCollectionViewDataSource
     private let layout: StoredAlbumsCollectionViewLayout
