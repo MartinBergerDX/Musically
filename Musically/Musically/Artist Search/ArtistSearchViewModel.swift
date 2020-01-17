@@ -15,18 +15,19 @@ protocol ArtistSearchViewModelOutput: class {
 
 class ArtistSearchViewModel: NSObject {
     private static let defaultQuery = "cher"
-    private static let optimizedCount = 100 // needed because server can return large data sets
+    private static let optimizedCount = 100 // needed because server can return large data set > 2000
     weak var output: ArtistSearchViewModelOutput!
     private var artists: [Artist] = []
     private var currentQuery: String! = ArtistSearchViewModel.defaultQuery
     private var newQuery: String! = ArtistSearchViewModel.defaultQuery
     private var searching = false // mutated on main thread only
-    private var page: Int = Pagination.defaultPage
+    private var paging: Pagination!
     private var totalElements: Int = 100
     var backendService: BackendServiceProtocol!
     
     override init() {
         super.init()
+        self.paging = Pagination.init()
     }
     
     func search() {
@@ -36,11 +37,11 @@ class ArtistSearchViewModel: NSObject {
         searching = true
 
         if queryUpdated() {
-            page = Pagination.defaultPage
+            paging.reset()
         }
         
         var request = ArtistSearchRequest.init()
-        request.page = page
+        request.page = paging.page
         request.artist = self.newQuery.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? self.newQuery
         request.completion = { [unowned self] (result) in
             self.searchFinished(with: result)
@@ -53,7 +54,7 @@ class ArtistSearchViewModel: NSObject {
         switch result {
         case .success(let received):
             self.totalElements = received.pagination.total
-            self.page += 1
+            paging.nextPage()
             if queryUpdated() {
                 self.artists = received.artists
                 totalElements = ArtistSearchViewModel.optimizedCount

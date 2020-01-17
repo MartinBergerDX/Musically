@@ -18,13 +18,10 @@ protocol BackendServiceProtocol {
 
 class BackendService: BackendServiceProtocol {
     private var session: URLSession!
-    private let APIKey: String = "4ada9c636666c2d26556850f10f59121"
-    private let sharedSecret: String = "a6c18927ef5d6771e18b76db9bceffda"
-    private let baseEndpoint: String = "http://ws.audioscrobbler.com/2.0"
-    private let userAgent: UserAgent = UserAgent()
-    private let defaultTimeout: TimeInterval = 10
+    private let serviceConfiguration: BackendServiceConfiguration!
     
-    init() {
+    init(serviceConfiguration: BackendServiceConfiguration) {
+        self.serviceConfiguration = serviceConfiguration
         setupDefaultSession()
     }
     
@@ -33,7 +30,7 @@ class BackendService: BackendServiceProtocol {
         let url = URL.init(string: full)!
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = request.method
-        urlRequest.addValue(self.userAgent.UAString(), forHTTPHeaderField: "User-Agent")
+        urlRequest.addValue(serviceConfiguration.userAgent.UAString(), forHTTPHeaderField: "User-Agent")
         
         print("Making request")
         print(request)
@@ -54,7 +51,7 @@ class BackendService: BackendServiceProtocol {
     
     private func urlString(request: BackendRequest) -> String {
         let join = "&"
-        var url = self.baseEndpoint
+        var url = serviceConfiguration.baseEndpoint
         url.append("?")
         url.append("method=")
         url.append(request.endpoint)
@@ -62,7 +59,7 @@ class BackendService: BackendServiceProtocol {
         url.append(request.arguments)
         url.append(join)
         url.append("api_key=")
-        url.append(APIKey)
+        url.append(serviceConfiguration.APIKey)
         url.append(join)
         url.append("format=json")
         return url
@@ -70,8 +67,8 @@ class BackendService: BackendServiceProtocol {
     
     private func setupDefaultSession() {
         let configuration = URLSessionConfiguration.default
-        configuration.timeoutIntervalForRequest = self.defaultTimeout
-        configuration.timeoutIntervalForResource = self.defaultTimeout
+        configuration.timeoutIntervalForRequest = serviceConfiguration.defaultTimeout
+        configuration.timeoutIntervalForResource = serviceConfiguration.defaultTimeout
         session = URLSession(configuration: configuration, delegate: nil, delegateQueue: nil)
     }
 }

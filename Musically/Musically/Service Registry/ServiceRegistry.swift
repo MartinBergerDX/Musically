@@ -17,6 +17,6 @@ protocol ServiceRegistryProtocol {
 class ServiceRegistry : ServiceRegistryProtocol {
     static let shared = ServiceRegistry.init()
     let database = CoreDataStack.init(modelName: CoreDataStack.defaultModelName)
-    let backendService: BackendServiceProtocol = BackendService.init()
+    let backendService: BackendServiceProtocol = BackendService.init(serviceConfiguration: BackendServiceConfiguration())
     let imageCache = NSCache<NSString, UIImage>.init()
 }

@@ -17,13 +17,14 @@ class AlbumsViewModel: NSObject {
     weak var output: AlbumsViewModelOutput!
     private var albums: [Album] = []
     private var searching = false // mutated on main thread only
-    private var page: Int = Pagination.defaultPage
+    private var paging: Pagination!
     private var totalElements: Int = 100
     var backendService: BackendServiceProtocol!
     var artist: Artist!
     
     override init() {
         super.init()
+        paging = Pagination.init()
     }
     
     func search() {
@@ -33,7 +34,7 @@ class AlbumsViewModel: NSObject {
         searching = true
         
         var request = AlbumRequest.init()
-        request.page = page
+        request.page = paging.page
         request.artist = artist.name.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""
         request.mbid = artist.mbid.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""
         request.completion = { [unowned self] (result) in
@@ -47,7 +48,7 @@ class AlbumsViewModel: NSObject {
         switch result {
         case .success(let received):
             self.totalElements = received.pagination.total
-            self.page += 1
+            paging.nextPage()
             self.albums.append(contentsOf: received.albums)
             break
         case .failure(let error):
