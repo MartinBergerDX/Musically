@@ -12,6 +12,7 @@ class AlbumsViewController: UIViewController {
     @IBOutlet weak var viewModel: AlbumsViewModel!
     @IBOutlet weak var tableView: UITableView!
     var artist: Artist!
+    private var tableViewDelegator: AlbumsTableViewDelegator!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,8 @@ class AlbumsViewController: UIViewController {
         tableView.register(UINib(nibName: AlbumTableViewCell.reuseId(), bundle: Bundle.main), forCellReuseIdentifier: AlbumTableViewCell.reuseId())
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 60
+        tableViewDelegator = AlbumsViewControllerFactory.delegator(viewModel: viewModel, navigationController: self.navigationController)
+        tableViewDelegator.bind(tableView: tableView)
     }
     
     private func setupTitle() {
@@ -44,47 +47,8 @@ class AlbumsViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Stored", style: .done, target: self, action: #selector(resetToStoredAlbums(sender:)))
     }
     
-    private func showAlbumDetails(for album: Album) {
-        let vc = AlbumDetailsViewController.storyboardViewController(from: "Main")
-        vc.album = album
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
     @objc private func resetToStoredAlbums(sender: UIBarButtonItem) {
         NotificationCenter.default.post(name: NSNotification.Name.resetToStoredAlbums, object: nil)
-    }
-}
-
-extension AlbumsViewController: UITableViewDataSourcePrefetching {
-    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        let contains: Bool = indexPaths.contains { element in
-            return self.viewModel.isLoading(for: element)
-        }
-        if contains {
-            self.viewModel.search()
-        }
-    }
-}
-
-extension AlbumsViewController: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let album: Album? = self.viewModel.album(for: indexPath.row)
-        let cell: AlbumTableViewCell = tableView.dequeueReusableCell(withIdentifier: AlbumTableViewCell.reuseId(), for:indexPath) as! AlbumTableViewCell
-        cell.setup(with: album)
-        if let album = album {
-            cell.viewTapBehaviour = ViewTapBehaviour.init(views: [cell.mainContainer], onTap: { [unowned self] (view: UIView) in
-                self.showAlbumDetails(for: album)
-            })
-        }
-        return cell
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1;
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.viewModel.totalCount()
     }
 }
 
