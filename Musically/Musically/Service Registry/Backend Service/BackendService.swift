@@ -17,7 +17,7 @@ protocol BackendServiceProtocol {
 }
 
 class BackendService: BackendServiceProtocol {
-    private var session: URLSession! = URLSession.init()
+    private var session: URLSession!
     private let APIKey: String = "4ada9c636666c2d26556850f10f59121"
     private let sharedSecret: String = "a6c18927ef5d6771e18b76db9bceffda"
     private let baseEndpoint: String = "http://ws.audioscrobbler.com/2.0"
