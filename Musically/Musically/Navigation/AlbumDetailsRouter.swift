@@ -9,7 +9,7 @@
 import UIKit
 
 class AlbumDetailsRouter {
-    let navigationController: UINavigationController!
+    weak var navigationController: UINavigationController!
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController

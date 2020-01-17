@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ArtistTableViewCell: UITableViewCell {
+class ArtistTableViewCell: UITableViewCell, ReusableObject {
     var viewTapBehaviour: ViewTapBehaviour!
     private var openUrlBehaviour: ViewOpenUrlBehaviour!
     

@@ -22,8 +22,7 @@ class AlbumsViewController: UIViewController {
     }
     
     private func setupTableView() {
-        let reuseId = String.init(describing: AlbumTableViewCell.self)
-        tableView.register(UINib(nibName: reuseId, bundle: Bundle.main), forCellReuseIdentifier: reuseId)
+        tableView.register(UINib(nibName: AlbumTableViewCell.reuseId(), bundle: Bundle.main), forCellReuseIdentifier: AlbumTableViewCell.reuseId())
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 60
     }
@@ -70,8 +69,7 @@ extension AlbumsViewController: UITableViewDataSourcePrefetching {
 extension AlbumsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let album: Album? = self.viewModel.album(for: indexPath.row)
-        let reuseId = String.init(describing: AlbumTableViewCell.self)
-        let cell: AlbumTableViewCell = tableView.dequeueReusableCell(withIdentifier: reuseId, for:indexPath) as! AlbumTableViewCell
+        let cell: AlbumTableViewCell = tableView.dequeueReusableCell(withIdentifier: AlbumTableViewCell.reuseId(), for:indexPath) as! AlbumTableViewCell
         cell.setup(with: album)
         if let album = album {
             cell.viewTapBehaviour = ViewTapBehaviour.init(views: [cell.mainContainer], onTap: { [unowned self] (view: UIView) in

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AlbumTableViewCell: UITableViewCell {
+class AlbumTableViewCell: UITableViewCell, ReusableObject {
     var viewTapBehaviour: ViewTapBehaviour!
     private var openUrlBehaviour: ViewOpenUrlBehaviour!
     
