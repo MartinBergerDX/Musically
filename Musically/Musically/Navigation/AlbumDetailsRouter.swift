@@ -16,7 +16,7 @@ class AlbumDetailsRouter {
     }
     
     func showAlbumDetails(for album: Album) {
-        let vc = AlbumDetailsViewController.storyboardViewController(from: "Main")
+        let vc = AlbumDetailsViewController.storyboardViewController()
         vc.album = album
         self.navigationController.pushViewController(vc, animated: true)
     }

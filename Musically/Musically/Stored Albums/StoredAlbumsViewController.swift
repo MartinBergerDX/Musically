@@ -8,7 +8,7 @@
 
 import UIKit
 
-class StoredAlbumsViewController: UIViewController {
+class StoredAlbumsViewController: InitialViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var viewModel: StoredAlbumsViewModel!
     private var collectionViewDelegator: StoredAlbumsCollectionViewDelegator!
@@ -32,7 +32,7 @@ class StoredAlbumsViewController: UIViewController {
     }
     
     @IBAction func onSearch() {
-        let asvc = ArtistSearchViewController.storyboardViewController(from: "Main")
+        let asvc = ArtistSearchViewController.storyboardViewController()
         self.navigationController?.pushViewController(asvc, animated: true)
     }
 }

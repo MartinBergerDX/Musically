@@ -10,7 +10,7 @@ import Foundation
 
 struct Graphics: Hashable {
     var url: URL? = .none
-    var size: GraphicsSize? = .none
+    var size: GraphicsSize? = GraphicsSize.none
 }
 
 extension Graphics: Codable {

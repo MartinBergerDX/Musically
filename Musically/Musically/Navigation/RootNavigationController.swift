@@ -20,7 +20,7 @@ class RootNavigationController: UINavigationController {
     }
     
     @objc private func resetToStoredAlbums(notification: NSNotification) {
-        let storedAlbums = StoredAlbumsViewController.storyboardViewController(from: "Main")
+        let storedAlbums = StoredAlbumsViewController.storyboardViewController()
         setViewControllers([storedAlbums], animated: true)
     }
 }

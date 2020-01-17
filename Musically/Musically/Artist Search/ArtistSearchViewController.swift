@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ArtistSearchViewController: UIViewController {
+class ArtistSearchViewController: InitialViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var viewModel: ArtistSearchViewModel!
     private var tableViewDelegator: ArtistSearchTableViewDelegator!

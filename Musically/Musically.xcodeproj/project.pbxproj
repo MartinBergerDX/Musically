@@ -53,6 +53,8 @@
 		5B77929E23D1DE2200633BD4 /* AlbumsTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B77929D23D1DE2200633BD4 /* AlbumsTableViewDataSource.swift */; };
 		5B7792A023D1E0BF00633BD4 /* AlbumsTableViewDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B77929F23D1E0BF00633BD4 /* AlbumsTableViewDelegator.swift */; };
 		5B7792A223D1E24F00633BD4 /* AlbumsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7792A123D1E24F00633BD4 /* AlbumsFactory.swift */; };
+		5B7792A423D1E57A00633BD4 /* NavigationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7792A323D1E57A00633BD4 /* NavigationRouter.swift */; };
+		5B7792A623D1E8D500633BD4 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7792A523D1E8D500633BD4 /* InitialViewController.swift */; };
 		5B785786234BAE59003BC97A /* RootNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B785785234BAE59003BC97A /* RootNavigationController.swift */; };
 		5B78578A234BB310003BC97A /* AlbumDetailsNoDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B785789234BB310003BC97A /* AlbumDetailsNoDataView.swift */; };
 		5B78578C234BB319003BC97A /* AlbumDetailsNoDataView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B78578B234BB319003BC97A /* AlbumDetailsNoDataView.xib */; };
@@ -144,6 +146,8 @@
 		5B77929D23D1DE2200633BD4 /* AlbumsTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsTableViewDataSource.swift; sourceTree = "<group>"; };
 		5B77929F23D1E0BF00633BD4 /* AlbumsTableViewDelegator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsTableViewDelegator.swift; sourceTree = "<group>"; };
 		5B7792A123D1E24F00633BD4 /* AlbumsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsFactory.swift; sourceTree = "<group>"; };
+		5B7792A323D1E57A00633BD4 /* NavigationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouter.swift; sourceTree = "<group>"; };
+		5B7792A523D1E8D500633BD4 /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		5B785785234BAE59003BC97A /* RootNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationController.swift; sourceTree = "<group>"; };
 		5B785789234BB310003BC97A /* AlbumDetailsNoDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailsNoDataView.swift; sourceTree = "<group>"; };
 		5B78578B234BB319003BC97A /* AlbumDetailsNoDataView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlbumDetailsNoDataView.xib; sourceTree = "<group>"; };
@@ -456,6 +460,7 @@
 				5B785785234BAE59003BC97A /* RootNavigationController.swift */,
 				5B89E78D23CF4A7E00EF5CBE /* AlbumDetailsRouter.swift */,
 				5B78B12823D1CB26004AF60D /* AlbumsRouter.swift */,
+				5B7792A323D1E57A00633BD4 /* NavigationRouter.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -588,6 +593,7 @@
 			isa = PBXGroup;
 			children = (
 				5BE1BC0923CF72AE00D0668F /* ReusableObject.swift */,
+				5B7792A523D1E8D500633BD4 /* InitialViewController.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -730,6 +736,7 @@
 				5B4419D6233D5A1B00F87B86 /* GraphicsSize.swift in Sources */,
 				5B4419E6233E694300F87B86 /* TextViewOpenUrlBehaviour.swift in Sources */,
 				5B7792A023D1E0BF00633BD4 /* AlbumsTableViewDelegator.swift in Sources */,
+				5B7792A423D1E57A00633BD4 /* NavigationRouter.swift in Sources */,
 				5B89E79023CF59A300EF5CBE /* StoredAlbumsCollectionViewDataSource.swift in Sources */,
 				5B4419D8233D5A4000F87B86 /* Graphics.swift in Sources */,
 				5B78B12B23D1D169004AF60D /* ArtistSearchTableViewPrefetching.swift in Sources */,
@@ -763,6 +770,7 @@
 				5B89E78E23CF4A7E00EF5CBE /* AlbumDetailsRouter.swift in Sources */,
 				5B3527252344CA2000209639 /* ViewOpenUrlBehaviour.swift in Sources */,
 				5B35271823449FB800209639 /* Album.swift in Sources */,
+				5B7792A623D1E8D500633BD4 /* InitialViewController.swift in Sources */,
 				5B77929E23D1DE2200633BD4 /* AlbumsTableViewDataSource.swift in Sources */,
 				5B35279F2346662700209639 /* DaoFactory.swift in Sources */,
 				5B78B12623D1C9A3004AF60D /* ArtistSearchTableViewDataSource.swift in Sources */,
