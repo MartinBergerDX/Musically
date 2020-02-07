@@ -9,59 +9,55 @@
 import Foundation
 import UIKit
 
-protocol ArtistSearchViewModelOutput: class {
-    func updated(viewModel: ArtistSearchViewModel)
-}
-
 class ArtistSearchViewModel: NSObject {
+    let artists: Observable<[Artist]> = Observable<[Artist]>.init(value: [])
     private static let defaultQuery = "cher"
     private static let optimizedCount = 100 // needed because server can return large data set > 2000
-    weak var output: ArtistSearchViewModelOutput!
-    private var artists: [Artist] = []
     private var currentQuery: String! = ArtistSearchViewModel.defaultQuery
     private var newQuery: String! = ArtistSearchViewModel.defaultQuery
     private var searching = false // mutated on main thread only
-    private var paging: Pagination!
+    private var paging: RequestPaging!
     private var totalElements: Int = 100
     var backendService: BackendServiceProtocol!
     
     override init() {
         super.init()
-        self.paging = Pagination.init()
+        self.paging = RequestPaging.init()
     }
     
     func search() {
-        guard !searching else {
+        guard !backendService.serialExecution.isArtistSearchInProgress() else {
             return
         }
-        searching = true
+//        guard !searching else {
+//            return
+//        }
+//        searching = true
+//
+//        if queryUpdated() {
+//            paging.reset()
+//        }
 
-        if queryUpdated() {
-            paging.reset()
-        }
-        
-        var request = ArtistSearchRequest.init()
-        request.page = paging.page
-        request.artist = self.newQuery.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? self.newQuery
-        request.completion = { [unowned self] (result) in
+        let request = ArtistSearchFactory.artistSearch(page: paging.page, artist: newQuery, completion: { [unowned self] (result) in
             self.searchFinished(with: result)
-            self.output.updated(viewModel: self)
-        }
-        self.backendService.execute(request: request)
+        })
+        self.backendService.enqueue(backendRequest: request)
     }
     
     private func searchFinished(with result: Result<ArtistSearchResult, Error>) {
         switch result {
-        case .success(let received):
-            self.totalElements = received.pagination.total
+        case .success(let model):
             paging.nextPage()
-            if queryUpdated() {
-                self.artists = received.artists
-                totalElements = ArtistSearchViewModel.optimizedCount
-                currentQuery = newQuery
-            } else {
-                self.artists.append(contentsOf: received.artists)
-            }
+//            if queryUpdated() {
+//                self.artists = model.artists
+//                totalElements = ArtistSearchViewModel.optimizedCount
+//                currentQuery = newQuery
+//            } else {
+//                totalElements = model.pagination.total
+//                self.artists.append(contentsOf: model.artists)
+//            }
+            totalElements += model.artists.count
+            self.artists.value.append(contentsOf: model.artists)
             break
         case .failure(let error):
             print(error)
@@ -78,17 +74,17 @@ class ArtistSearchViewModel: NSObject {
     }
     
     func artist(for index: Int) -> Artist? {
-        guard index < artists.count else {
-            return .none
+        guard index < artists.value.count else {
+            return nil
         }
-        return artists[index]
+        return artists.value[index]
     }
     
     func isLoading(for indexPath: IndexPath) -> Bool {
-        guard !self.artists.isEmpty else {
+        guard !self.artists.value.isEmpty else {
             return false
         }
-        return indexPath.row > self.artists.count
+        return indexPath.row > self.artists.value.count
     }
     
     private func queryUpdated() -> Bool {

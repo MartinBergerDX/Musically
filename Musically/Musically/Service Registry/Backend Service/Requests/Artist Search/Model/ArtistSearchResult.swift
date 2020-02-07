@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct ArtistSearchResult {
+struct ArtistSearchResult: Initable {
     var artists: [Artist] = []
-    var pagination = Pagination.init()
+    var pagination = RequestPaging.init()
 }
 
 extension ArtistSearchResult: Decodable {

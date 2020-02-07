@@ -8,27 +8,35 @@
 
 import Foundation
 
-struct AlbumDetailsRequest: BackendRequest {
-    var method: String = HTTPMethod.get.description
+class AlbumDetailsRequest: BackendRequest {
     var completion: ((Result<AlbumDetails, Error>) -> Void)?
-    var endpoint: String = "album.getinfo"
-    var arguments: String {
-        get {
-            var args: String = ""
-            if !mbid.isEmpty {
-                args.append("mbid=")
-                args.append(mbid)
-            } else if !album.isEmpty {
-                args.append("album=")
-                args.append(album)
-            }
-            return args
-        }
-    }
-    var mbid: String = ""
-    var album: String = ""
     
-    func onComplete(result: Result<Data,Error>) {
+//    var endpoint: String = "album.getinfo"
+//    var arguments: String {
+//        get {
+//            var args: String = ""
+//            if !mbid.isEmpty {
+//                args.append("mbid=")
+//                args.append(mbid)
+//            } else if !album.isEmpty {
+//                args.append("album=")
+//                args.append(album)
+//            }
+//            return args
+//        }
+//    }
+    var mbid: String = ""
+    var albumName: String = ""
+    
+    init (albumName: String, mbid: String) {
+        super.init()
+        self.albumName = albumName
+        self.mbid = mbid
+        self.endpoint = "album.getinfo"
+        self.arguments = (!mbid.isEmpty ? ("mbid=" + mbid) : "") + (!albumName.isEmpty ? ("album=" + albumName) : "")
+    }
+    
+    override func onComplete(result: Result<Data,Error>) {
         switch result {
         case .success(let data):
             let decoder = JSONDecoder()

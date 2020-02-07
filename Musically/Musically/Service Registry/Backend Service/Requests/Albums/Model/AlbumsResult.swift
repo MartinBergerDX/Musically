@@ -10,7 +10,7 @@ import Foundation
 
 struct AlbumsResult: Decodable {
     var albums: [Album] = []
-    var pagination = Pagination.init()
+    var pagination = RequestPaging.init()
     
     enum CodingKeys: String, CodingKey {
         case topalbums

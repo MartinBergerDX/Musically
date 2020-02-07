@@ -8,30 +8,36 @@
 
 import Foundation
 
-struct AlbumRequest: BackendRequest, PagedBackendRequest {
-    var method: String = HTTPMethod.get.description
+class AlbumRequest: BackendRequest {
     var completion: ((Result<AlbumsResult, Error>) -> Void)?
-    var limit: Int = Pagination.defaultLimit
-    var page: Int = Pagination.defaultPage
-    var endpoint: String = "artist.gettopalbums"
-    var arguments: String {
-        get {
-            var args: String = ""
-            if !mbid.isEmpty {
-                args.append("mbid=")
-                args.append(mbid)
-            } else if !artist.isEmpty {
-                args.append("artist=")
-                args.append(artist)
-            }
-            args.append(pagingArguments())
-            return args
-        }
-    }
+
+//    var endpoint: String = "artist.gettopalbums"
+//    var arguments: String {
+//        get {
+//            var args: String = ""
+//            if !mbid.isEmpty {
+//                args.append("mbid=")
+//                args.append(mbid)
+//            } else if !artist.isEmpty {
+//                args.append("artist=")
+//                args.append(artist)
+//            }
+//            args.append(pagingArguments())
+//            return args
+//        }
+//    }
     var mbid: String = ""
-    var artist: String = ""
+    var artistName: String = ""
+
+    init (artistName: String, mbid: String) {
+        super.init()
+        self.artistName = artistName
+        self.mbid = mbid
+        self.endpoint = "artist.search"
+        self.arguments = (!mbid.isEmpty ? "mbid=" + mbid : "") + (!artistName.isEmpty ? "artist=" + artistName : "")
+    }
     
-    func onComplete(result: Result<Data,Error>) {
+    override func onComplete(result: Result<Data,Error>) {
         switch result {
         case .success(let data):
             let decoder = JSONDecoder()

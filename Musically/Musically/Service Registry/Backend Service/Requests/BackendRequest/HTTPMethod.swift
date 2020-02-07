@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum HTTPMethod: String, CustomStringConvertible {
+enum HTTPMethod: String {
     case get = "GET"
     case head = "HEAD"
     case post = "POST"
@@ -18,8 +18,4 @@ enum HTTPMethod: String, CustomStringConvertible {
     case options = "OPTIONS"
     case trace = "TRACE"
     case patch = "PATCH"
-    
-    var description: String {
-        return String(self.rawValue)
-    }
 }

@@ -11,7 +11,6 @@ import UIKit
 class ArtistSearchTableViewDelegator: NSObject, UITableViewDataSource, UITableViewDataSourcePrefetching {
     private let dataSource: ArtistSearchTableViewDataSource!
     private let prefetching: ArtistSearchTableViewPrefetching!
-    private weak var tableView: UITableView!
     
     init (dataSource: ArtistSearchTableViewDataSource, prefetching: ArtistSearchTableViewPrefetching) {
         self.dataSource = dataSource
@@ -19,9 +18,8 @@ class ArtistSearchTableViewDelegator: NSObject, UITableViewDataSource, UITableVi
     }
     
     func bind(tableView: UITableView) {
-        self.tableView = tableView
-        self.tableView.dataSource = self
-        self.tableView.prefetchDataSource = self
+        tableView.dataSource = self
+        tableView.prefetchDataSource = self
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

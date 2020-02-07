@@ -30,7 +30,9 @@ class ArtistSearchViewController: InitialViewController {
     
     private func setupViewModel() {
         self.viewModel.backendService = ServiceRegistry.shared.backendService
-        self.viewModel.output = self
+        self.viewModel.artists.callback = { [unowned self] (artists: [Artist]) -> Void in
+            self.tableView.reloadData()
+        }
         self.viewModel.search()
     }
     
@@ -38,11 +40,5 @@ class ArtistSearchViewController: InitialViewController {
         let searchController = ArtistSearchFactory.searchController(viewModel: viewModel)
         self.navigationItem.searchController = searchController
         self.definesPresentationContext = true
-    }
-}
-
-extension ArtistSearchViewController: ArtistSearchViewModelOutput {
-    func updated(viewModel: ArtistSearchViewModel) {
-        self.tableView.reloadData()
     }
 }

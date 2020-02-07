@@ -23,14 +23,16 @@ class AlbumDetailsViewModel: NSObject {
     }
     
     func search() {
-        var request = AlbumDetailsRequest.init()
-        request.album = album.name.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""
-        request.mbid = album.mbid.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""
+        let albumName = album.name.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""
+        let mbid = album.mbid.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""
+        var request = AlbumDetailsRequest.init(albumName: albumName, mbid: mbid)
+//        request.album = album.name.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""
+//        request.mbid = album.mbid.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""
         request.completion = { [unowned self] (result) in
             self.searchFinished(with: result)
             self.output.updated(viewModel: self)
         }
-        self.backendService.execute(request: request)
+        self.backendService.execute(backendRequest: request)
     }
     
     private func searchFinished(with result: Result<AlbumDetails, Error>) {
