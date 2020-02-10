@@ -42,7 +42,7 @@ class AlbumsViewModel: NSObject {
             self.searchFinished(with: result)
             self.output.updated(viewModel: self)
         }
-        self.backendService.execute(backendRequest: request)
+        self.backendService.schedule(backendRequest: request)
     }
     
     private func searchFinished(with result: Result<AlbumsResult, Error>) {

@@ -26,7 +26,7 @@ class ArtistSearchViewModel: NSObject {
     }
     
     func search() {
-        guard !backendService.serialExecution.isArtistSearchInProgress() else {
+        guard !backendService.scheduler.isArtistSearchInProgress() else {
             return
         }
 //        guard !searching else {
@@ -41,7 +41,7 @@ class ArtistSearchViewModel: NSObject {
         let request = ArtistSearchFactory.artistSearch(page: paging.page, artist: newQuery, completion: { [unowned self] (result) in
             self.searchFinished(with: result)
         })
-        self.backendService.enqueue(backendRequest: request)
+        self.backendService.schedule(backendRequest: request)
     }
     
     private func searchFinished(with result: Result<ArtistSearchResult, Error>) {
