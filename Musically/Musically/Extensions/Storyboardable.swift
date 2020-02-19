@@ -33,7 +33,7 @@ extension Storyboardable where Self: UIViewController {
     }
 }
 
-extension Storyboardable where Self: InitialViewController {
+extension Storyboardable where Self: CommonViewController {
     static var storyboardName: String {
         return String(describing: self)
     }

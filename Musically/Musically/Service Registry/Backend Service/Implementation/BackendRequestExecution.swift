@@ -1,5 +1,5 @@
 //
-//  BackendRequestExecutor.swift
+//  BackendRequestExecution.swift
 //  Musically
 //
 //  Created by Martin on 2/7/20.
@@ -8,11 +8,11 @@
 
 import Foundation
 
-protocol BackendRequestExecutorProtocol: class {
+protocol BackendRequestExecutionProtocol: class {
     func execute(backendRequest:  BackendRequestProtocol)
 }
 
-class BackendRequestExecutor {
+class BackendRequestExecution: BackendRequestExecutionProtocol {
     private var session: URLSession!
     private let serviceConfiguration: BackendServiceConfiguration!
     

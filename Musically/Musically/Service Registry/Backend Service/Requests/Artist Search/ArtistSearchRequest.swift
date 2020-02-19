@@ -15,25 +15,8 @@ class ArtistSearchRequest: BackendRequest, BackendRequestJsonMapping {
     var artist: String!
     var completion: ((Result<DataType, Error>) -> Void)?
     
-    // MARK: BackendRequestJsonMapping
-    
     typealias DataType = ArtistSearchResult
-    
-    // MARK: PagedBackendRequest
-    
-//    var limit: Int = RequestPaging.defaultLimit
-//    var page: Int = RequestPaging.defaultPage
-    
-    // MARK: BackendRequest
-    
-//    var endpoint: String = "artist.search"
-//    var arguments: String {
-//        get {
-//            return "artist=" + artist + pagingArguments()
-//        }
-//    }
-//    var method: String = HTTPMethod.get.description
-    
+
     init(artist: String) {
         super.init()
         self.artist = artist

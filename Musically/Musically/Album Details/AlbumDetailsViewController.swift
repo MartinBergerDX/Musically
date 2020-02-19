@@ -9,7 +9,7 @@
 import UIKit
 import Foundation
 
-class AlbumDetailsViewController: InitialViewController {
+class AlbumDetailsViewController: CommonViewController {
     @IBOutlet weak var viewModel: AlbumDetailsViewModel!
     @IBOutlet weak var scrollController: AlbumDetailsScrollController!
     

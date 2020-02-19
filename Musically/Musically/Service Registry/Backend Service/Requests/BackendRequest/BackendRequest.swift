@@ -53,7 +53,7 @@ class BackendRequest: BackendOperation, BackendRequestProtocol {
         endpoint = "you need to set endpoint in derived class"
         arguments = String()
         method = HTTPMethod.get.rawValue
-        pagination = RequestPaging.null
+        pagination = RequestPaging.Null
         state = .ready
         super.init()
     }
@@ -72,6 +72,15 @@ class BackendRequest: BackendOperation, BackendRequestProtocol {
     }
     
     override func main() {
-        backendRequestExecutor.execute(backendRequest: self)
+        backendRequestExecution.execute(backendRequest: self)
     }
+}
+
+func calculateReplaceRange(page: Int, count: Int) -> ClosedRange<Int> {
+    let zeroBasedArrayOffset: Int = 1
+    let nElementsMoreMinusOne: Int = (count - 1)
+    let pageOffset: Int = (page - zeroBasedArrayOffset)
+    let startArrayIndex: Int = (pageOffset * count)
+    let endArrayIndex: Int = (startArrayIndex + nElementsMoreMinusOne)
+    return startArrayIndex...endArrayIndex
 }

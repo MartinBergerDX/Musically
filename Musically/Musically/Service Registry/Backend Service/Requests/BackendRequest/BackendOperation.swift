@@ -12,7 +12,7 @@ class BackendOperation: Operation {
     private let stateQueue = DispatchQueue(label: "com.musically.backend.request.state", attributes: .concurrent)
     private var mExecuting = false
     private var mFinished = false
-    var backendRequestExecutor: BackendRequestExecutor!
+    var backendRequestExecution: BackendRequestExecution!
     
     override var isAsynchronous: Bool {
         return true

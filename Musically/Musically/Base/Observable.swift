@@ -9,11 +9,11 @@
 import Foundation
 
 class Observable<DataType> {
-    var callback: ((DataType) -> Void)?
+    var callback: (() -> Void)?
     var value: DataType {
         didSet {
             DispatchQueue.main.async {
-                self.callback?(self.value)
+                self.callback?()
             }
         }
     }

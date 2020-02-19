@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AlbumsViewController: InitialViewController {
+class AlbumsViewController: CommonViewController {
     @IBOutlet weak var viewModel: AlbumsViewModel!
     @IBOutlet weak var tableView: UITableView!
     var artist: Artist!

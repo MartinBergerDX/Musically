@@ -1,5 +1,5 @@
 //
-//  InitialViewController.swift
+//  CommonViewController.swift
 //  Musically
 //
 //  Created by Martin on 1/17/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class InitialViewController: UIViewController {
+class CommonViewController: UIViewController {
     class func storyboardFileName() -> String {
         return "Main"
     }

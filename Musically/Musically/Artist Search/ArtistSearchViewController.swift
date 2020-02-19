@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ArtistSearchViewController: InitialViewController {
+class ArtistSearchViewController: CommonViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var viewModel: ArtistSearchViewModel!
     private var tableViewDelegator: ArtistSearchTableViewDelegator!
@@ -21,16 +21,17 @@ class ArtistSearchViewController: InitialViewController {
     }
     
     private func setupTableView() {
-        self.tableView.register(UINib(nibName: ArtistTableViewCell.reuseId(), bundle: Bundle.main), forCellReuseIdentifier: ArtistTableViewCell.reuseId())
-        self.tableView.rowHeight = UITableView.automaticDimension
-        self.tableView.estimatedRowHeight = 60
-        self.tableViewDelegator = ArtistSearchFactory.delegator(viewModel: viewModel, navigationController: self.navigationController)
-        self.tableViewDelegator.bind(tableView: tableView)
+        tableView.register(UINib(nibName: ArtistTableViewCell.reuseId(), bundle: Bundle.main), forCellReuseIdentifier: ArtistTableViewCell.reuseId())
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 60
+        tableViewDelegator = ArtistSearchFactory.delegator(viewModel: viewModel, navigationController: self.navigationController)
+        tableViewDelegator.bind(tableView: tableView)
     }
     
     private func setupViewModel() {
         self.viewModel.backendService = ServiceRegistry.shared.backendService
-        self.viewModel.artists.callback = { [unowned self] (artists: [Artist]) -> Void in
+        self.viewModel.artists.callback = { [unowned self] () -> Void in
+            print("reload data")
             self.tableView.reloadData()
         }
         self.viewModel.search()

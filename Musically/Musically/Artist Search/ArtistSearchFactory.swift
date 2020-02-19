@@ -28,6 +28,7 @@ class ArtistSearchFactory {
     static func artistSearch(page: Int, artist: String, completion: ((Result<ArtistSearchRequest.DataType, Error>) -> Void)?) -> BackendRequest {
         let formattedArtist = artist.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? artist
         let request = ArtistSearchRequest(artist: formattedArtist)
+        request.pagination = RequestPaging()
         request.pagination.page = page
         request.completion = completion
         return request

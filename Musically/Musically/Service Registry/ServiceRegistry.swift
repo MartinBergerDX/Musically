@@ -12,20 +12,20 @@ import UIKit
 protocol ServiceRegistryProtocol {
     var database: DatabaseProtocol {get}
     var backendService: BackendServiceProtocol {get}
+    var imageCache: NSCache<NSString, UIImage> {get}
 }
 
 class ServiceRegistry : ServiceRegistryProtocol {
-    static let shared = ServiceRegistry.init()
+    static let shared: ServiceRegistry = { ServiceRegistry.init() }()
+    var factory: ServiceFactoryProtocol = ProductionServiceFactory()
     
     let database: DatabaseProtocol
     let backendService: BackendServiceProtocol
     let imageCache: NSCache<NSString, UIImage>
     
     init() {
-        database = CoreDataStack.init(modelName: CoreDataStack.defaultModelName)
-        let backendRequestExecutor = BackendRequestExecutor.init(serviceConfiguration: BackendServiceConfiguration())
-        let backendServiceScheduler = BackendServiceScheduler.init(backendRequestExecutor: backendRequestExecutor)
-        backendService = BackendService.init(requestExecutor: backendRequestExecutor, scheduler: backendServiceScheduler)
-        imageCache = NSCache<NSString, UIImage>.init()
+        database = factory.produceDatabase()
+        backendService = factory.produceBackendService()
+        imageCache = factory.produceImageCache()
     }
 }

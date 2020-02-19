@@ -17,6 +17,8 @@ extension BackendRequestJsonMapping {
         do {
             return try JSONDecoder().decode(DataType.self, from: data)
         } catch _ {
+            let someErrorString: String = String(decoding: data, as: UTF8.self)
+                print("Error parsing JSON response: " + someErrorString)
             return DataType.init()
         }
     }

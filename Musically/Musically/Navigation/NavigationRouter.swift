@@ -13,7 +13,7 @@ protocol NavigationRouterProtocol {
     func navigate(with modelObject: DataType)
 }
 
-class NavigationRouter<ModelType: Any, ViewController: InitialViewController>: NavigationRouterProtocol {
+class NavigationRouter<ModelType: Any, ViewController: CommonViewController>: NavigationRouterProtocol {
     weak var navigationController: UINavigationController!
     
     init(navigationController: UINavigationController) {

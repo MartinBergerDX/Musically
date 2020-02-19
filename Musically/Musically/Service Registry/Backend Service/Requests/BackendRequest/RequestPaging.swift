@@ -9,11 +9,11 @@
 import Foundation
 
 struct RequestPaging {
-    private static let defaultLimit = 30
-    private static let defaultPage = 1
+    static let DefaultLimit = 30
+    static let DefaultPage = 1
     
-    var limit: Int = RequestPaging.defaultLimit
-    var page: Int = RequestPaging.defaultPage
+    var limit: Int = RequestPaging.DefaultLimit
+    var page: Int = RequestPaging.DefaultPage
     var total: Int = 0
     
     mutating func nextPage() {
@@ -21,19 +21,21 @@ struct RequestPaging {
     }
     
     mutating func reset() {
-        self.page = RequestPaging.defaultPage
+        self.page = RequestPaging.DefaultPage
     }
     
-    static let null = RequestPaging.init(limit: 0, page: 0, total: 0)
+    static let Null = RequestPaging.init(limit: 0, page: 0, total: 0)
     
     static func == (left: RequestPaging, right: RequestPaging) -> Bool {
         return left.limit == right.limit && left.page == right.page && left.total == right.total
     }
+    
+    
 }
 
 extension RequestPaging {
     func arguments() -> String {
-        if self == RequestPaging.null {
+        if self == RequestPaging.Null {
             return nullArguments()
         }
         var args = "&"

@@ -37,12 +37,11 @@ class AlbumsViewModel: NSObject {
         let mbid = artist.mbid.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""
         let request = AlbumRequest.init(artistName: artistName, mbid: mbid)
         request.pagination.page = paging.page
-        
         request.completion = { [unowned self] (result) in
             self.searchFinished(with: result)
             self.output.updated(viewModel: self)
         }
-        self.backendService.schedule(backendRequest: request)
+        self.backendService.enqueue(request: request)
     }
     
     private func searchFinished(with result: Result<AlbumsResult, Error>) {

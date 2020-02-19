@@ -8,7 +8,7 @@
 
 import UIKit
 
-class StoredAlbumsViewController: InitialViewController {
+class StoredAlbumsViewController: CommonViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var viewModel: StoredAlbumsViewModel!
     private var collectionViewDelegator: StoredAlbumsCollectionViewDelegator!
