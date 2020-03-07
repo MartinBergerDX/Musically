@@ -35,18 +35,16 @@ class BackendRequestExecution: BackendRequestExecutionProtocol {
         backendRequest.set(requestState: .ready)
         
         session.dataTask(with: urlRequest) { (data, response, error) in
-            DispatchQueue.main.async(execute: { () -> Void in
-                guard error == nil else {
-                    print("Request completed with errors.")
-                    backendRequest.onComplete(result: .failure(error!))
-                    backendRequest.set(requestState: .failed)
-                    return
-                }
-                print("Request completed.")
-                let received: Data = data ?? Data.init()
-                backendRequest.onComplete(result: .success(received))
-                backendRequest.set(requestState: .finished)
-            })
+            guard error == nil else {
+                print("Request completed with errors.")
+                backendRequest.onComplete(result: .failure(error!))
+                backendRequest.set(requestState: .failed)
+                return
+            }
+            print("Request completed.")
+            let received: Data = data ?? Data.init()
+            backendRequest.onComplete(result: .success(received))
+            backendRequest.set(requestState: .finished)
         }.resume()
     }
     
@@ -70,6 +68,6 @@ class BackendRequestExecution: BackendRequestExecutionProtocol {
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = serviceConfiguration.defaultTimeout
         configuration.timeoutIntervalForResource = serviceConfiguration.defaultTimeout
-        session = URLSession(configuration: configuration, delegate: nil, delegateQueue: nil)
+        session = URLSession(configuration: configuration, delegate: nil, delegateQueue: OperationQueue.main)
     }
 }

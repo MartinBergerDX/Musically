@@ -16,6 +16,7 @@ class ArtistSearchPagingTest: XCTestCase {
     
     override func setUp() {
         viewModel = ArtistSearchViewModel.init()
+        viewModel.factory = MockArtistSearchRequestFactory()
         viewModel.backendService = MockBackendService.init()
     }
 
@@ -29,16 +30,48 @@ class ArtistSearchPagingTest: XCTestCase {
     }
 }
 
+class MockArtistSearchRequestFactory: ArtistSearchRequestFactoryProtocol {
+    func produceRequest(artistQuery: String, page: Int) -> ArtistSearchRequest {
+        let request = MockArtistSearchRequest.init(artistQuery: "test")
+        let objects = Array.init(repeating: Artist.init(), count: 30)
+        let pagination = RequestPaging.init(limit: RequestPaging.DefaultLimit, page: 1, total: 100)
+        let result = ArtistSearchResult.init(artists: objects, pagination: pagination)
+        request.objectsForPage = [result]
+        return request
+    }
+}
+
 class MockBackendService: BackendServiceProtocol {
+    func enqueue(requests: [BackendRequestProtocol]) {
+        
+    }
+    
+    func enqueue(request: BackendRequestProtocol) {
+        
+    }
+    
+    let execution: MockBackendRequestExecution
+    
+    init() {
+        self.execution = MockBackendRequestExecution.init()
+    }
+    
     func requestIterator() -> BackendRequestIterator {
         return BackendRequestIterator.null
     }
+}
+
+class MockBackendRequestExecution: BackendRequestExecutionProtocol {
+    func execute(backendRequest:  BackendRequestProtocol) {
+        backendRequest.onComplete(result: .success(Data.init()))
+    }
+}
+
+class MockArtistSearchRequest: ArtistSearchRequest {
+    var objectsForPage: [ArtistSearchResult] = []
     
-    func enqueue(request: BackendOperation) {
-//        let page: Int = backendRequest.pagination.page
-//        if let url = Bundle.main.url(forResource: "artist_search_1", withExtension: "json") {
-//            let data: Data = try! Data.init(contentsOf: url)
-//            backendRequest.onComplete(result: .success(data))
-//        }
+    override func onComplete(result: Result<Data, Error>) {
+        let filtered: [ArtistSearchResult] = objectsForPage.filter { (($0 as ArtistSearchResult).pagination.page == self.pagination.page) }
+        completion?(.success(filtered.first!))
     }
 }

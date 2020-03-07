@@ -16,10 +16,14 @@ protocol BackendRequestProtocol {
     var arguments: String {get}
     var method: String {get}
     var state: BackendRequestState {get set}
+    var stateChangeCallback: ((BackendRequestState) -> Void)? {get set}
     
     func set(requestState: BackendRequestState)
+    func set(stateChangeCallback: @escaping (BackendRequestState) -> Void)
     func onComplete(result: Result<Data,Error>)
     func argumentList() -> String
+    
+    func add(command: BackendRequestCommand)
 }
 
 enum BackendRequestState: Int {
@@ -29,7 +33,10 @@ enum BackendRequestState: Int {
     case executing
 }
 
-class BackendRequest: BackendOperation, BackendRequestProtocol {
+class BackendRequest: /*BackendOperation,*/ BackendRequestProtocol {
+    var commandList: [BackendRequestCommand]
+    var stateChangeCallback: ((BackendRequestState) -> Void)?
+    
     var endpoint: String
     var arguments: String
     var method: String
@@ -37,6 +44,7 @@ class BackendRequest: BackendOperation, BackendRequestProtocol {
     var state: BackendRequestState {
         didSet {
             onStateChange()
+            stateChangeCallback?(state)
         }
     }
 
@@ -44,18 +52,23 @@ class BackendRequest: BackendOperation, BackendRequestProtocol {
         self.state = requestState
     }
     
+    func set(stateChangeCallback: @escaping (BackendRequestState) -> Void) {
+        self.stateChangeCallback = stateChangeCallback
+    }
+    
     func onComplete(result: Result<Data,Error>) {
         fatalError()
     }
     
-    override
+//    override
     init () {
+        commandList = []
         endpoint = "you need to set endpoint in derived class"
         arguments = String()
         method = HTTPMethod.get.rawValue
-        pagination = RequestPaging.Null
+        pagination = RequestPaging.init()
         state = .ready
-        super.init()
+//        super.init()
     }
     
     func argumentList() -> String {
@@ -64,16 +77,24 @@ class BackendRequest: BackendOperation, BackendRequestProtocol {
     
     private func onStateChange() {
         switch state {
-            case .finished, .failed:
-                finish()
+            case .finished:
+//                finish()
+                for command in commandList {
+                    command.execute()
+                }
+                commandList.removeAll()
             default:
                 break
             }
     }
     
-    override func main() {
-        backendRequestExecution.execute(backendRequest: self)
+    func add(command: BackendRequestCommand) {
+        commandList.append(command)
     }
+    
+//    override func main() {
+//        backendRequestExecution.execute(backendRequest: self)
+//    }
 }
 
 func calculateReplaceRange(page: Int, count: Int) -> ClosedRange<Int> {
@@ -83,4 +104,18 @@ func calculateReplaceRange(page: Int, count: Int) -> ClosedRange<Int> {
     let startArrayIndex: Int = (pageOffset * count)
     let endArrayIndex: Int = (startArrayIndex + nElementsMoreMinusOne)
     return startArrayIndex...endArrayIndex
+}
+
+class BackendRequestCommand {
+    func execute() {
+        
+    }
+}
+
+class BackendRequestCallbackCommand<T>: BackendRequestCommand {
+    typealias DataType = T
+    var completion: ((Result<DataType, Error>) -> Void)?
+    override func execute() {
+        
+    }
 }

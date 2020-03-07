@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 class ArtistSearchViewModel: NSObject {
+    var factory: ArtistSearchRequestFactoryProtocol!
     let artists: Observable<[Artist]> = Observable<[Artist]>.init(value: [])
     
     private static let DefaultQuery = "cher"
@@ -27,27 +28,19 @@ class ArtistSearchViewModel: NSObject {
     }
     
     func search() {
-        guard ArtistSearchCheck().isInProgress(iterator: backendService.requestIterator()) else {
-            return
-        }
-//        guard !backendService.isArtistSearchInProgress() else {
+//        guard ArtistSearchCheck().isInProgress(iterator: backendService.requestIterator()) else {
 //            return
-//        }
-//        guard !searching else {
-//            return
-//        }
-//        searching = true
-//
-//        if queryUpdated() {
-//            paging.reset()
 //        }
         
         let loadingElements = Array.init(repeating: Artist(), count: RequestPaging.DefaultLimit)
         artists.value.append(contentsOf: loadingElements)
-        
-        let request = ArtistSearchFactory.artistSearch(page: paging.page, artist: newQuery, completion: { [unowned self] (result) in
+
+        //let request = ArtistSearchRequest.init(artistQuery: newQuery, page: paging.page)
+        let request = factory.produceRequest(artistQuery: newQuery, page: paging.page)
+        request.completion = { [unowned self] (result) in
             self.searchFinished(with: result)
-        })
+        }
+        
         self.backendService.enqueue(request: request)
     }
     
@@ -66,10 +59,10 @@ class ArtistSearchViewModel: NSObject {
 //            }
             
 //            totalElements += model.artists.count
-            //self.artists.value.append(contentsOf: model.artists)
-            //let range = ((model.pagination.page-1) * RequestPaging.DefaultLimit)...(((model.pagination.page-1) * RequestPaging.DefaultLimit) + (RequestPaging.DefaultLimit - 1))
-            
-            //artists.value.replaceSubrange(model.pagination.calculateReplaceRange(count: model.artists.count), with: model.artists)
+//            self.artists.value.append(contentsOf: model.artists)
+//            let range = ((model.pagination.page-1) * RequestPaging.DefaultLimit)...(((model.pagination.page-1) * RequestPaging.DefaultLimit) + (RequestPaging.DefaultLimit - 1))
+//
+//            artists.value.replaceSubrange(model.pagination.calculateReplaceRange(count: model.artists.count), with: model.artists)
             let range = calculateReplaceRange(page: model.pagination.page, count: model.artists.count)
             artists.value.replaceSubrange(range, with: model.artists)
             break

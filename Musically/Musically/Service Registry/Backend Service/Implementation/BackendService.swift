@@ -14,14 +14,15 @@ import Foundation
 
 protocol BackendServiceProtocol {
     func requestIterator() -> BackendRequestIterator
-    func enqueue(request: BackendOperation)
+    func enqueue(request: BackendRequestProtocol)
+    func enqueue(requests: [BackendRequestProtocol])
 }
 
 class BackendService: BackendServiceProtocol {
-    private let requestQueue: OperationQueue!
-    private let backendRequestExecution: BackendRequestExecution!
+    internal let requestQueue: OperationQueue!
+    private let backendRequestExecution: BackendRequestExecutionProtocol!
     
-    init(backendRequestExecution: BackendRequestExecution!) {
+    init(backendRequestExecution: BackendRequestExecutionProtocol!) {
         self.backendRequestExecution = backendRequestExecution
         requestQueue = OperationQueue.init()
         requestQueue.name = "Backend Service request serial queue"
@@ -29,14 +30,37 @@ class BackendService: BackendServiceProtocol {
         requestQueue.underlyingQueue = DispatchQueue.global()
     }
     
-    func enqueue(request: BackendOperation) {
-        request.backendRequestExecution = backendRequestExecution
-        requestQueue.addOperation(request)
+    func enqueue(request: BackendRequestProtocol) {
+        requestQueue.addOperation(operationFrom(request: request))
+    }
+    
+    func enqueue(requests: [BackendRequestProtocol]) {
+        for request in requests {
+            requestQueue.addOperation(operationFrom(request: request))
+        }
+    }
+    
+    func enqueueAll(requests: [BackendRequestProtocol], completion: @escaping () -> Void) {
+        var operations: [Operation] = requests.map { operationFrom(request: $0) }
+        operations.append(BlockOperation.init(block: completion))
+        requestQueue.addOperations(operations, waitUntilFinished: false)
     }
     
     func requestIterator() -> BackendRequestIterator {
         let iterator = requestQueue.operations.makeIterator()
         return BackendRequestIterator.init(iterator: iterator)
+    }
+    
+    private func operationFrom(request: BackendRequestProtocol) -> BackendOperation {
+        let operation = BackendOperation()
+        operation.backendRequest = request
+        operation.execution = backendRequestExecution
+        bindStatePropagation(operation: operation, request: request)
+        return operation
+    }
+    
+    private func bindStatePropagation(operation: BackendOperation, request: BackendRequestProtocol) {
+        request.set(stateChangeCallback: { [unowned operation] (newState: BackendRequestState) in if newState == .finished { operation.finish() } })
     }
 }
 

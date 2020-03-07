@@ -11,21 +11,6 @@ import Foundation
 class AlbumRequest: BackendRequest {
     var completion: ((Result<AlbumsResult, Error>) -> Void)?
 
-//    var endpoint: String = "artist.gettopalbums"
-//    var arguments: String {
-//        get {
-//            var args: String = ""
-//            if !mbid.isEmpty {
-//                args.append("mbid=")
-//                args.append(mbid)
-//            } else if !artist.isEmpty {
-//                args.append("artist=")
-//                args.append(artist)
-//            }
-//            args.append(pagingArguments())
-//            return args
-//        }
-//    }
     var mbid: String = ""
     var artistName: String = ""
 

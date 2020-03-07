@@ -13,12 +13,16 @@ protocol BackendRequestJsonMapping {
 }
 
 extension BackendRequestJsonMapping {
-    func guaranteeObject(from data: Data) -> DataType {
+    func mappedObject(from data: Data) throws -> DataType {
+        return try JSONDecoder().decode(DataType.self, from: data)
+    }
+    
+    func mapJsonButReturnNullObjectOnMapException(from data: Data) -> DataType {
         do {
-            return try JSONDecoder().decode(DataType.self, from: data)
+            return try mappedObject(from: data)
         } catch _ {
             let someErrorString: String = String(decoding: data, as: UTF8.self)
-                print("Error parsing JSON response: " + someErrorString)
+            print("Error parsing JSON response: " + someErrorString)
             return DataType.init()
         }
     }
