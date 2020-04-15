@@ -12,7 +12,7 @@ import UIKit
 protocol ServiceRegistryProtocol {
     var database: DatabaseProtocol {get}
     var backendService: BackendServiceProtocol {get}
-    var imageCache: NSCache<NSString, UIImage> {get}
+    var imageCache: ImageCacheProtocol {get}
 }
 
 class ServiceRegistry : ServiceRegistryProtocol {
@@ -21,7 +21,7 @@ class ServiceRegistry : ServiceRegistryProtocol {
     
     let database: DatabaseProtocol
     let backendService: BackendServiceProtocol
-    let imageCache: NSCache<NSString, UIImage>
+    let imageCache: ImageCacheProtocol
     
     init() {
         database = factory.produceDatabase()

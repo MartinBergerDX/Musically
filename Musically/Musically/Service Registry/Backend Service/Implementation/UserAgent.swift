@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+// Stolen from:
 // https://github.com/WURFL/User-Agent-Native-apps/blob/master/swift/UABuilder.swift
 
 class UserAgent {

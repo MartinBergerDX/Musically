@@ -14,7 +14,7 @@ class AlbumDetailsScrollController: NSObject {
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var artist: UILabel!
     @IBOutlet weak var mbid: UILabel!
-    @IBOutlet weak var albumPhoto: UIImageView!
+    @IBOutlet weak var albumPhoto: MMImageView!
     @IBOutlet weak var listeners: UILabel!
     @IBOutlet weak var playcount: UILabel!
     @IBOutlet weak var tracks: UIStackView!

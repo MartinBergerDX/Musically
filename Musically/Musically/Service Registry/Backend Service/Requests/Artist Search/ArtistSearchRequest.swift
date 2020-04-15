@@ -10,35 +10,27 @@ import Foundation
 
 // https://www.last.fm/api/show/artist.search
 
-class ArtistSearchRequest: BackendRequest, BackendRequestJsonMapping {
-    typealias DataType = ArtistSearchResult
-    
+class ArtistSearchRequest: BackendRequest<ArtistSearchResult> {
     var artistQuery: String!
-    var completion: ((Result<DataType, Error>) -> Void)?
 
     init(artistQuery: String) {
         super.init()
-        self.artistQuery = artistQuery
+        self.artistQuery = formatArtist(artistQuery: artistQuery)
         endpoint = "artist.search"
-        formatArguments()
+        arguments = []
+        formatUrlArguments()
     }
     
     convenience init(artistQuery: String, page: Int) {
-        let formattedArtist = artistQuery.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? artistQuery
-        self.init(artistQuery: formattedArtist)
+        self.init(artistQuery: artistQuery)
         self.pagination.page = page
     }
     
-    override func onComplete(result: Result<Data,Error>) {
-        switch result {
-        case .success(let data):
-            self.completion?(.success(mapJsonButReturnNullObjectOnMapException(from: data)))
-        case .failure(let error):
-            self.completion?(.failure(error))
-        }
+    private func formatArtist(artistQuery: String) -> String {
+        return artistQuery.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? artistQuery
     }
     
-    private func formatArguments() {
-        arguments = "artist=" + artistQuery
+    private func formatUrlArguments() {
+        arguments.append(URLQueryItem.init(name: "artist", value: artistQuery))
     }
 }

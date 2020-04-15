@@ -9,18 +9,18 @@
 import UIKit
 
 class AlbumsTableViewPrefetching: NSObject, UITableViewDataSourcePrefetching {
-    private weak var viewModel: AlbumsViewModel!
+    private weak var dataProvider: AlbumsDataProvider!
     
-    init (viewModel: AlbumsViewModel!) {
-        self.viewModel = viewModel
+    init (dataProvider: AlbumsDataProvider!) {
+        self.dataProvider = dataProvider
     }
     
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         let contains: Bool = indexPaths.contains { element in
-            return self.viewModel.isLoading(for: element)
+            return self.dataProvider.isLoading(for: element)
         }
         if contains {
-            self.viewModel.search()
+            self.dataProvider.search()
         }
     }
 }

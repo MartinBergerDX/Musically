@@ -84,3 +84,7 @@ extension AlbumDetails: Comparable {
         return lhs.albumName < rhs.albumName
     }
 }
+
+extension AlbumDetails: Initable {
+    
+}

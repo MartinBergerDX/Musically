@@ -1,5 +1,5 @@
 //
-//  AlbumsViewModel.swift
+//  AlbumsDataProvider.swift
 //  Musically
 //
 //  Created by Martin on 10/2/19.
@@ -9,10 +9,10 @@
 import Foundation
 
 protocol AlbumsViewModelOutput: class {
-    func updated(viewModel: AlbumsViewModel)
+    func updated(viewModel: AlbumsDataProvider)
 }
 
-class AlbumsViewModel: NSObject {
+class AlbumsDataProvider: NSObject {
     private static let optimizedCount = 100 // needed because server can return large data sets
     weak var output: AlbumsViewModelOutput!
     private var albums: [Album] = []
@@ -60,7 +60,7 @@ class AlbumsViewModel: NSObject {
     
     func totalCount() -> Int {
         guard totalElements > 0 else {
-            return AlbumsViewModel.optimizedCount
+            return AlbumsDataProvider.optimizedCount
         }
         return totalElements
     }

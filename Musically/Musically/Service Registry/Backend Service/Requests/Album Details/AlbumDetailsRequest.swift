@@ -8,23 +8,8 @@
 
 import Foundation
 
-class AlbumDetailsRequest: BackendRequest {
+class AlbumDetailsRequest: BackendRequest<AlbumDetails> {
     var completion: ((Result<AlbumDetails, Error>) -> Void)?
-    
-//    var endpoint: String = "album.getinfo"
-//    var arguments: String {
-//        get {
-//            var args: String = ""
-//            if !mbid.isEmpty {
-//                args.append("mbid=")
-//                args.append(mbid)
-//            } else if !album.isEmpty {
-//                args.append("album=")
-//                args.append(album)
-//            }
-//            return args
-//        }
-//    }
     var mbid: String = ""
     var albumName: String = ""
     
@@ -32,23 +17,17 @@ class AlbumDetailsRequest: BackendRequest {
         super.init()
         self.albumName = albumName
         self.mbid = mbid
-        self.endpoint = "album.getinfo"
-        self.arguments = (!mbid.isEmpty ? ("mbid=" + mbid) : "") + (!albumName.isEmpty ? ("album=" + albumName) : "")
+        endpoint = "album.getinfo"
+        arguments = []
+        formatUrlArguments()
     }
     
-    override func onComplete(result: Result<Data,Error>) {
-        switch result {
-        case .success(let data):
-            let decoder = JSONDecoder()
-            do {
-                let received = try decoder.decode(AlbumDetails.self, from: data)
-                self.completion?(.success(received))
-            } catch let error {
-                self.completion?(.failure(error))
-            }
-            
-        case .failure(let error):
-            self.completion?(.failure(error))
+    private func formatUrlArguments() {
+        if !mbid.isEmpty {
+            arguments.append(URLQueryItem.init(name: "mbid", value: mbid))
+        }
+        if !albumName.isEmpty {
+            arguments.append(URLQueryItem.init(name: "album", value: albumName))
         }
     }
 }

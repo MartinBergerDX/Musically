@@ -121,7 +121,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dwh-vv-3O4" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <customObject id="GhC-xh-3Sx" customClass="ArtistSearchViewModel" customModule="Musically" customModuleProvider="target"/>
+                <customObject id="GhC-xh-3Sx" customClass="ArtistSearchDataProvider" customModule="Musically" customModuleProvider="target"/>
             </objects>
             <point key="canvasLocation" x="1366.6666666666667" y="-24.107142857142858"/>
         </scene>
@@ -159,12 +159,12 @@
                         <barButtonItem key="backBarButtonItem" title=" " id="jCF-eo-tSf"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="dataProvider" destination="YNq-u2-uIr" id="TXD-4i-PUy"/>
                         <outlet property="tableView" destination="jKc-2s-FpQ" id="sNB-R8-HQ5"/>
-                        <outlet property="viewModel" destination="YNq-u2-uIr" id="iDD-Ki-rZu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sen-dk-ngK" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <customObject id="YNq-u2-uIr" customClass="AlbumsViewModel" customModule="Musically" customModuleProvider="target"/>
+                <customObject id="YNq-u2-uIr" customClass="AlbumsDataProvider" customModule="Musically" customModuleProvider="target"/>
             </objects>
             <point key="canvasLocation" x="2283" y="-24"/>
         </scene>
@@ -234,7 +234,7 @@
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BYC-kL-SMs" userLabel="Photo View">
                                                                         <rect key="frame" x="238.5" y="0.0" width="165.5" height="165.5"/>
                                                                         <subviews>
-                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PhotoPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="NJR-6a-Yao">
+                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PhotoPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="NJR-6a-Yao" customClass="MMImageView" customModule="Musically" customModuleProvider="target">
                                                                                 <rect key="frame" x="16.5" y="16.5" width="132.5" height="132.5"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="width" secondItem="NJR-6a-Yao" secondAttribute="height" multiplier="1:1" id="AwM-qM-vaQ"/>
@@ -370,7 +370,7 @@
                 <customObject id="JpL-4e-KRW" customClass="AlbumDetailsViewModel" customModule="Musically" customModuleProvider="target"/>
                 <customObject id="hIK-hL-1yJ" customClass="AlbumDetailsScrollController" customModule="Musically" customModuleProvider="target">
                     <connections>
-                        <outlet property="albumPhoto" destination="NJR-6a-Yao" id="9yc-x5-sk7"/>
+                        <outlet property="albumPhoto" destination="NJR-6a-Yao" id="uLe-ws-h5f"/>
                         <outlet property="artist" destination="It3-rv-V3l" id="7RG-Ff-4IE"/>
                         <outlet property="content" destination="RJ8-eV-YAM" id="rIQ-tu-OWg"/>
                         <outlet property="listeners" destination="Nfm-kZ-ywb" id="Ozw-Xi-v9T"/>

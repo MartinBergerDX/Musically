@@ -12,8 +12,7 @@ class BackendOperation: Operation {
     private let stateQueue = DispatchQueue(label: "com.musically.backend.request.state", attributes: .concurrent)
     private var mExecuting = false
     private var mFinished = false
-    var backendRequest: BackendRequestProtocol!
-    var execution: BackendRequestExecutionProtocol!
+    var execution: BackendRequestConsumerProtocol!
     
     override var isAsynchronous: Bool {
         return true
@@ -51,30 +50,7 @@ class BackendOperation: Operation {
         main()
     }
     
-    override func main() {
-//        let completionCommand = BackendOperationCompleteCommand(operation: self)
-//        backendRequest.add(command: completionCommand)
-        execution.execute(backendRequest: backendRequest)
-    }
-    
-    func finish() {
+    func finishOperation() {
         isFinished = true
     }
-    
-    deinit {
-        print("operation deinit")
-    }
 }
-
-//class BackendOperationCompleteCommand: BackendRequestCommand {
-//    var operation: BackendOperation!
-//    
-//    init(operation: BackendOperation) {
-//        self.operation = operation
-//    }
-//    
-//    override func execute() {
-//        operation.finish()
-//    }
-//}
-

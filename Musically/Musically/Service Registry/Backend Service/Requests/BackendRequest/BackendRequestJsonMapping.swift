@@ -27,3 +27,19 @@ extension BackendRequestJsonMapping {
         }
     }
 }
+
+//class BackendRequestJsonMapping2<T: Decodable> {
+//    func mappedObject(from data: Data) throws -> T {
+//        return try JSONDecoder().decode(T.self, from: data)
+//    }
+//
+//    func mapJsonButReturnNullObjectOnMapException(from data: Data) -> T {
+//        do {
+//            return try mappedObject(from: data)
+//        } catch _ {
+//            let someErrorString: String = String(decoding: data, as: UTF8.self)
+//            print("Error parsing JSON response: " + someErrorString)
+//            return DataType.init()
+//        }
+//    }
+//}

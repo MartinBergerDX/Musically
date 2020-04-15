@@ -8,10 +8,12 @@
 
 import Foundation
 
-struct AlbumsResult: Decodable {
+struct AlbumsResult {
     var albums: [Album] = []
     var pagination = RequestPaging.init()
-    
+}
+
+extension AlbumsResult: Decodable {
     enum CodingKeys: String, CodingKey {
         case topalbums
         case album
@@ -35,4 +37,8 @@ struct AlbumsResult: Decodable {
         let startPageString: String = try attributes.decode(String.self, forKey: .page)
         pagination.page = Int.init(startPageString) ?? 0
     }
+}
+
+extension AlbumsResult: Initable {
+    
 }

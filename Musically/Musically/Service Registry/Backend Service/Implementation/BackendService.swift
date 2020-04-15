@@ -14,68 +14,61 @@ import Foundation
 
 protocol BackendServiceProtocol {
     func requestIterator() -> BackendRequestIterator
-    func enqueue(request: BackendRequestProtocol)
-    func enqueue(requests: [BackendRequestProtocol])
+    func enqueue(request: BackendOperation)
+    func enqueue(requests: [BackendOperation])
 }
 
 class BackendService: BackendServiceProtocol {
     internal let requestQueue: OperationQueue!
-    private let backendRequestExecution: BackendRequestExecutionProtocol!
+    private let consumer: BackendRequestConsumerProtocol!
     
-    init(backendRequestExecution: BackendRequestExecutionProtocol!) {
-        self.backendRequestExecution = backendRequestExecution
+    init(consumer: BackendRequestConsumerProtocol!) {
+        self.consumer = consumer
         requestQueue = OperationQueue.init()
-        requestQueue.name = "Backend Service request serial queue"
-        requestQueue.maxConcurrentOperationCount = 5
+        setup(requestQueue: requestQueue)
+    }
+    
+    func setup(requestQueue: OperationQueue) {
+        requestQueue.name = "Backend Service request concurrent queue"
+        requestQueue.maxConcurrentOperationCount = 10
         requestQueue.underlyingQueue = DispatchQueue.global()
     }
     
-    func enqueue(request: BackendRequestProtocol) {
-        requestQueue.addOperation(operationFrom(request: request))
+    func enqueue(request: BackendOperation) {
+        request.execution = consumer
+        requestQueue.addOperation(request)
     }
     
-    func enqueue(requests: [BackendRequestProtocol]) {
+    func enqueue(requests: [BackendOperation]) {
+        var _ = requests.map({ $0.execution = self.consumer })
+        requestQueue.addOperations(requests, waitUntilFinished: false)
+    }
+    
+    func enqueueAll(requests: [BackendOperation], completion: @escaping () -> Void) {
+        let completion = BlockOperation.init(block: completion)
         for request in requests {
-            requestQueue.addOperation(operationFrom(request: request))
+            request.execution = consumer
+            completion.addDependency(request)
         }
-    }
-    
-    func enqueueAll(requests: [BackendRequestProtocol], completion: @escaping () -> Void) {
-        var operations: [Operation] = requests.map { operationFrom(request: $0) }
-        operations.append(BlockOperation.init(block: completion))
+        var operations: [Operation] = requests.map({ $0 as BackendOperation })
+        operations.append(completion)
         requestQueue.addOperations(operations, waitUntilFinished: false)
     }
     
     func requestIterator() -> BackendRequestIterator {
-        let iterator = requestQueue.operations.makeIterator()
-        return BackendRequestIterator.init(iterator: iterator)
-    }
-    
-    private func operationFrom(request: BackendRequestProtocol) -> BackendOperation {
-        let operation = BackendOperation()
-        operation.backendRequest = request
-        operation.execution = backendRequestExecution
-        bindStatePropagation(operation: operation, request: request)
-        return operation
-    }
-    
-    private func bindStatePropagation(operation: BackendOperation, request: BackendRequestProtocol) {
-        request.set(stateChangeCallback: { [unowned operation] (newState: BackendRequestState) in if newState == .finished { operation.finish() } })
+        if let operations = requestQueue.operations as? [BackendRequestAttributesProtocol] {
+            let iterator = operations.makeIterator()
+            return BackendRequestIterator.init(iterator: iterator)
+        }
+        return BackendRequestIterator.null
     }
 }
 
-class BackendRequestIterator {
-    var iterator: IndexingIterator<[Operation]>
-    init(iterator: IndexingIterator<[Operation]>) {
-        self.iterator = iterator
-    }
-    func next() -> Operation? {
-        return iterator.next()
-    }
-    
-    // Null-Object pattern
-    static let null: BackendRequestIterator = {
-        let it = IndexingIterator<[Operation]>(_elements: [])
-        return BackendRequestIterator.init(iterator: it)
-    }()
+func calculateReplaceRange(page: Int, count: Int) -> ClosedRange<Int> {
+    let zeroBasedArrayOffset: Int = 1
+    let nElementsMoreMinusOne: Int = (count - 1)
+    let pageOffset: Int = (page - zeroBasedArrayOffset)
+    let startArrayIndex: Int = (pageOffset * count)
+    let endArrayIndex: Int = (startArrayIndex + nElementsMoreMinusOne)
+    return startArrayIndex...endArrayIndex
 }

@@ -34,18 +34,26 @@ struct RequestPaging {
 }
 
 extension RequestPaging {
-    func arguments() -> String {
+//    func arguments() -> String {
+//        if self == RequestPaging.Null {
+//            return nullArguments()
+//        }
+//        var args = "&"
+//        args.append("page=")
+//        args.append(String(self.page))
+//        args.append("&")
+//        args.append("limit=")
+//        args.append(String(self.limit))
+//        return args
+//    }
+    
+    func arguments() -> [URLQueryItem] {
         if self == RequestPaging.Null {
-            return nullArguments()
+            return []
         }
-        var args = "&"
-        args.append("page=")
-        args.append(String(self.page))
-        args.append("&")
-        args.append("limit=")
-        args.append(String(self.limit))
-        return args
+        return [URLQueryItem.init(name: "page", value: String(self.page)),
+                URLQueryItem.init(name: "limit", value: String(self.limit))]
     }
     
-    private func nullArguments() -> String { "" }
+//    private func nullArguments() -> String { "" }
 }

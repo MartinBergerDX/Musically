@@ -16,7 +16,7 @@ class AlbumTableViewCell: UITableViewCell, ReusableObject {
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var playcount: UILabel!
     @IBOutlet weak var identifier: UILabel!
-    @IBOutlet weak var albumPhoto: UIImageView!
+    @IBOutlet weak var albumPhoto: MMImageView!
     @IBOutlet weak var loadingContainer: UIView!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     

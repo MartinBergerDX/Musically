@@ -9,8 +9,7 @@
 import UIKit
 
 class StoredAlbumsCollectionViewCell: UICollectionViewCell, ReusableObject {
-    //static var reuseId: String! = String.init(describing: StoredAlbumsCollectionViewCell.self)
-    @IBOutlet weak var albumGraphics: UIImageView!
+    @IBOutlet weak var albumGraphics: MMImageView!
     @IBOutlet weak var albumName: UILabel!
     
     override func awakeFromNib() {

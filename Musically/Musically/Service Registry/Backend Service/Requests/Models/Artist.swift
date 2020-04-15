@@ -14,6 +14,16 @@ struct Artist: Hashable {
     var mbid: String = ""
     var url: URL? = .none
     var image: [Graphics] = []
+    
+    func mediumSizeImageUrl() -> URL? {
+        let medium = image.filter { (graphics) -> Bool in
+            return graphics.size == GraphicsSize.medium
+        }
+        if let imageUrl: URL = medium.first?.url {
+            return imageUrl
+        }
+        return .none
+    }
 }
 
 extension Artist: Codable {

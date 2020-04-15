@@ -12,4 +12,8 @@ class CommonViewController: UIViewController {
     class func storyboardFileName() -> String {
         return "Main"
     }
+    
+    func serviceRegistry() -> ServiceRegistryProtocol {
+        return ServiceRegistry.shared
+    }
 }

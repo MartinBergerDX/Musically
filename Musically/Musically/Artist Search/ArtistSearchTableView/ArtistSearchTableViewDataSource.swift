@@ -9,22 +9,20 @@
 import UIKit
 
 class ArtistSearchTableViewDataSource: NSObject, UITableViewDataSource {
-    weak var viewModel: ArtistSearchViewModel!
+    weak var dataProvider: ArtistSearchDataProvider!
     let router: AlbumsRouter!
     
-    init (viewModel: ArtistSearchViewModel, router: AlbumsRouter) {
-        self.viewModel = viewModel
+    init (viewModel: ArtistSearchDataProvider, router: AlbumsRouter) {
+        self.dataProvider = viewModel
         self.router = router
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let artist: Artist? = self.viewModel.artist(for: indexPath.row)
+        let viewModel = self.dataProvider.viewModel(for: indexPath.row)
         let cell: ArtistTableViewCell = tableView.dequeueReusableCell(withIdentifier: ArtistTableViewCell.reuseId(), for:indexPath) as! ArtistTableViewCell
-        cell.setup(with: artist)
-        if let artist = artist {
-            cell.viewTapBehaviour = ViewTapBehaviour.init(views: [cell.mainContainer], onTap: { [unowned self] (view: UIView) in
-                self.router.showAlbums(for: artist)
-            })
+        cell.setup(with: viewModel)
+        cell.set { [unowned self] in
+            self.router.showAlbums(for: viewModel.model())
         }
         return cell
     }
@@ -34,6 +32,6 @@ class ArtistSearchTableViewDataSource: NSObject, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.viewModel.totalCount()
+        return self.dataProvider.totalCount()
     }
 }

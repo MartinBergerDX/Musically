@@ -9,7 +9,7 @@
 import UIKit
 
 class AlbumsViewController: CommonViewController {
-    @IBOutlet weak var viewModel: AlbumsViewModel!
+    @IBOutlet weak var dataProvider: AlbumsDataProvider!
     @IBOutlet weak var tableView: UITableView!
     var artist: Artist!
     private var tableViewDelegator: AlbumsTableViewDelegator!
@@ -26,7 +26,7 @@ class AlbumsViewController: CommonViewController {
         tableView.register(UINib(nibName: AlbumTableViewCell.reuseId(), bundle: Bundle.main), forCellReuseIdentifier: AlbumTableViewCell.reuseId())
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 60
-        tableViewDelegator = AlbumsViewControllerFactory.delegator(viewModel: viewModel, navigationController: self.navigationController)
+        tableViewDelegator = AlbumsViewControllerFactory.delegator(dataProvider: dataProvider, navigationController: self.navigationController)
         tableViewDelegator.bind(tableView: tableView)
     }
     
@@ -37,10 +37,10 @@ class AlbumsViewController: CommonViewController {
     }
     
     private func setupViewModel() {
-        viewModel.backendService = ServiceRegistry.shared.backendService
-        viewModel.output = self
-        viewModel.artist = artist
-        viewModel.search()
+        dataProvider.backendService = ServiceRegistry.shared.backendService
+        dataProvider.output = self
+        dataProvider.artist = artist
+        dataProvider.search()
     }
     
     private func installResetButton() {
@@ -48,12 +48,12 @@ class AlbumsViewController: CommonViewController {
     }
     
     @objc private func resetToStoredAlbums(sender: UIBarButtonItem) {
-        NotificationCenter.default.post(name: NSNotification.Name.resetToStoredAlbums, object: nil)
+        //NotificationCenter.default.post(name: NSNotification.Name.resetToStoredAlbums, object: nil)
     }
 }
 
 extension AlbumsViewController: AlbumsViewModelOutput {
-    func updated(viewModel: AlbumsViewModel) {
+    func updated(viewModel: AlbumsDataProvider) {
         self.tableView.reloadData()
     }
 }

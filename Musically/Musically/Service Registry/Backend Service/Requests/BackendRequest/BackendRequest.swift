@@ -8,114 +8,160 @@
 
 import Foundation
 
-// wrapper around endpoint string, http method and arguments
-// when making a call to server, instantiate BackendRequest class
+// Facade around endpoint string, http method and arguments
+// when making a call to server, instantiate subclass of BackendRequest class
 
-protocol BackendRequestProtocol {
+protocol BackendRequestAttributesProtocol {
     var endpoint: String {get}
-    var arguments: String {get}
+    var arguments: [URLQueryItem] {get}
     var method: String {get}
     var state: BackendRequestState {get set}
-    var stateChangeCallback: ((BackendRequestState) -> Void)? {get set}
-    
+    var pagination: RequestPaging {get}
+    func argumentList() -> [URLQueryItem]
+    func add(command: BackendRequestCommandProtocol)
+}
+
+protocol BackendRequestServiceControlProtocol {
     func set(requestState: BackendRequestState)
-    func set(stateChangeCallback: @escaping (BackendRequestState) -> Void)
-    func onComplete(result: Result<Data,Error>)
-    func argumentList() -> String
+    func set(result: Result<Data, Error>)
+    func onComplete()
+}
+
+protocol BackendRequestProtocol: BackendRequestAttributesProtocol, BackendRequestServiceControlProtocol {
     
-    func add(command: BackendRequestCommand)
 }
 
 enum BackendRequestState: Int {
     case ready
+    case executing
     case failed
     case finished
-    case executing
 }
 
-class BackendRequest: /*BackendOperation,*/ BackendRequestProtocol {
-    var commandList: [BackendRequestCommand]
-    var stateChangeCallback: ((BackendRequestState) -> Void)?
-    
+//protocol BackendRequestDataType: Decodable, Initable {
+//
+//}
+
+class BackendRequest<T: Decodable & Initable>: BackendOperation, BackendRequestProtocol {
+    var commands: [BackendRequestCommandProtocol]
+    var requestResult: Result<Data, Error>!
     var endpoint: String
-    var arguments: String
+    var arguments: [URLQueryItem]
     var method: String
     var pagination: RequestPaging
     var state: BackendRequestState {
         didSet {
             onStateChange()
-            stateChangeCallback?(state)
         }
     }
+    private (set) var value: T!
 
-    func set(requestState: BackendRequestState) {
-        self.state = requestState
+    override func main() {
+        execution.execute(backendRequest: self)
     }
     
-    func set(stateChangeCallback: @escaping (BackendRequestState) -> Void) {
-        self.stateChangeCallback = stateChangeCallback
-    }
-    
-    func onComplete(result: Result<Data,Error>) {
-        fatalError()
-    }
-    
-//    override
-    init () {
-        commandList = []
-        endpoint = "you need to set endpoint in derived class"
-        arguments = String()
+    override init () {
+        commands = []
+        endpoint = ""
+        arguments = []
         method = HTTPMethod.get.rawValue
         pagination = RequestPaging.init()
         state = .ready
-//        super.init()
+        super.init()
     }
     
-    func argumentList() -> String {
+    func add(command: BackendRequestCommandProtocol) {
+        commands.append(command)
+    }
+    
+    func executeCommands() {
+        for command in commands {
+            command.execute(request: self)
+        }
+    }
+    
+    func argumentList() -> [URLQueryItem] {
         return arguments + pagination.arguments()
     }
     
-    private func onStateChange() {
-        switch state {
-            case .finished:
-//                finish()
-                for command in commandList {
-                    command.execute()
-                }
-                commandList.removeAll()
-            default:
-                break
-            }
+    func mapJson() {
+        guard let data: Data = try? requestResult.get() else {
+            return
+        }
+        do {
+            value = try mappedJson(from: data)
+        } catch let decodingError {
+            value = T.init()
+            requestResult = Result.failure(decodingError)
+        }
     }
     
-    func add(command: BackendRequestCommand) {
-        commandList.append(command)
+    func mappedJson(from data: Data) throws -> T {
+        return try JSONDecoder().decode(T.self, from: data)
     }
     
-//    override func main() {
-//        backendRequestExecution.execute(backendRequest: self)
-//    }
-}
-
-func calculateReplaceRange(page: Int, count: Int) -> ClosedRange<Int> {
-    let zeroBasedArrayOffset: Int = 1
-    let nElementsMoreMinusOne: Int = (count - 1)
-    let pageOffset: Int = (page - zeroBasedArrayOffset)
-    let startArrayIndex: Int = (pageOffset * count)
-    let endArrayIndex: Int = (startArrayIndex + nElementsMoreMinusOne)
-    return startArrayIndex...endArrayIndex
-}
-
-class BackendRequestCommand {
-    func execute() {
+    func onStateChange() {
         
+    }
+    
+    // MARK: BackendRequestServiceControlProtocol
+    
+    func set(requestState: BackendRequestState) {
+        state = requestState
+    }
+    
+    func set(result: Result<Data, Error>) {
+        requestResult = result
+    }
+    
+    func onComplete() {
+        mapJson()
+        executeCommands()
+        finishOperation()
+    }
+    
+    // MARK: Command Factory
+    // Factory Method pattern
+    
+    func makeCompletionCommand(success: @escaping ((T) -> Void), failure: @escaping ((Error) -> Void)) -> BackendRequestResultCommand<T> {
+        let command = BackendRequestResultCommand<T>.init()
+        command.completion = success
+        command.failure = failure
+        return command
     }
 }
 
-class BackendRequestCallbackCommand<T>: BackendRequestCommand {
-    typealias DataType = T
-    var completion: ((Result<DataType, Error>) -> Void)?
-    override func execute() {
-        
+protocol BackendRequestCommandProtocol {
+    func execute<T: Decodable & Initable>(request: BackendRequest<T>)
+}
+
+class BackendRequestCompletionCommand: BackendRequestCommandProtocol {
+    var completion: (() -> Void)!
+    
+    init(callback: @escaping () -> Void) {
+        self.completion = callback
+    }
+    
+    func execute<T>(request: BackendRequest<T>) {
+        completion()
+    }
+}
+
+class BackendRequestResultCommand<DataType: Decodable & Initable>: BackendRequestCommandProtocol {
+    
+    var completion: ((DataType) -> Void)?
+    var failure: ((Error) -> Void)?
+
+    func execute<T: Decodable & Initable>(request: BackendRequest<T>) {
+//        if let obj: DataType = request.value as? DataType {
+//            completion?(obj)
+//        } else if case .failure(let error) = request.requestResult {
+//            failure?(error)
+//        }
+        if case .failure(let error) = request.requestResult {
+            failure?(error)
+            return
+        }
+        completion?(request.value as! DataType)
     }
 }

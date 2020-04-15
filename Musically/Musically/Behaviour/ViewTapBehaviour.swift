@@ -9,9 +9,10 @@
 import UIKit
 
 class ViewTapBehaviour {
-    private var callback: ((UIView) -> Void)!
+    private var callback: (() -> Void)!
     private var mapped: [UIView:UIGestureRecognizer] = [:]
-    init(views: [UIView], onTap: @escaping (UIView) -> Void) {
+    
+    init(views: [UIView], onTap: @escaping () -> Void) {
         callback = onTap
         for view in views {
             let tap = UITapGestureRecognizer.init(target: self, action: #selector(onTap(view:)))
@@ -21,7 +22,7 @@ class ViewTapBehaviour {
     }
     
     @objc private func onTap(view: UIView) {
-        callback(view)
+        callback()
     }
     
     deinit {

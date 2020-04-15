@@ -12,7 +12,7 @@ import UIKit
 protocol ServiceFactoryProtocol {
     func produceDatabase() -> DatabaseProtocol
     func produceBackendService() -> BackendServiceProtocol
-    func produceImageCache() -> NSCache<NSString, UIImage>
+    func produceImageCache() -> ImageCacheProtocol
 }
 
 // Abstract Factory pattern
@@ -22,12 +22,12 @@ class ProductionServiceFactory: ServiceFactoryProtocol {
     }
     
     func produceBackendService() -> BackendServiceProtocol {
-        let backendRequestExecution = BackendRequestExecution.init(serviceConfiguration: BackendServiceConfiguration())
-        let backendService = BackendService.init(backendRequestExecution: backendRequestExecution)
+        let consumer = BackendRequestConsumer.init(serviceConfiguration: BackendServiceConfiguration())
+        let backendService = BackendService.init(consumer: consumer)
         return backendService
     }
     
-    func produceImageCache() -> NSCache<NSString, UIImage> {
-        return NSCache<NSString, UIImage>.init()
+    func produceImageCache() -> ImageCacheProtocol {
+        return ImageCache.init()
     }
 }

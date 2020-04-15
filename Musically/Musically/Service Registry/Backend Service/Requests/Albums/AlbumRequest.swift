@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AlbumRequest: BackendRequest {
+class AlbumRequest: BackendRequest<AlbumsResult> {
     var completion: ((Result<AlbumsResult, Error>) -> Void)?
 
     var mbid: String = ""
@@ -18,23 +18,17 @@ class AlbumRequest: BackendRequest {
         super.init()
         self.artistName = artistName
         self.mbid = mbid
-        self.endpoint = "artist.search"
-        self.arguments = (!mbid.isEmpty ? "mbid=" + mbid : "") + (!artistName.isEmpty ? "artist=" + artistName : "")
+        endpoint = "artist.search"
+        arguments = []
+        formatUrlArguments()
     }
     
-    override func onComplete(result: Result<Data,Error>) {
-        switch result {
-        case .success(let data):
-            let decoder = JSONDecoder()
-            do {
-                let received = try decoder.decode(AlbumsResult.self, from: data)
-                self.completion?(.success(received))
-            } catch let error {
-                self.completion?(.failure(error))
-            }
-            
-        case .failure(let error):
-            self.completion?(.failure(error))
+    private func formatUrlArguments() {
+        if !mbid.isEmpty {
+            arguments.append(URLQueryItem.init(name: "mbid", value: mbid))
+        }
+        if !artistName.isEmpty {
+            arguments.append(URLQueryItem.init(name: "artist", value: artistName))
         }
     }
 }
