@@ -17,7 +17,7 @@ class ArtistSearchFactory: ArtistSearchRequestFactoryProtocol {
     func delegator(viewModel: ArtistSearchDataProvider!, navigationController: UINavigationController!) -> ArtistSearchTableViewDelegator {
         let router = AlbumsRouter.init(navigationController: navigationController)
         let dataSource = ArtistSearchTableViewDataSource.init(viewModel: viewModel, router: router)
-        let prefetching = ArtistSearchTableViewPrefetching.init(viewModel: viewModel)
+        let prefetching = ArtistSearchTableViewPrefetching.init(dataProvider: viewModel)
         let delegator: ArtistSearchTableViewDelegator = ArtistSearchTableViewDelegator.init(dataSource: dataSource, prefetching: prefetching)
         return delegator
     }

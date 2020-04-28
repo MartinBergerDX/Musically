@@ -38,7 +38,9 @@ class AlbumsViewController: CommonViewController {
     
     private func setupViewModel() {
         dataProvider.backendService = ServiceRegistry.shared.backendService
-        dataProvider.output = self
+        dataProvider.dataSource.callback = { [unowned self] () -> Void in
+            self.tableView.reloadData()
+        }
         dataProvider.artist = artist
         dataProvider.search()
     }
@@ -49,11 +51,5 @@ class AlbumsViewController: CommonViewController {
     
     @objc private func resetToStoredAlbums(sender: UIBarButtonItem) {
         //NotificationCenter.default.post(name: NSNotification.Name.resetToStoredAlbums, object: nil)
-    }
-}
-
-extension AlbumsViewController: AlbumsViewModelOutput {
-    func updated(viewModel: AlbumsDataProvider) {
-        self.tableView.reloadData()
     }
 }

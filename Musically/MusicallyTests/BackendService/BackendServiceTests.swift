@@ -11,12 +11,12 @@ import Foundation
 @testable import Musically
 
 class BackendServiceTest: XCTestCase {
-    fileprivate var backendService: QueueTestBackendService!
+    fileprivate var backendService: BackendService!
     fileprivate var consumer: QueueTestConsumer!
 
     override func setUp() {
         consumer = QueueTestConsumer()
-        backendService = QueueTestBackendService.init(consumer: consumer)
+        backendService = BackendService.init(consumer: consumer)
     }
 
     override func tearDown() {
@@ -78,50 +78,5 @@ class BackendServiceTest: XCTestCase {
         backendService.enqueue(requests: [req1, req2])
         waitForExpectations(timeout: 1)
         XCTAssert(req1.state == .finished && backendService.currentOperationCount() == 0)
-    }
-}
-
-class QueueTestConsumer: BackendRequestConsumerProtocol {
-    var jsonData: Data!
-    func execute(backendRequest: BackendRequestProtocol) {
-        //DispatchQueue.main.async { [unowned self] in
-            backendRequest.set(requestState: .finished)
-            backendRequest.set(result: .success(self.jsonData))
-            backendRequest.onComplete()
-        //}
-    }
-}
-
-fileprivate
-class QueueTestRequest: BackendRequest<Int> {
-    var identifier: String?
-    override var description: String {
-        return identifier ?? ""
-    }
-    var deadline: Double = 0.2
-    init(deadline: Double) {
-        self.deadline = deadline
-        super.init()
-    }
-
-    override func onComplete() {
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + deadline) {
-            if let _ = self.identifier {
-                print("Operation completing: " + self.description)
-            }
-            super.onComplete()
-        }
-    }
-}
-
-fileprivate class QueueTestBackendService: BackendService {
-    func currentOperationCount() -> Int {
-        return requestQueue.operationCount
-    }
-
-    override func setup(requestQueue: OperationQueue) {
-        requestQueue.name = "[TEST] Backend Service request serial queue"
-        requestQueue.maxConcurrentOperationCount = 10
-        requestQueue.underlyingQueue = DispatchQueue.global()
     }
 }

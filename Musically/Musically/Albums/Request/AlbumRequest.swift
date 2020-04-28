@@ -9,16 +9,15 @@
 import Foundation
 
 class AlbumRequest: BackendRequest<AlbumsResult> {
-    var completion: ((Result<AlbumsResult, Error>) -> Void)?
+    private var mbid: String!
+    private var artistName: String!
 
-    var mbid: String = ""
-    var artistName: String = ""
-
-    init (artistName: String, mbid: String) {
+    init (artistName: String, mbid: String, page: Int) {
         super.init()
-        self.artistName = artistName
-        self.mbid = mbid
-        endpoint = "artist.search"
+        self.artistName = artistName.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""
+        self.mbid = mbid.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""
+        pagination.page = page
+        endpoint = "artist.gettopalbums"
         arguments = []
         formatUrlArguments()
     }

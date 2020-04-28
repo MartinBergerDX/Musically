@@ -9,16 +9,16 @@
 import UIKit
 
 class ArtistSearchTableViewPrefetching: NSObject, UITableViewDataSourcePrefetching {
-    weak var viewModel: ArtistSearchDataProvider!
+    weak var dataProvider: ArtistSearchDataProvider!
     
-    init (viewModel: ArtistSearchDataProvider) {
-        self.viewModel = viewModel
+    init (dataProvider: ArtistSearchDataProvider) {
+        self.dataProvider = dataProvider
     }
     
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        let contains: Bool = indexPaths.contains { self.viewModel.isNearEnd(for: $0) }
+        let contains: Bool = indexPaths.contains { self.dataProvider.isNearEnd(for: $0) }
         if !contains {
-            self.viewModel.search()
+            self.dataProvider.search()
         }
     }
 }

@@ -1,18 +1,23 @@
 //
-//  ArtistSearchMockBackendConsumer.swift
+//  QueueTestConsumer.swift
 //  MusicallyTests
 //
-//  Created by Martin on 4/4/20.
+//  Created by Martin on 4/27/20.
 //  Copyright © 2020 Turbo. All rights reserved.
 //
 
 import Foundation
 @testable import Musically
 
-class ArtistSearchMockBackendConsumer: BackendRequestConsumerProtocol {
+struct Foo: Codable, Initable {
+    var value: Int!
+}
+
+class QueueTestConsumer: BackendRequestConsumerProtocol {
+    var jsonData: Data!
     func execute(backendRequest: BackendRequestProtocol) {
         backendRequest.set(requestState: .finished)
-        backendRequest.set(result: Result.success(ObjectFromJsonFile<ArtistSearchResult>.data(from: "ArtistBatchOf30")))
+        backendRequest.set(result: .success(self.jsonData))
         backendRequest.onComplete()
         DispatchQueue.main.async {
             backendRequest.executeCommands()

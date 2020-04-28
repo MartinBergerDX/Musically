@@ -9,6 +9,15 @@
 import Foundation
 
 class BackendOperation: Operation {
+    var execution: BackendRequestConsumerProtocol!
+    
+    override func main() {
+        execution.execute(backendRequest: (self as! BackendRequestProtocol))
+    }
+}
+
+
+class BackendOperation_Not_Used: Operation {
     private let stateQueue = DispatchQueue(label: "com.musically.backend.request.state", attributes: .concurrent)
     private var mExecuting = false
     private var mFinished = false

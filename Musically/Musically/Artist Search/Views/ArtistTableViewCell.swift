@@ -36,28 +36,6 @@ class ArtistTableViewCell: UITableViewCell, ReusableObject {
             openUrlBehaviour = ViewOpenUrlBehaviour.init(views: [artistPhoto], url: viewModel.artistPhotoURL())
         }
         set(loading: viewModel.isLoading())
-        
-//        switch artist {
-//        case .some(let artist):
-//                name.text = artist.name
-//                listeners.text = "Listeners: " + artist.listeners
-//                identifier.text = artist.mbid
-//                identifier.isHidden = artist.mbid.isEmpty ? true : false
-//                let medium = artist.image.filter { (graphics) -> Bool in
-//                    return graphics.size == GraphicsSize.medium
-//                }
-//                if let imageUrl: URL = medium.first?.url {
-//                    artistPhoto.download(image: imageUrl)
-//                }
-//                if let url: URL = artist.url {
-//                    openUrlBehaviour = ViewOpenUrlBehaviour.init(views: [artistPhoto], url: url)
-//                }
-//                set(loading: false)
-//            break
-//        case .none:
-//            set(loading: true)
-//            break
-//        }
     }
     
     func set(onTap: @escaping (() -> Void)) {

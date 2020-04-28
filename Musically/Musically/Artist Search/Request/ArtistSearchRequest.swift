@@ -11,7 +11,7 @@ import Foundation
 // https://www.last.fm/api/show/artist.search
 
 class ArtistSearchRequest: BackendRequest<ArtistSearchResult> {
-    var artistQuery: String!
+    private var artistQuery: String!
 
     init(artistQuery: String) {
         super.init()

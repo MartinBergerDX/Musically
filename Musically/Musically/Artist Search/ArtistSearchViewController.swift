@@ -18,7 +18,7 @@ class ArtistSearchViewController: CommonViewController {
         super.viewDidLoad()
         factory = ArtistSearchFactory()
         setupTableView()
-        setupViewModel()
+        setupDataProvider()
         setupSearchController()
     }
     
@@ -30,7 +30,7 @@ class ArtistSearchViewController: CommonViewController {
         tableViewDelegator.bind(tableView: tableView)
     }
     
-    private func setupViewModel() {
+    private func setupDataProvider() {
         viewModel.backendService = serviceRegistry().backendService
         viewModel.artists.callback = { [unowned self] () -> Void in
             print("reloading table")

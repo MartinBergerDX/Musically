@@ -14,6 +14,16 @@ struct Album {
     var mbid: String = ""
     var url: URL? = .none
     var images: [Graphics] = []
+    
+    func mediumSizeImageUrl() -> URL? {
+        let medium = images.filter { (graphics) -> Bool in
+            return graphics.size == GraphicsSize.medium
+        }
+        if let imageUrl: URL = medium.first?.url {
+            return imageUrl
+        }
+        return .none
+    }
 }
 
 extension Album: Codable {

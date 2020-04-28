@@ -9,9 +9,9 @@
 import Foundation
 
 class AlbumDetailsRequest: BackendRequest<AlbumDetails> {
-    var completion: ((Result<AlbumDetails, Error>) -> Void)?
-    var mbid: String = ""
-    var albumName: String = ""
+    //var completion: ((Result<AlbumDetails, Error>) -> Void)?
+    private var mbid: String!
+    private var albumName: String!
     
     init (albumName: String, mbid: String) {
         super.init()

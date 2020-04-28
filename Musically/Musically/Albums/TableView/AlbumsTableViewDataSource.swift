@@ -18,13 +18,11 @@ class AlbumsTableViewDataSource: NSObject, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let album: Album? = self.dataProvider.album(for: indexPath.row)
+        let viewModel = self.dataProvider.viewModel(for: indexPath.row)
         let cell: AlbumTableViewCell = tableView.dequeueReusableCell(withIdentifier: AlbumTableViewCell.reuseId(), for:indexPath) as! AlbumTableViewCell
-        cell.setup(with: album)
-        if let album = album {
-            cell.viewTapBehaviour = ViewTapBehaviour.init(views: [cell.mainContainer], onTap: { [unowned self] () in
-                self.router.showAlbumDetails(for: album)
-            })
+        cell.setup(with: viewModel)
+        cell.set { [unowned self] in
+            self.router.showAlbumDetails(for: viewModel.model())
         }
         return cell
     }

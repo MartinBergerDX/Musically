@@ -26,23 +26,15 @@ class AlbumDetailsViewModel: NSObject {
         let albumName = album.name.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""
         let mbid = album.mbid.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""
         let request = AlbumDetailsRequest.init(albumName: albumName, mbid: mbid)
-        request.completion = { [unowned self] (result) in
-            self.searchFinished(with: result)
+        let command = request.makeCompletionCommand(success: { [unowned self] (result: AlbumDetails) in
+            self.albumDetails = result
             self.output.updated(viewModel: self)
-        }
-        self.backendService.enqueue(request: request)
-    }
-    
-    private func searchFinished(with result: Result<AlbumDetails, Error>) {
-        switch result {
-        case .success(let received):
-            albumDetails = received
-            break
-        case .failure(let error):
-            tryReadFromDatabase()
+        }) { [unowned self] (error: Error) in
+            self.tryReadFromDatabase()
             print(error)
-            break
         }
+        request.add(command: command)
+        self.backendService.enqueue(request: request)
     }
     
     func exists() -> Bool {

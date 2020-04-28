@@ -12,10 +12,10 @@ import Foundation
 
 class ArtistSearchPagingTest: XCTestCase {
     private let BatchCount: Int = 30
-    var vm: ArtistSearchDataProvider!
+    fileprivate var vm: DataProviderTest!
     
     override func setUp() {
-        vm = ArtistSearchDataProvider()
+        vm = DataProviderTest()
         vm.backendService = BackendService.init(consumer: ArtistSearchMockBackendConsumer())
     }
 
@@ -24,14 +24,29 @@ class ArtistSearchPagingTest: XCTestCase {
     }
     
     func testLoadSinglePage() {
+        vm.exp = XCTestExpectation.init(description: "exp")
         vm.beginSearch(queryString: "test")
+        wait(for: [vm.exp], timeout: 1)
         XCTAssert(vm.totalCount() == BatchCount)
     }
     
-    func loadFivePages() {
-        for _ in 1...5 {
-            vm.beginSearch(queryString: "test")
-        }
-        XCTAssert(vm.totalCount() == (BatchCount * 5))
+//    func testLoadFivePages() {
+//        var exps: [XCTestExpectation] = []
+//        for _ in 1...5 {
+//            vm.exp = XCTestExpectation.init(description: "exp")
+//            vm.beginSearch(queryString: "test")
+//            exps.append(vm.exp)
+//        }
+//        wait(for: exps, timeout: 2)
+//        XCTAssert(vm.totalCount() == (BatchCount * 5))
+//    }
+}
+
+fileprivate
+class DataProviderTest: ArtistSearchDataProvider {
+    var exp: XCTestExpectation!
+    override func searchFinished(with result: ArtistSearchResult) {
+        super.searchFinished(with: result)
+        exp.fulfill()
     }
 }

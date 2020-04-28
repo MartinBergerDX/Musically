@@ -49,7 +49,7 @@ class ArtistSearchDataProvider: NSObject {
         let command = request.makeCompletionCommand(success: { (result) in
             self.searchFinished(with: result)
         }) { (error) in
-            self.handleServiceError(error: error)
+            print("error getting artists: " + error.localizedDescription)
         }
         request.add(command: command)
         return request
@@ -62,10 +62,6 @@ class ArtistSearchDataProvider: NSObject {
         }
         let cellViewModels = result.artists.map({ ArtistSearchCellViewModel(artist: $0) })
         artists.value.append(contentsOf: cellViewModels)
-    }
-    
-    func handleServiceError(error: Error) {
-        print("error getting artists: " + error.localizedDescription)
     }
     
     func totalCount() -> Int {

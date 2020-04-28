@@ -19,16 +19,16 @@ protocol BackendServiceProtocol {
 }
 
 class BackendService: BackendServiceProtocol {
-    internal let requestQueue: OperationQueue!
+    internal var requestQueue: OperationQueue!
     private let consumer: BackendRequestConsumerProtocol!
     
     init(consumer: BackendRequestConsumerProtocol!) {
         self.consumer = consumer
-        requestQueue = OperationQueue.init()
-        setup(requestQueue: requestQueue)
+        setupRequestQueue()
     }
     
-    func setup(requestQueue: OperationQueue) {
+    func setupRequestQueue() {
+        requestQueue = OperationQueue()
         requestQueue.name = "Backend Service request concurrent queue"
         requestQueue.maxConcurrentOperationCount = 10
         requestQueue.underlyingQueue = DispatchQueue.global()
@@ -62,13 +62,8 @@ class BackendService: BackendServiceProtocol {
         }
         return BackendRequestIterator.null
     }
-}
-
-func calculateReplaceRange(page: Int, count: Int) -> ClosedRange<Int> {
-    let zeroBasedArrayOffset: Int = 1
-    let nElementsMoreMinusOne: Int = (count - 1)
-    let pageOffset: Int = (page - zeroBasedArrayOffset)
-    let startArrayIndex: Int = (pageOffset * count)
-    let endArrayIndex: Int = (startArrayIndex + nElementsMoreMinusOne)
-    return startArrayIndex...endArrayIndex
+    
+    func currentOperationCount() -> Int {
+        return requestQueue.operationCount
+    }
 }

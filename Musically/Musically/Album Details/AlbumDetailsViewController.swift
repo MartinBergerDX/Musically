@@ -20,6 +20,13 @@ class AlbumDetailsViewController: CommonViewController {
         setupViewModel()
     }
     
+    private func setupViewModel() {
+        viewModel.backendService = ServiceRegistry.shared.backendService
+        viewModel.output = self
+        viewModel.album = album
+        viewModel.search()
+    }
+    
     @objc private func onSave(sender: UIBarButtonItem) {
         if viewModel.exists() {
             viewModel.remove()
@@ -35,13 +42,6 @@ class AlbumDetailsViewController: CommonViewController {
     
     private func uninstallSaveButton() {
         self.navigationItem.rightBarButtonItem = nil
-    }
-    
-    private func setupViewModel() {
-        viewModel.backendService = ServiceRegistry.shared.backendService
-        viewModel.output = self
-        viewModel.album = album
-        viewModel.search()
     }
     
     private func updateSaveButton() {

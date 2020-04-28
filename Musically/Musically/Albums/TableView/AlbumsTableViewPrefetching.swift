@@ -16,10 +16,8 @@ class AlbumsTableViewPrefetching: NSObject, UITableViewDataSourcePrefetching {
     }
     
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        let contains: Bool = indexPaths.contains { element in
-            return self.dataProvider.isLoading(for: element)
-        }
-        if contains {
+        let contains: Bool = indexPaths.contains { self.dataProvider.isNearEnd(for: $0) }
+        if !contains {
             self.dataProvider.search()
         }
     }
