@@ -11,10 +11,6 @@ import Foundation
 // Facade around endpoint string, http method and arguments
 // when making a call to server, instantiate subclass of BackendRequest class
 
-protocol BackendRequestCommandProtocol {
-    func execute<T: Decodable & Initable>(request: BackendRequest<T>)
-}
-
 protocol BackendRequestAttributesProtocol {
     var endpoint: String {get}
     var arguments: [URLQueryItem] {get}
@@ -43,7 +39,7 @@ enum BackendRequestState: Int {
     case finished
 }
 
-class BackendRequest<T: Decodable & Initable>: BackendOperation, BackendRequestProtocol {
+class BackendRequest<T: BackendRequestDataType>: BackendOperation, BackendRequestProtocol {
     var commands: [BackendRequestCommandProtocol]
     var result: Result<Data, Error>!
     var endpoint: String
@@ -56,6 +52,7 @@ class BackendRequest<T: Decodable & Initable>: BackendOperation, BackendRequestP
         }
     }
     var value: T!
+    typealias ModelDataType = T
 
     override init () {
         commands = []
@@ -115,7 +112,18 @@ class BackendRequest<T: Decodable & Initable>: BackendOperation, BackendRequestP
         }
     }
     
+    func dependOn<OriginType, DestinationType>(originRequest: OriginType, mapping: @escaping (OriginType, DestinationType) -> Void)
+        where OriginType: BackendOperation, OriginType: BackendRequestProtocol, DestinationType: BackendRequestProtocol {
+        
+        let cast = (self as! DestinationType)
+        let command = DependRequestCommand<OriginType, DestinationType>.init(destination: cast, mapping: mapping)
+        originRequest.add(command: command)
+        
+        addDependency(originRequest)
+    }
+    
     // MARK: Command Factory
+    
     // Factory Method pattern
     
     func makeCompletionCommand(success: @escaping ((T) -> Void), failure: @escaping ((Error) -> Void)) -> BackendRequestResultCommand<T> {

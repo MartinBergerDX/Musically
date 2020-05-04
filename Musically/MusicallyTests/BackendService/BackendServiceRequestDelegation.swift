@@ -79,6 +79,43 @@ class BackendServiceRequestDelegation: XCTestCase {
         waitForExpectations(timeout: 1)
         XCTAssert(r4.r1.value!.value == 1 && r4.r2.value!.value == 2 && r4.r3.value!.value == 3)
     }
+    
+    func testPassingData3() {
+        let r1 = R1()
+        r1.name = "R1"
+        let e1 = expectation(description: "completion1")
+        let c1 = DelegationCommand<Foo>.init { (v: Foo) in
+            e1.fulfill()
+        }
+        r1.add(command: c1)
+        
+        let r2 = R2()
+        r2.name = "R2"
+        let e2 = expectation(description: "completion2")
+        let c2 = DelegationCommand<Foo>.init { (v: Foo) in
+            e2.fulfill()
+        }
+        r2.add(command: c2)
+        r2.dependOn(originRequest: r1) { (origin: R1, dest: R2) in
+            dest.receivedFromR1 = origin.value
+        }
+        
+        let r3 = R3()
+        r3.name = "R3"
+        let e3 = expectation(description: "completion3")
+        let c3 = DelegationCommand<Foo>.init { (v: Foo) in
+            e3.fulfill()
+        }
+        r3.add(command: c3)
+        r3.dependOn(originRequest: r2) { (origin: R2, dest: R3) in
+            dest.receivedFromR2 = origin.value
+        }
+        
+        backendService.enqueue(requests: [r1, r2, r3])
+        waitForExpectations(timeout: 1)
+        XCTAssert(r2.receivedFromR1.value == r1.value!.value)
+        XCTAssert(r3.receivedFromR2.value == r2.value!.value)
+    }
 }
 
 fileprivate
@@ -91,7 +128,6 @@ class R1: BackendRequest<Foo> {
 fileprivate
 class R2: BackendRequest<Foo> {
     var receivedFromR1: Foo!
-    
     override func onComplete() {
         value = Foo.init(value: 2)
     }
@@ -99,6 +135,7 @@ class R2: BackendRequest<Foo> {
 
 fileprivate
 class R3: BackendRequest<Foo> {
+    var receivedFromR2: Foo!
     override func onComplete() {
         value = Foo.init(value: 3)
     }
@@ -106,6 +143,7 @@ class R3: BackendRequest<Foo> {
 
 fileprivate
 class R4: BackendRequest<Foo> {
+    var receivedFromR3: Foo!
     var r1: BackendRequest<Foo>!
     var r2: BackendRequest<Foo>!
     var r3: BackendRequest<Foo>!
@@ -115,7 +153,7 @@ class R4: BackendRequest<Foo> {
 }
 
 fileprivate
-class DelegationCommand<DataType: Decodable & Initable>: BackendRequestCommandProtocol {
+class DelegationCommand<DataType: BackendRequestDataType>: BackendRequestCommandProtocol {
     func execute<T>(request: BackendRequest<T>) {
         completion(request.value! as! DataType)
     }

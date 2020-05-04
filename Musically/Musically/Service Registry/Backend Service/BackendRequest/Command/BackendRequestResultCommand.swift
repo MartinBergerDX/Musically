@@ -8,12 +8,12 @@
 
 import Foundation
 
-class BackendRequestResultCommand<DataType: Decodable & Initable>: BackendRequestCommandProtocol {
+class BackendRequestResultCommand<DataType: BackendRequestDataType>: BackendRequestCommandProtocol {
     
     var completion: ((DataType) -> Void)?
     var failure: ((Error) -> Void)?
 
-    func execute<T: Decodable & Initable>(request: BackendRequest<T>) {
+    func execute<T: BackendRequestDataType>(request: BackendRequest<T>) {
         if case .failure(let error) = request.result {
             failure?(error)
             return

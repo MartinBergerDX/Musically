@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol Initable {
+public protocol Initable {
     init()
 }

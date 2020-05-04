@@ -58,10 +58,10 @@
 		5B4419E1233E020700F87B86 /* ArtistTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B4419E0233E020700F87B86 /* ArtistTableViewCell.xib */; };
 		5B4419E3233E621200F87B86 /* MMImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4419E2233E621200F87B86 /* MMImageView.swift */; };
 		5B4419E6233E694300F87B86 /* TextViewOpenUrlBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4419E5233E694300F87B86 /* TextViewOpenUrlBehaviour.swift */; };
-		5B616D3C24575A02009944A4 /* DemoRequest_DeleteLater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B616D3B24575A02009944A4 /* DemoRequest_DeleteLater.swift */; };
 		5B616D3E24576257009944A4 /* QueueTestConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B616D3D24576257009944A4 /* QueueTestConsumer.swift */; };
 		5B616D40245762A7009944A4 /* QueueTestRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B616D3F245762A7009944A4 /* QueueTestRequest.swift */; };
 		5B616D42245762FF009944A4 /* BackendServiceRequestDelegation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B616D41245762FF009944A4 /* BackendServiceRequestDelegation.swift */; };
+		5B616D44245CA100009944A4 /* BackendRequestCommandProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B616D43245CA100009944A4 /* BackendRequestCommandProtocol.swift */; };
 		5B6C81DB242A8298007F8319 /* ArtistSearchCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6C81DA242A8298007F8319 /* ArtistSearchCellViewModel.swift */; };
 		5B70CDA2243D0F9F0050CAF2 /* SearchQueryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B70CDA1243D0F9F0050CAF2 /* SearchQueryState.swift */; };
 		5B77929C23D1DE1000633BD4 /* AlbumsTableViewPrefetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B77929B23D1DE1000633BD4 /* AlbumsTableViewPrefetching.swift */; };
@@ -89,6 +89,7 @@
 		5B96B19F23D4FD6600AF70A5 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B96B19E23D4FD6600AF70A5 /* Observable.swift */; };
 		5B9C025523F4311C009F4AD8 /* ArtistSearchPagingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9C025423F4311C009F4AD8 /* ArtistSearchPagingTest.swift */; };
 		5B9C025723F43B78009F4AD8 /* ServiceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9C025623F43B78009F4AD8 /* ServiceFactory.swift */; };
+		5BB5196F2460A615006347B5 /* DependRequestCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB5196E2460A615006347B5 /* DependRequestCommand.swift */; };
 		5BC59EF224477CB40000951C /* BackendRequestIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC59EF124477CB40000951C /* BackendRequestIterator.swift */; };
 		5BC59EF424477F290000951C /* CurrentSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC59EF324477F290000951C /* CurrentSearch.swift */; };
 		5BD4F90B233BD72100E27715 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD4F90A233BD72100E27715 /* AppDelegate.swift */; };
@@ -172,10 +173,10 @@
 		5B4419E0233E020700F87B86 /* ArtistTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArtistTableViewCell.xib; sourceTree = "<group>"; };
 		5B4419E2233E621200F87B86 /* MMImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MMImageView.swift; sourceTree = "<group>"; };
 		5B4419E5233E694300F87B86 /* TextViewOpenUrlBehaviour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewOpenUrlBehaviour.swift; sourceTree = "<group>"; };
-		5B616D3B24575A02009944A4 /* DemoRequest_DeleteLater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoRequest_DeleteLater.swift; sourceTree = "<group>"; };
 		5B616D3D24576257009944A4 /* QueueTestConsumer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueTestConsumer.swift; sourceTree = "<group>"; };
 		5B616D3F245762A7009944A4 /* QueueTestRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueTestRequest.swift; sourceTree = "<group>"; };
 		5B616D41245762FF009944A4 /* BackendServiceRequestDelegation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendServiceRequestDelegation.swift; sourceTree = "<group>"; };
+		5B616D43245CA100009944A4 /* BackendRequestCommandProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendRequestCommandProtocol.swift; sourceTree = "<group>"; };
 		5B6C81DA242A8298007F8319 /* ArtistSearchCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistSearchCellViewModel.swift; sourceTree = "<group>"; };
 		5B70CDA1243D0F9F0050CAF2 /* SearchQueryState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchQueryState.swift; sourceTree = "<group>"; };
 		5B77929B23D1DE1000633BD4 /* AlbumsTableViewPrefetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsTableViewPrefetching.swift; sourceTree = "<group>"; };
@@ -203,6 +204,7 @@
 		5B96B19E23D4FD6600AF70A5 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		5B9C025423F4311C009F4AD8 /* ArtistSearchPagingTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistSearchPagingTest.swift; sourceTree = "<group>"; };
 		5B9C025623F43B78009F4AD8 /* ServiceFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceFactory.swift; sourceTree = "<group>"; };
+		5BB5196E2460A615006347B5 /* DependRequestCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependRequestCommand.swift; sourceTree = "<group>"; };
 		5BC59EF124477CB40000951C /* BackendRequestIterator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendRequestIterator.swift; sourceTree = "<group>"; };
 		5BC59EF324477F290000951C /* CurrentSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentSearch.swift; sourceTree = "<group>"; };
 		5BD4F907233BD72100E27715 /* Musically.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Musically.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -347,7 +349,6 @@
 			isa = PBXGroup;
 			children = (
 				5BD4F90A233BD72100E27715 /* AppDelegate.swift */,
-				5B616D3B24575A02009944A4 /* DemoRequest_DeleteLater.swift */,
 			);
 			path = "App Delegate";
 			sourceTree = "<group>";
@@ -395,6 +396,8 @@
 			children = (
 				5B36CF0E2457550D009E51CA /* BackendRequestCompletionCommand.swift */,
 				5B36CF102457552A009E51CA /* BackendRequestResultCommand.swift */,
+				5B616D43245CA100009944A4 /* BackendRequestCommandProtocol.swift */,
+				5BB5196E2460A615006347B5 /* DependRequestCommand.swift */,
 			);
 			path = Command;
 			sourceTree = "<group>";
@@ -807,7 +810,6 @@
 				5B4419DA233D5A8A00F87B86 /* ArtistSearchResult.swift in Sources */,
 				5B4419C2233D020B00F87B86 /* ArtistSearchRequest.swift in Sources */,
 				5B89E79223CF5CAE00EF5CBE /* StoredAlbumsCollectionViewDelegator.swift in Sources */,
-				5B616D3C24575A02009944A4 /* DemoRequest_DeleteLater.swift in Sources */,
 				5B35271A2344A79800209639 /* AlbumRequest.swift in Sources */,
 				5BD4F90B233BD72100E27715 /* AppDelegate.swift in Sources */,
 				5BD4F92E233BE5C500E27715 /* UserAgent.swift in Sources */,
@@ -824,6 +826,7 @@
 				5B96B19F23D4FD6600AF70A5 /* Observable.swift in Sources */,
 				5B35273A23460C8700209639 /* AlbumDetailsScrollController.swift in Sources */,
 				5B40AF242348B3B200D503E1 /* StoredAlbumsCollectionViewCell.swift in Sources */,
+				5B616D44245CA100009944A4 /* BackendRequestCommandProtocol.swift in Sources */,
 				5B96B19523D4731F00AF70A5 /* BackendOperation.swift in Sources */,
 				5BD4F92B233BDB5800E27715 /* GenericDao.swift in Sources */,
 				5B3527A523476AC300209639 /* GraphicsDao.swift in Sources */,
@@ -840,6 +843,7 @@
 				5BE1BC0723CF666200D0668F /* StoredAlbumsCollectionViewFactory.swift in Sources */,
 				5B4419DF233E01FA00F87B86 /* ArtistTableViewCell.swift in Sources */,
 				5B4419E3233E621200F87B86 /* MMImageView.swift in Sources */,
+				5BB5196F2460A615006347B5 /* DependRequestCommand.swift in Sources */,
 				5B4419C7233D1D0800F87B86 /* Artist.swift in Sources */,
 				5B35278F234662D600209639 /* AlbumDetailsDao.swift in Sources */,
 				5B36CF0D2455E54F009E51CA /* AlbumCellViewModel.swift in Sources */,
